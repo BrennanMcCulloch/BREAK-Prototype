@@ -7,7 +7,7 @@ using UnityEditor;
 [System.Serializable]
 public class MoveListInserter : MonoBehaviour
 {
-    //INITIALIZE TO ALL POSSIBLE MOVES yes
+    //INITIALIZE TO ALL POSSIBLE MOVES
     public MoveClass[] allMoves;
     public TextAsset moveList;
 
@@ -21,8 +21,6 @@ public class MoveListInserter : MonoBehaviour
         AssetDatabase.ImportAsset("Assets/Resources/JSON/AllMovesList.json");
         moveList = (TextAsset) AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/AllMovesList.json");
         allMoves = JsonHelper.FromJson<MoveClass>(moveList.text);
-        MoveClass fixit = new MoveClass("Bufuuu", "Rhythm", false, 4, false, false);
-        allMoves[0] = fixit;
         string fixitstring = JsonHelper.ToJson<MoveClass>(allMoves, true);
         Debug.Log(fixitstring);
 
@@ -33,13 +31,18 @@ public class MoveListInserter : MonoBehaviour
             temp.name = allMoves[x].GetName();
 
             MoveClass current = allMoves[x];
-            MoveClass thing = temp.AddComponent<MoveClass>();
-            thing.SetName(current.GetName());
-            thing.SetMoveType(current.GetMoveType());
-            thing.SetGroup(current.GetGroup());
-            thing.SetCost(current.GetCost());
-            thing.SetFriend(current.GetFriend());
-            thing.SetHarm(current.GetHarm());
+
+            System.Type myType = System.Type.GetType("MoveClass");
+
+            
+            MoveClassWrapper thing = temp.AddComponent<MoveClassWrapper>();
+            thing.MoveClass.SetName(current.GetName());
+            thing.MoveClass.SetMoveType(current.GetMoveType());
+            thing.MoveClass.SetGroup(current.GetGroup());
+            thing.MoveClass.SetCost(current.GetCost());
+            thing.MoveClass.SetFriend(current.GetFriend());
+            thing.MoveClass.SetHarm(current.GetHarm());
+            
         }
 #endif
     }

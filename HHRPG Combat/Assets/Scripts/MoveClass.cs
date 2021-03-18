@@ -6,6 +6,7 @@ using UnityEditor;
 [System.Serializable]
 public class MoveClass
 {
+    [SerializeField]
     public string moveName;
     public string type; //attack, rhythm, support
     public bool group; //true if group effect, false if not
