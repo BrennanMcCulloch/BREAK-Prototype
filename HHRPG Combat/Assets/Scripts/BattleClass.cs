@@ -5,22 +5,24 @@ using UnityEngine;
 public class BattleClass : MonoBehaviour
 {
     private static int maxPartySize = 3;
-    private static int maxRowSize = 4;
+    private static int maxRowSize;
     private static int maxNumberOfRows = 3;
 
     public PartyMemberClass leader;
     public PartyMemberClass[] party;
-    public EnemyClass[,] enemies = new EnemyClass[maxNumberOfRows, maxRowSize]; //3 is the number of rows (front, mid, back), 4 is the number of potential enemies in each row
+    public EnemyClass[,] enemies;
     public string difficulty;
 
     public PartyMemberClass[] restOfParty = new PartyMemberClass[maxPartySize];
 
-    BattleClass(PartyMemberClass _lead, PartyMemberClass[] _party, EnemyClass[][] _enemy, string _bpm)
+    BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[][] _enemy, string _bpm)
     {
         leader = _lead;
+        maxRowSize = _rowSize;
+        enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
 
         //initializing rest of party array
-        for(int x = 0; x < _party.Length; x++)
+        for (int x = 0; x < _party.Length; x++)
         {
             if (x >= maxPartySize) { throw new System.Exception("Tried to put too many people in the party!"); }
             restOfParty[x] = _party[x];
@@ -63,24 +65,40 @@ public class BattleClass : MonoBehaviour
         difficulty = _bpm;
     }
 
+    //Party Phase of battle overview and turn movement
     private void PartyPhase()
     {
-
+        int turn = 0;
+        while (turn < party.Length)
+        {
+            PartyMemberTurn(party[turn], turn);
+            turn++;
+        }
     }
 
-    private void PartyMemberTurn()
-    {
-
-    }
-
+    //Enemy Phase of battle overview and turn movement
     private void EnemyPhase()
     {
+        for(int row = 0; row < maxNumberOfRows; row++)
+        {
+            for(int col = 0; col < maxRowSize; col++)
+            {
+                if (enemies[row, col] != null) { EnemyTurn(enemies[row, col], row, col); }
+            }
+        }
 
     }
 
-    private void EnemyTurn()
+    //Interactivity code for party member turn
+    private void PartyMemberTurn(PartyMemberClass person, int leader)
     {
+        //PUT INTERACTIVE STUFF HERE
+    }
 
+    //Things to do on enemy turn
+    private void EnemyTurn(EnemyClass enemy, int row, int col)
+    {
+        //PUT ENEMY STUFF HERE
     }
 
     // Start is called before the first frame update
@@ -90,6 +108,7 @@ public class BattleClass : MonoBehaviour
     }
 
     // Update is called once per frame
+    // LINK BETWEEN PARTY AND ENEMY PHASE SHOULD BE HERE
     void Update()
     {
         
