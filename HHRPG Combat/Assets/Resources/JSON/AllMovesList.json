@@ -17,6 +17,14 @@
     "harmonic": false
   },
   {
+    "moveName": "Zio",
+    "type": "Rhythm",
+    "group": false,
+    "cost": 4,
+    "friendly": false,
+    "harmonic": false
+  },
+  {
     "moveName": "Agi",
     "type": "Rhythm",
     "group": false,

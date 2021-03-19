@@ -8,10 +8,10 @@ public class PartyMemberClass : MonoBehaviour
     public string memberName;
     public AffinityDictionary affinities;
     public StatDictionary stats;
-    public MoveClass[] moves; //MAKE THIS SIZE 8
-    public MoveClass harmonic;
+    public GameObject[] moves; //MAKE THIS SIZE 8
+    public GameObject harmonic;
 
-    PartyMemberClass(string _name, AffinityDictionary _aff, StatDictionary _stats, MoveClass[] _moves, MoveClass _harm)
+    PartyMemberClass(string _name, AffinityDictionary _aff, StatDictionary _stats, GameObject[] _moves, GameObject _harm)
     {
         memberName = _name;
         affinities = _aff;

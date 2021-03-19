@@ -14,18 +14,23 @@ public class MoveListInserter : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR
-        foreach (Transform child in transform)
-        {
-            GameObject.DestroyImmediate(child.gameObject);
-        }
         AssetDatabase.ImportAsset("Assets/Resources/JSON/AllMovesList.json");
         moveList = (TextAsset) AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/AllMovesList.json");
         allMoves = JsonHelper.FromJson<MoveClass>(moveList.text);
         string fixitstring = JsonHelper.ToJson<MoveClass>(allMoves, true);
-        Debug.Log(fixitstring);
+
+        Debug.Log(moveList);
 
         for (int x = 0; x < allMoves.Length; x++)
         {
+            bool isItThereAlready = false;
+
+            foreach (var child in this.transform.GetComponentsInChildren(typeof(MoveClassWrapper), true)) {
+                if (child.name == allMoves[x].GetName()) { isItThereAlready = true; break; }
+            }
+
+            if(isItThereAlready == true) { continue; }
+
             GameObject temp = new GameObject();
             temp.transform.parent = this.gameObject.transform;
             temp.name = allMoves[x].GetName();
