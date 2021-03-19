@@ -43,6 +43,7 @@ public class MoveListInserter : MonoBehaviour
             MoveClassWrapper thing = temp.AddComponent<MoveClassWrapper>();
             thing.MoveClass.SetName(current.GetName());
             thing.MoveClass.SetMoveType(current.GetMoveType());
+            thing.MoveClass.SetEffective(current.GetEffective());
             thing.MoveClass.SetGroup(current.GetGroup());
             thing.MoveClass.SetCost(current.GetCost());
             thing.MoveClass.SetFriend(current.GetFriend());

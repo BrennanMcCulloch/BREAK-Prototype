@@ -9,15 +9,17 @@ public class MoveClass
     [SerializeField]
     public string moveName;
     public string type; //attack, rhythm, support
+    public float effective; //for support skills, use this stat as a percentage 0-1
     public bool group; //true if group effect, false if not
     public int cost;
     public bool friendly; //true if only cast on party, false if cast on enemy
     public bool harmonic; //true if it's a move for a harmonic
 
-    public MoveClass(string _move, string _type, bool _group, int _cost, bool _friend, bool _harm)
+    public MoveClass(string _move, string _type, float _eff, bool _group, int _cost, bool _friend, bool _harm)
     {
         moveName = _move;
         type = _type;
+        effective = _eff;
         group = _group;
         cost = _cost;
         friendly = _friend;
@@ -42,6 +44,16 @@ public class MoveClass
     public void SetMoveType(string _m)
     {
         type = _m;
+    }
+
+    public float GetEffective()
+    {
+        return effective;
+    }
+
+    public void SetEffective(float _f)
+    {
+        effective = _f;
     }
 
     public bool GetGroup()

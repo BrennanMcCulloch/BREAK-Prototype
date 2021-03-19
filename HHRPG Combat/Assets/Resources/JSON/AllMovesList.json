@@ -1,24 +1,9 @@
 {
  "Items": [
   {
-    "moveName": "Bufu",
-    "type": "Rhythm",
-    "group": false,
-    "cost": 4,
-    "friendly": false,
-    "harmonic": false
-  },
-  {
-    "moveName": "Garu",
-    "type": "Rhythm",
-    "group": false,
-    "cost": 8,
-    "friendly": false,
-    "harmonic": false
-  },
-  {
     "moveName": "Zio",
     "type": "Rhythm",
+	"effective": 0.2,
     "group": false,
     "cost": 4,
     "friendly": false,
@@ -27,6 +12,7 @@
   {
     "moveName": "Agi",
     "type": "Rhythm",
+	"effective": 0.2,
     "group": false,
     "cost": 4,
     "friendly": false,
