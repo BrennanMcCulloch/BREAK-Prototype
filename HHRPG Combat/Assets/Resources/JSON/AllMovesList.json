@@ -1,22 +1,21 @@
 {
- "Items": [
-  {
-    "moveName": "Zio",
-    "type": "Rhythm",
-	"effective": 0.2,
-    "group": false,
-    "cost": 4,
-    "friendly": false,
-    "harmonic": false
-  },
-  {
-    "moveName": "Agi",
-    "type": "Rhythm",
-	"effective": 0.2,
-    "group": false,
-    "cost": 4,
-    "friendly": false,
-    "harmonic": false
-  }
- ]
+	"Items": [{
+			"moveName": "Zio",
+			"type": "Rhythm",
+			"effective": 0.2,
+			"group": false,
+			"cost": 4,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Agi",
+			"type": "Rhythm",
+			"effective": 0.2,
+			"group": false,
+			"cost": 4,
+			"friendly": false,
+			"harmonic": false
+		}
+	]
 }
