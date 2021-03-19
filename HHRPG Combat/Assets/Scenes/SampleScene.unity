@@ -121,6 +121,171 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &411411544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 411411549}
+  - component: {fileID: 411411548}
+  - component: {fileID: 411411547}
+  - component: {fileID: 411411546}
+  - component: {fileID: 411411545}
+  m_Layer: 0
+  m_Name: Sora
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &411411545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411411544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870fb9261a334e842b0ee24f20ec6b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memberName: Sora
+  currentHealth: 75
+  currentEP: 30
+  affinities:
+    _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
+    _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
+    _Next: ffffffffffffffff00000000ffffffff010000000000000000000000
+    _Count: 5
+    _Version: 110
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Physical
+    - Drum
+    - Bass
+    - Guitar
+    - Piano
+    - 
+    - 
+    _Values:
+    - Strong
+    - Neutral
+    - Neutral
+    - Weak
+    - Weak
+    - 
+    - 
+  stats:
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
+    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 187
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - HP
+    - EP
+    - Strength
+    - Rhythm
+    - Physical Defence
+    - Rhythm Defence
+    - Agility
+    - Potential
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 4b0000001e0000000e0000000700000014000000070000000600000006000000000000000000000000000000000000000000000000000000000000000000000000000000
+  moves:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  harmonic: {fileID: 0}
+--- !u!65 &411411546
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411411544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &411411547
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411411544}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &411411548
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411411544}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &411411549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411411544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.36, z: 1.615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +461,171 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &980143290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 980143295}
+  - component: {fileID: 980143294}
+  - component: {fileID: 980143293}
+  - component: {fileID: 980143292}
+  - component: {fileID: 980143291}
+  m_Layer: 0
+  m_Name: Scrooge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &980143291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980143290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870fb9261a334e842b0ee24f20ec6b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memberName: Scrooge
+  currentHealth: 30
+  currentEP: 30
+  affinities:
+    _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
+    _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
+    _Next: ffffffffffffffff00000000ffffffff010000000000000000000000
+    _Count: 5
+    _Version: 163
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Physical
+    - Drum
+    - Bass
+    - Guitar
+    - Piano
+    - 
+    - 
+    _Values:
+    - Weak
+    - Neutral
+    - Neutral
+    - Neutral
+    - Neutral
+    - 
+    - 
+  stats:
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
+    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 214
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - HP
+    - EP
+    - Strength
+    - Rhythm
+    - Physical Defence
+    - Rhythm Defence
+    - Agility
+    - Potential
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 1e0000001e0000000f0000000f00000007000000080000001400000007000000000000000000000000000000000000000000000000000000000000000000000000000000
+  moves:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  harmonic: {fileID: 0}
+--- !u!65 &980143292
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980143290}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &980143293
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980143290}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &980143294
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980143290}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &980143295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980143290}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.36, z: 4.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1063410349
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +736,7 @@ Transform:
   - {fileID: 1063410350}
   - {fileID: 1408460197}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1408460196
 GameObject:
@@ -565,38 +895,227 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870fb9261a334e842b0ee24f20ec6b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  memberName: 
+  memberName: Joker
+  currentHealth: 50
+  currentEP: 40
   affinities:
-    _Buckets: ffffffff00000000ffffffff
-    _HashCodes: fe162a160000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 1
+    _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
+    _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
+    _Next: ffffffffffffffff00000000ffffffff010000000000000000000000
+    _Count: 5
+    _Version: 96
     _FreeList: -1
     _FreeCount: 0
     _Keys:
-    - 
+    - Physical
+    - Drum
+    - Bass
+    - Guitar
+    - Piano
     - 
     - 
     _Values:
-    - 
+    - Neutral
+    - Neutral
+    - Neutral
+    - Neutral
+    - Neutral
     - 
     - 
   stats:
-    _Buckets: ffffffff00000000ffffffff
-    _HashCodes: fe162a160000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 1
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
+    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 175
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - HP
+    - EP
+    - Strength
+    - Rhythm
+    - Physical Defence
+    - Rhythm Defence
+    - Agility
+    - Potential
     - 
     - 
     - 
-    _Values: 000000000000000000000000
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 32000000280000000a0000000a0000000e0000000e0000000c00000005000000000000000000000000000000000000000000000000000000000000000000000000000000
   moves:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   harmonic: {fileID: 0}
+--- !u!1 &1671912870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1671912875}
+  - component: {fileID: 1671912874}
+  - component: {fileID: 1671912873}
+  - component: {fileID: 1671912872}
+  - component: {fileID: 1671912871}
+  m_Layer: 0
+  m_Name: Ruby
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1671912871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671912870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870fb9261a334e842b0ee24f20ec6b23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memberName: Ruby
+  currentHealth: 40
+  currentEP: 60
+  affinities:
+    _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
+    _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
+    _Next: ffffffffffffffff00000000ffffffff010000000000000000000000
+    _Count: 5
+    _Version: 138
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Physical
+    - Drum
+    - Bass
+    - Guitar
+    - Piano
+    - 
+    - 
+    _Values:
+    - Neutral
+    - Neutral
+    - Strong
+    - Absorb
+    - Reflect
+    - 
+    - 
+  stats:
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
+    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 201
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - HP
+    - EP
+    - Strength
+    - Rhythm
+    - Physical Defence
+    - Rhythm Defence
+    - Agility
+    - Potential
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 280000003c000000070000000e0000000c000000120000000f00000004000000000000000000000000000000000000000000000000000000000000000000000000000000
+  moves:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  harmonic: {fileID: 0}
+--- !u!65 &1671912872
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671912870}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1671912873
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671912870}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &1671912874
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671912870}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1671912875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671912870}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.36, z: 3.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
