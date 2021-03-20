@@ -1,20 +1,254 @@
 {
 	"Items": [{
-			"moveName": "Zio",
-			"type": "Rhythm",
-			"effective": 0.2,
+			"moveName": "Tom",
+			"type": "Drum",
+			"effective": 0.3,
 			"group": false,
 			"cost": 4,
 			"friendly": false,
 			"harmonic": false
 		},
 		{
-			"moveName": "Agi",
-			"type": "Rhythm",
-			"effective": 0.2,
+			"moveName": "Snare",
+			"type": "Drum",
+			"effective": 0.6,
+			"group": false,
+			"cost": 8,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Kick",
+			"type": "Drum",
+			"effective": 1,
+			"group": false,
+			"cost": 12,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Hi Hat",
+			"type": "Drum",
+			"effective": 0.3,
+			"group": true,
+			"cost": 10,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Wash",
+			"type": "Drum",
+			"effective": 0.6,
+			"group": true,
+			"cost": 20,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Crash",
+			"type": "Drum",
+			"effective": 1,
+			"group": true,
+			"cost": 30,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Pick",
+			"type": "Bass",
+			"effective": 0.3,
 			"group": false,
 			"cost": 4,
 			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Pluck",
+			"type": "Bass",
+			"effective": 0.6,
+			"group": false,
+			"cost": 8,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Slap",
+			"type": "Bass",
+			"effective": 1,
+			"group": false,
+			"cost": 12,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Jam",
+			"type": "Bass",
+			"effective": 0.3,
+			"group": true,
+			"cost": 10,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Funk",
+			"type": "Bass",
+			"effective": 0.6,
+			"group": true,
+			"cost": 20,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Groove",
+			"type": "Bass",
+			"effective": 1,
+			"group": true,
+			"cost": 30,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Finger",
+			"type": "Guitar",
+			"effective": 0.3,
+			"group": false,
+			"cost": 4,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Strum",
+			"type": "Guitar",
+			"effective": 0.6,
+			"group": false,
+			"cost": 8,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Arpeggio",
+			"type": "Guitar",
+			"effective": 1,
+			"group": false,
+			"cost": 12,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Chord",
+			"type": "Guitar",
+			"effective": 0.3,
+			"group": true,
+			"cost": 10,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Barre",
+			"type": "Guitar",
+			"effective": 0.6,
+			"group": true,
+			"cost": 20,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Power",
+			"type": "Guitar",
+			"effective": 1,
+			"group": true,
+			"cost": 30,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Plink",
+			"type": "Piano",
+			"effective": 0.3,
+			"group": false,
+			"cost": 4,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Waltz",
+			"type": "Piano",
+			"effective": 0.6,
+			"group": false,
+			"cost": 8,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Nocturne",
+			"type": "Piano",
+			"effective": 1,
+			"group": false,
+			"cost": 12,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Mezzo",
+			"type": "Piano",
+			"effective": 0.3,
+			"group": true,
+			"cost": 10,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Forte",
+			"type": "Piano",
+			"effective": 0.6,
+			"group": true,
+			"cost": 20,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Subito",
+			"type": "Piano",
+			"effective": 1,
+			"group": true,
+			"cost": 30,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Push The Fader",
+			"type": "Heal",
+			"effective": 0.2,
+			"group": false,
+			"cost": 6,
+			"friendly": true,
+			"harmonic": false
+		},
+		{
+			"moveName": "Red Line",
+			"type": "Heal",
+			"effective": 0.2,
+			"group": true,
+			"cost": 15,
+			"friendly": true,
+			"harmonic": false
+		},
+		{
+			"moveName": "Silencers",
+			"type": "Physical Defence",
+			"effective": 3,
+			"group": false,
+			"cost": 7,
+			"friendly": true,
+			"harmonic": false
+		},
+		{
+			"moveName": "Up To 11",
+			"type": "Rhythm",
+			"effective": 4,
+			"group": false,
+			"cost": 10,
+			"friendly": true,
 			"harmonic": false
 		}
 	]
