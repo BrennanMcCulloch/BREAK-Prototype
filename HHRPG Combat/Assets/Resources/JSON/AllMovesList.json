@@ -263,7 +263,7 @@
 		},
 		{
 			"moveName": "Silencers",
-			"type": "Physical Defence",
+			"type": "Physical Defence Buff",
 			"effective": 3,
 			"group": false,
 			"cost": 7,
@@ -272,7 +272,7 @@
 		},
 		{
 			"moveName": "Up To 11",
-			"type": "Rhythm",
+			"type": "Rhythm Buff",
 			"effective": 4,
 			"group": false,
 			"cost": 10,
