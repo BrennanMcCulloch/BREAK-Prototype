@@ -1,5 +1,24 @@
 {
-	"Items": [{
+	"Items": [
+		{
+			"moveName": "Smack",
+			"type": "Physical",
+			"effective": 0.3,
+			"group": false,
+			"cost": 2,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
+			"moveName": "Mosh Pit",
+			"type": "Physical",
+			"effective": 0.3,
+			"group": true,
+			"cost": 2,
+			"friendly": false,
+			"harmonic": false
+		},
+		{
 			"moveName": "Tom",
 			"type": "Drum",
 			"effective": 0.3,
@@ -219,6 +238,15 @@
 			"moveName": "Push The Fader",
 			"type": "Heal",
 			"effective": 0.2,
+			"group": false,
+			"cost": 6,
+			"friendly": true,
+			"harmonic": false
+		},
+		{
+			"moveName": "Pick The Bass Back Up",
+			"type": "Heal",
+			"effective": 0.15,
 			"group": false,
 			"cost": 6,
 			"friendly": true,

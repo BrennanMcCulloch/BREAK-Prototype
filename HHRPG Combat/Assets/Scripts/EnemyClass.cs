@@ -5,13 +5,14 @@ using UnityEngine;
 public class EnemyClass : MonoBehaviour
 {
     public string enemyName;
+    public int currentHealth;
     public AffinityDictionary affinities;
     public StatDictionary stats;
-    public MoveClass[] frontMoves;
-    public MoveClass[] midMoves;
-    public MoveClass[] backMoves;
+    public GameObject[] frontMoves;
+    public GameObject[] midMoves;
+    public GameObject[] backMoves;
 
-    EnemyClass(string _name, AffinityDictionary _aff, StatDictionary _stats, MoveClass[] _front, MoveClass[] _mid, MoveClass[] _back)
+    EnemyClass(string _name, AffinityDictionary _aff, StatDictionary _stats, GameObject[] _front, GameObject[] _mid, GameObject[] _back)
     {
         enemyName = _name;
         affinities = _aff;
