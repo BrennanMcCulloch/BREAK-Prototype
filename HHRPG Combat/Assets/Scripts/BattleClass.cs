@@ -103,16 +103,30 @@ public class BattleClass : MonoBehaviour
 
     }
 
+    /*
+     *
+     * WORK NEEDS TO BE DONE HERE
+     * 
+     */
     //Interactivity code for party member turn
     private void PartyMemberTurn(PartyMemberClass person, int leader)
     {
         //PUT INTERACTIVE STUFF HERE
     }
 
+    /*
+    *
+    * WORK NEEDS TO BE DONE HERE
+    * 
+    */
+    private void PartyMove()
+    {
+        //MORE INTERACTIVE STUFF HERE
+    }
+
     //Things to do on enemy turn
     private void EnemyTurn(EnemyClass enemy, int row, int col)
     {
-        //PUT ENEMY STUFF HERE
         switch(row)
         {
             case 0: //front row
@@ -154,7 +168,8 @@ public class BattleClass : MonoBehaviour
     {
         switch (move.type)
         {
-            case "Physical": //attack
+            //ALL FORMS OF ATTACK. ONCE NEW TYPES ARE ADDED, THEY GO HERE.
+            case "Physical":
             case "Drum":
             case "Bass":
             case "Guitar":
@@ -290,8 +305,12 @@ public class BattleClass : MonoBehaviour
                 else if (affinityInQuestion == "Reflect") { doer.currentHealth -= damage; }//REFLECT (FIX LATER)
                 else { victim.currentHealth -= damage; }
 
+                //DISPLAY IT
+                Debug.Log(doer.name + " did a " + move.moveName + " on " + victim.name + " for " + damage);
+
                 break;
-            case "Strength Buff": //Buffs
+            //ALL BUFFS GO HERE.
+            case "Strength Buff":
             case "Rhythm Buff":
             case "Physical Defence Buff":
             case "Rhythm Defence Buff":
@@ -326,10 +345,40 @@ public class BattleClass : MonoBehaviour
                 buff.turnTime = 3;
 
                 //ADD THE BUFF
-                buddy.buffDebuff.Add(buff.statName, buff);
+                Modifier thingBuff;
+                buddy.buffDebuff.TryGetValue(buff.statName, out thingBuff);
+                if(thingBuff == null)
+                {
+                    buddy.buffDebuff.Add(buff.statName, buff);
+                }
+                else //there's already a buff or debuff in that category
+                {
+                    if(thingBuff.amount < 0)
+                    {
+                        thingBuff.amount = buff.amount;
+                        thingBuff.turnTime = 3;
+                    }
+                    else if(thingBuff.amount == buff.amount)
+                    {
+                        thingBuff.turnTime += buff.turnTime;
+                    }
+                    else if(thingBuff.amount > 0)
+                    {
+                        thingBuff.amount += buff.amount;
+                        thingBuff.turnTime = 3;
+                    }
+                    else
+                    {
+                        Debug.Log("shouldn't break anything, but the buff isn't working");
+                    }
+                }
+
+                //DISPLAY IT
+                Debug.Log(doer.name + " did a " + move.moveName + " on " + buddy.name + " for " + buff.amount);
 
                 break;
-            case "Strength Debuff": //Debuffs
+            //ALL DEBUFFS GO HERE.
+            case "Strength Debuff":
             case "Rhythm Debuff":
             case "Physical Defence Debuff":
             case "Rhythm Defence Debuff":
@@ -364,10 +413,42 @@ public class BattleClass : MonoBehaviour
                 debuff.turnTime = 3;
 
                 //ADD THE DEBUFF
-                notBuddy.buffDebuff.Add(debuff.statName, debuff);
+                Modifier thingDebuff;
+                notBuddy.buffDebuff.TryGetValue(debuff.statName, out thingDebuff);
+                if (thingDebuff == null)
+                {
+                    notBuddy.buffDebuff.Add(debuff.statName, debuff);
+                }
+                else //there's already a buff or debuff in that category
+                {
+                    if (thingDebuff.amount > 0)
+                    {
+                        thingDebuff.amount = debuff.amount;
+                        thingDebuff.turnTime = 3;
+                    }
+                    else if (thingDebuff.amount == debuff.amount)
+                    {
+                        thingDebuff.turnTime -= debuff.turnTime;
+                    }
+                    else if (thingDebuff.amount < 0)
+                    {
+                        thingDebuff.amount -= debuff.amount;
+                        thingDebuff.turnTime = 3;
+                    }
+                    else
+                    {
+                        Debug.Log("shouldn't break anything, but the debuff isn't working");
+                    }
+                }
+
+
+                //DISPLAY IT
+                Debug.Log(doer.name + " did a " + move.moveName + " on " + notBuddy.name + " for " + debuff.amount);
+
 
                 break;
-            case "Heal": //Healing.... obv
+            //HEALIES FOR YOUR FEELIES
+            case "Heal":
                 //Find the member of the enemies with the lowest health and HEAL THAT FOOL
                 int lowestHealth = 500000;
                 int xPos = 0;
@@ -390,7 +471,10 @@ public class BattleClass : MonoBehaviour
                 float healies = move.effective * maxHealth;
                 int heals = (int)Mathf.Round(healies);
                 enemies[xPos][yPos].currentHealth += heals;
-                if(enemies[xPos][yPos].currentHealth > maxHealth) { enemies[xPos][yPos] = maxHealth;  }
+                if(enemies[xPos][yPos].currentHealth > maxHealth) { enemies[xPos][yPos].currentHealth = maxHealth;  }
+
+                //DISPLAY IT
+                Debug.Log(doer.name + " did a " + move.moveName + " on " + enemies[xPos][yPos].name + " for " + heals);
 
                 break;
             default:
@@ -612,6 +696,12 @@ public class BattleClass : MonoBehaviour
         victim = party[highestPerson];
         return victim;
     }
+
+    /*
+    *
+    * WORK NEEDS TO BE DONE HERE
+    * 
+    */
 
     // Start is called before the first frame update
     void Start()

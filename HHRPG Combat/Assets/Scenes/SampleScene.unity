@@ -423,6 +423,18 @@ MonoBehaviour:
     - Agility
     - 
     _Values: 14000000070000000a00000005000000050000000a00000000000000
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   frontMoves:
   - {fileID: 1724165348}
   midMoves:
@@ -566,6 +578,19 @@ MonoBehaviour:
   memberName: Sora
   currentHealth: 75
   currentEP: 30
+  currentlyGuarding: 0
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
     _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
@@ -1161,6 +1186,19 @@ MonoBehaviour:
   memberName: Scrooge
   currentHealth: 30
   currentEP: 30
+  currentlyGuarding: 0
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
     _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
@@ -1677,7 +1715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9972e8404c39d41bee4598b1f78999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leader: {fileID: 0}
+  leader: {fileID: 1587424049}
   difficulty: Easy
   maxRowSize: 1
   front:
@@ -1686,7 +1724,10 @@ MonoBehaviour:
   - {fileID: 222546566}
   back:
   - {fileID: 1810568611}
-  restOfParty: []
+  restOfParty:
+  - {fileID: 411411545}
+  - {fileID: 1671912871}
+  - {fileID: 980143291}
 --- !u!4 &1300073383
 Transform:
   m_ObjectHideFlags: 0
@@ -2088,14 +2129,14 @@ MonoBehaviour:
     friendly: 1
     harmonic: 0
   - moveName: Silencers
-    type: Physical Defence
+    type: Physical Defence Buff
     effective: 3
     group: 0
     cost: 7
     friendly: 1
     harmonic: 0
   - moveName: Up To 11
-    type: Rhythm
+    type: Rhythm Buff
     effective: 4
     group: 0
     cost: 10
@@ -2222,6 +2263,18 @@ MonoBehaviour:
     - Agility
     - 
     _Values: 370000000b000000050000000a000000070000000100000000000000
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   frontMoves:
   - {fileID: 1050400387}
   midMoves:
@@ -2563,6 +2616,19 @@ MonoBehaviour:
   memberName: Joker
   currentHealth: 50
   currentEP: 40
+  currentlyGuarding: 0
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
     _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
@@ -2654,6 +2720,19 @@ MonoBehaviour:
   memberName: Ruby
   currentHealth: 40
   currentEP: 60
+  currentlyGuarding: 0
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
     _HashCodes: 1913a31a7656d93067cb6110b803fd568561d84b0000000000000000
@@ -2961,6 +3040,18 @@ MonoBehaviour:
     - Agility
     - 
     _Values: 28000000090000000900000009000000090000000600000000000000
+  buffDebuff:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
   frontMoves:
   - {fileID: 1050400387}
   midMoves:
