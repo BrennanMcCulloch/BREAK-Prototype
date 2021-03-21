@@ -19,8 +19,6 @@ public class BattleClass : MonoBehaviour
 
     public PartyMemberClass[] restOfParty = new PartyMemberClass[maxPartySize];
 
-    
-
     BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[][] _enemy, string _bpm)
     {
         leader = _lead;
@@ -146,13 +144,17 @@ public class BattleClass : MonoBehaviour
     {
         switch(move.type)
         {
-            case "Physical": //strength attack
+            case "Physical": //attack
+            case "Drum":
+            case "Bass":
+            case "Guitar":
+            case "Piano":
                 //Determine who we're attacking
                 PartyMemberClass victim;
                 if(difficulty == "Easy")
                 {
                     //Pick the worst enemy to attack
-                    victim = PickWorstPartyToHit("Physical");
+                    victim = PickWorstPartyToHit(move.type);
                 }
                 else if(difficulty == "Medium")
                 {
@@ -162,19 +164,58 @@ public class BattleClass : MonoBehaviour
                 else if(difficulty == "Hard")
                 {
                     //Pick the best enemy to attack
-                    victim = PickBestPartyToHit("Physical");
+                    victim = PickBestPartyToHit(move.type);
+                }
+                else
+                {
+                    throw new System.Exception("No difficulty selected in battle class");
                 }
 
                 //Determine attack value
+                int d20 = Random.Range(1, 21);
+                double percent = d20 * 0.02;
+                int statInQuestion;
+                string affinityInQuestion;
+                int agility;
+                victim.affinities.TryGetValue(move.type, out affinityInQuestion);
+                victim.stats.TryGetValue("Agility", out agility);
+                if(move.type == "Physical")
+                {
+                    victim.stats.TryGetValue("Physical Defence", out statInQuestion);
+                }
+                else
+                {
+                    victim.stats.TryGetValue("Rhythm Defence", out statInQuestion);
+                }
+                int crit = 1;
+                if(d20 >= 19 || affinityInQuestion == "Weak") { crit = 2; }
 
+                //Do they dodge?
+                int d100 = Random.Range(1, 101);
+                if (d100 <= agility)
+                {
+                    //DODGE STUFF HERE
+                    Debug.Log("Dodge!");
+                    break;
+                }
+
+                //If not, calculate damage
+                double damagePercent = (crit * percent) + 0.6;
+                int potentialDamage;
+                doer.stats.TryGetValue(move.type, out potentialDamage);
+                double damageDealt = damagePercent * potentialDamage;
+
+                int d20def = Random.Range(1, 21);
+                double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
+
+                double damageNotRounded = damageDealt * percentDefended;
+                if(affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
+                int damage = (int) System.Math.Round(damageNotRounded);
 
                 //Impact numbers
-
-                break;
-            case "Drum": //rhythm attacks
-            case "Bass":
-            case "Guitar":
-            case "Piano":
+                if (affinityInQuestion == "Absorb") { victim.currentHealth += damage; }
+                else if (affinityInQuestion == "Reflect") {doer.currentHealth -= damage; }//REFLECT (FIX LATER)
+                else { victim.currentHealth -= damage; }
 
                 break;
             case "Strength Buff": //Buffs
@@ -201,15 +242,107 @@ public class BattleClass : MonoBehaviour
         }
     }
 
+    public struct data
+    {
+        public string affinity { get; set; }
+        public float healthPercentage { get; set; }
+        public bool currentlyGuarding { get; set; }
+        public int points { get; set; }
+    }
+
     //AI STUFF
     private PartyMemberClass PickWorstPartyToHit(string type)
     {
+        data[] information = new data[party.Length];
+        PartyMemberClass victim;
 
+        //Establish AI data
+        for(int x = 0; x < party.Length; x++)
+        {
+            string temp;
+            int maxHealth;
+            party[x].affinities.TryGetValue(type, out temp);
+            party[x].stats.TryGetValue("HP", out maxHealth);
+            information[x].affinity = temp;
+            information[x].healthPercentage = party[x].currentHealth / maxHealth;
+            information[x].currentlyGuarding = party[x].currentlyGuarding;
+        }
+
+        //Impact AI point values 
+        for(int x = 0; x < information.Length; x++)
+        {
+            //affecting points to pick the worst one
+            if (information[x].affinity == "Weak") { information[x].points += 3; }
+            else if (information[x].affinity == "Strong") { information[x].points -= 1; }
+            else if (information[x].affinity == "Absorb" || information[x].affinity == "Reflect") { information[x].points -= 2; }
+
+            if (information[x].healthPercentage < 0.5) { information[x].points += 2; }
+
+            if (information[x].currentlyGuarding == true) { information[x].points -= 2; }
+            else { information[x].points += 3; }
+        }
+
+        //pick WORST one
+        int lowestPoint = 100;
+        int lowestPerson = -1;
+        for(int x = 0; x < party.Length; x++)
+        {
+            if(information[x].points <= lowestPoint)
+            {
+                lowestPoint = information[x].points;
+                lowestPerson = x;
+            }
+        }
+
+        victim = party[lowestPerson];
+        return victim;
     }
 
     private PartyMemberClass PickBestPartyToHit(string type)
     {
+        data[] information = new data[party.Length];
+        PartyMemberClass victim;
 
+        //Establish AI data
+        for (int x = 0; x < party.Length; x++)
+        {
+            string temp;
+            int maxHealth;
+            party[x].affinities.TryGetValue(type, out temp);
+            party[x].stats.TryGetValue("HP", out maxHealth);
+            information[x].affinity = temp;
+            information[x].healthPercentage = party[x].currentHealth / maxHealth;
+            information[x].currentlyGuarding = party[x].currentlyGuarding;
+        }
+
+        //Impact AI point values 
+        for (int x = 0; x < information.Length; x++)
+        {
+            //affecting points to pick the worst one
+            if (information[x].affinity == "Weak") { information[x].points += 3; }
+            else if (information[x].affinity == "Strong") { information[x].points -= 1; }
+            else if (information[x].affinity == "Absorb" || information[x].affinity == "Reflect") { information[x].points -= 2; }
+
+            if (information[x].healthPercentage < 0.5) { information[x].points += 2; }
+
+            if (information[x].currentlyGuarding == true) { information[x].points -= 2; }
+            else { information[x].points += 3; }
+        }
+
+        //pick BEST one
+        int highestPoint = -100;
+        int highestPerson = -1;
+        for (int x = 0; x < party.Length; x++)
+        {
+            if (information[x].points > highestPoint)
+            {
+                highestPoint = information[x].points;
+                highestPerson = x;
+            }
+        }
+
+        victim = party[highestPerson];
+        return victim;
     }
 
     // Start is called before the first frame update

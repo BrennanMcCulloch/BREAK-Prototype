@@ -8,6 +8,7 @@ public class PartyMemberClass : MonoBehaviour
     public string memberName;
     public int currentHealth;
     public int currentEP;
+    public bool currentlyGuarding = false;
     public AffinityDictionary affinities;
     public StatDictionary stats;
     public GameObject[] moves; //MAKE THIS SIZE 8
