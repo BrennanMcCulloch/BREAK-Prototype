@@ -19,7 +19,7 @@ public class MoveListInserter : MonoBehaviour
         allMoves = JsonHelper.FromJson<MoveClass>(moveList.text);
         string fixitstring = JsonHelper.ToJson<MoveClass>(allMoves, true);
 
-        Debug.Log(moveList);
+        //Debug.Log(moveList);
 
         for (int x = 0; x < allMoves.Length; x++)
         {

@@ -14,16 +14,6 @@ public class PartyMemberClass : MonoBehaviour
     public StatDictionary stats;
     public GameObject[] moves; //MAKE THIS SIZE 8
     public GameObject harmonic;
-
-    PartyMemberClass(string _name, AffinityDictionary _aff, StatDictionary _stats, GameObject[] _moves, GameObject _harm)
-    {
-        memberName = _name;
-        affinities = _aff;
-        stats = _stats;
-        moves = _moves;
-        harmonic = _harm;
-    }
-
 }
 
 public class Modifier

@@ -12,14 +12,4 @@ public class EnemyClass : MonoBehaviour
     public GameObject[] frontMoves;
     public GameObject[] midMoves;
     public GameObject[] backMoves;
-
-    EnemyClass(string _name, AffinityDictionary _aff, StatDictionary _stats, GameObject[] _front, GameObject[] _mid, GameObject[] _back)
-    {
-        enemyName = _name;
-        affinities = _aff;
-        stats = _stats;
-        frontMoves = _front;
-        midMoves = _mid;
-        backMoves = _back;
-    }
 }

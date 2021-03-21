@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
  * You can do this. :)
  */
 
-public class BattleClass : MonoBehaviour
+public class BattleClass
 {
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
@@ -25,11 +25,11 @@ public class BattleClass : MonoBehaviour
     public EnemyClass[] front;
     public EnemyClass[] mid;
     public EnemyClass[] back;
-    private EnemyClass[][] enemies = new EnemyClass[maxNumberOfRows][];
+    private EnemyClass[,] enemies;
 
     public PartyMemberClass[] restOfParty = new PartyMemberClass[maxPartySize];
 
-    BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[][] _enemy, string _bpm)
+    public BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[,] _enemy, string _bpm)
     {
         leader = _lead;
         maxRowSize = _rowSize;
@@ -46,7 +46,7 @@ public class BattleClass : MonoBehaviour
         //initializing party array with random assortment besides leader
         party = new PartyMemberClass[_party.Length + 1];
         int currentSlot = 0;
-        for (float x = restOfParty.Length; x > 0; x--)
+        for (float x = restOfParty.Length; x >= 0; x--)
         {
             if (x == restOfParty.Length) { party[currentSlot] = leader; currentSlot++; } //put leader in first
             else if (x == 0) { party[currentSlot] = restOfParty[0]; currentSlot++; } //don't random search for the last entry
@@ -64,45 +64,12 @@ public class BattleClass : MonoBehaviour
         }
 
         //initializing enemy 2D array
-        for(int x = 0; x < _enemy.Length; x++)
-        {
-            if (x >= maxNumberOfRows) { throw new System.Exception("Tried to make too many rows!"); }
-
-            for(int y = 0; y < _enemy[x].Length; y++)
-            {
-                if(y >= maxRowSize) { throw new System.Exception("Tried to put too many enemies in a row!"); }
-
-                enemies[x][y] = _enemy[x][y];
-            }
-        }
+        enemies = _enemy;
 
         difficulty = _bpm;
     }
 
-    //Party Phase of battle overview and turn movement
-    private void PartyPhase()
-    {
-        int turn = 0;
-        while (turn < party.Length)
-        {
-            PartyMemberTurn(party[turn], turn);
-            turn++;
-        }
-    }
-
-    //Enemy Phase of battle overview and turn movement
-    private void EnemyPhase()
-    {
-        for(int row = 0; row < maxNumberOfRows; row++)
-        {
-            for(int col = 0; col < maxRowSize; col++)
-            {
-                if (enemies[row][col] != null) { EnemyTurn(enemies[row][col], row, col); }
-            }
-        }
-
-    }
-
+    
     /*
      *
      * WORK NEEDS TO BE DONE HERE
@@ -112,6 +79,7 @@ public class BattleClass : MonoBehaviour
     private void PartyMemberTurn(PartyMemberClass person, int leader)
     {
         //PUT INTERACTIVE STUFF HERE
+        Debug.Log("In Party Member Turn for " + person.memberName);
     }
 
     /*
@@ -134,7 +102,8 @@ public class BattleClass : MonoBehaviour
                 {
                     int whichFront = Random.Range(0, enemy.frontMoves.Length);
                     GameObject doItFront = enemy.frontMoves[whichFront];
-                    MoveClass theThingFront = doItFront.GetComponent<MoveClass>();
+                    MoveClassWrapper theThingFrontBasis = doItFront.GetComponent<MoveClassWrapper>();
+                    MoveClass theThingFront = theThingFrontBasis.MoveClass;
                     EnemyMove(enemy, theThingFront);
                 }
                 break;
@@ -143,7 +112,8 @@ public class BattleClass : MonoBehaviour
                 {
                     int whichMid = Random.Range(0, enemy.midMoves.Length);
                     GameObject doItMid = enemy.midMoves[whichMid];
-                    MoveClass theThingMid = doItMid.GetComponent<MoveClass>();
+                    MoveClassWrapper theThingMidBasis = doItMid.GetComponent<MoveClassWrapper>();
+                    MoveClass theThingMid = theThingMidBasis.MoveClass;
                     EnemyMove(enemy, theThingMid);
                 }
                 break;
@@ -152,7 +122,8 @@ public class BattleClass : MonoBehaviour
                 {
                     int whichBack = Random.Range(0, enemy.backMoves.Length);
                     GameObject doItBack = enemy.backMoves[whichBack];
-                    MoveClass theThingBack = doItBack.GetComponent<MoveClass>();
+                    MoveClassWrapper theThingBackBasis = doItBack.GetComponent<MoveClassWrapper>();
+                    MoveClass theThingBack = theThingBackBasis.MoveClass;
                     EnemyMove(enemy, theThingBack);
                 }
                 break;
@@ -327,7 +298,7 @@ public class BattleClass : MonoBehaviour
                 else if (difficulty == "Medium")
                 {
 
-                    buddy = enemies[Random.Range(0, maxNumberOfRows + 1)][Random.Range(0, maxRowSize + 1)].GetComponent<EnemyClass>();
+                    buddy = enemies[Random.Range(0, maxNumberOfRows + 1), Random.Range(0, maxRowSize + 1)].GetComponent<EnemyClass>();
                 }
                 else if (difficulty == "Hard")
                 {
@@ -457,9 +428,9 @@ public class BattleClass : MonoBehaviour
                 {
                     for (int y = 0; y < maxRowSize; y++)
                     {
-                        if (lowestHealth > enemies[x][y].currentHealth)
+                        if (lowestHealth > enemies[x, y].currentHealth)
                         {
-                            lowestHealth = enemies[x][y].currentHealth;
+                            lowestHealth = enemies[x, y].currentHealth;
                             xPos = x;
                             yPos = y;
                         }
@@ -467,18 +438,19 @@ public class BattleClass : MonoBehaviour
                 }
 
                 int maxHealth;
-                enemies[xPos][yPos].stats.TryGetValue("HP", out maxHealth);
+                enemies[xPos, yPos].stats.TryGetValue("HP", out maxHealth);
                 float healies = move.effective * maxHealth;
                 int heals = (int)Mathf.Round(healies);
-                enemies[xPos][yPos].currentHealth += heals;
-                if(enemies[xPos][yPos].currentHealth > maxHealth) { enemies[xPos][yPos].currentHealth = maxHealth;  }
+                enemies[xPos, yPos].currentHealth += heals;
+                if(enemies[xPos, yPos].currentHealth > maxHealth) { enemies[xPos, yPos].currentHealth = maxHealth;  }
 
                 //DISPLAY IT
-                Debug.Log(doer.name + " did a " + move.moveName + " on " + enemies[xPos][yPos].name + " for " + heals);
+                Debug.Log(doer.name + " did a " + move.moveName + " on " + enemies[xPos, yPos].name + " for " + heals);
 
                 break;
             default:
-                throw new System.Exception("Fell into default in enemymove method in battle class");
+                Debug.Log("The enemy did nothing.");
+                break;
         }
     }
 
@@ -548,7 +520,7 @@ public class BattleClass : MonoBehaviour
             for(int y = 0; y < maxRowSize; y++)
             {
                 int result;
-                enemies[x][y].stats.TryGetValue(type, out result);
+                enemies[x, y].stats.TryGetValue(type, out result);
                 information[x, y].stat = result;
             }
         }
@@ -569,7 +541,7 @@ public class BattleClass : MonoBehaviour
             }
         }
 
-        return enemies[xPos][yPos];
+        return enemies[xPos, yPos];
     }
 
     private EnemyClass PickBestEnemyToBuff(string type)
@@ -580,7 +552,7 @@ public class BattleClass : MonoBehaviour
             for (int y = 0; y < maxRowSize; y++)
             {
                 int result;
-                enemies[x][y].stats.TryGetValue(type, out result);
+                enemies[x, y].stats.TryGetValue(type, out result);
                 information[x, y].stat = result;
             }
         }
@@ -601,7 +573,7 @@ public class BattleClass : MonoBehaviour
             }
         }
 
-        return enemies[xPos][yPos];
+        return enemies[xPos, yPos];
     }
     private PartyMemberClass PickWorstPartyToHit(string type)
     {
@@ -697,26 +669,36 @@ public class BattleClass : MonoBehaviour
         return victim;
     }
 
-    /*
-    *
-    * WORK NEEDS TO BE DONE HERE
-    * 
-    */
-
-    // Start is called before the first frame update
-    void Start()
+    //Party Phase of battle overview and turn movement
+    public void PartyPhase(ref bool isItRunningParty, ref bool runItParty, ref bool runItEnemy)
     {
-        enemies[0] = front;
-        enemies[1] = mid;
-        enemies[2] = back;
+        isItRunningParty = false;
+        Debug.Log("PARTY PHASE");
+        int turn = 0;
+        while (turn < party.Length)
+        {
+            PartyMemberTurn(party[turn], turn);
+            turn++;
+        }
+
+        runItParty = false;
+        runItEnemy = true;
     }
 
-    // Update is called once per frame
-    // LINK BETWEEN PARTY AND ENEMY PHASE SHOULD BE HERE
-    void Update()
+    //Enemy Phase of battle overview and turn movement
+    public void EnemyPhase(ref bool isItRunningEnemy, ref bool runItParty, ref bool runItEnemy)
     {
-        
+        Debug.Log("ENEMY PHASE");
+        isItRunningEnemy = false;
+        for (int row = 0; row < maxNumberOfRows; row++)
+        {
+            for (int col = 0; col < maxRowSize; col++)
+            {
+                if (enemies[row, col] != null) { EnemyTurn(enemies[row, col], row, col); }
+            }
+        }
+
+        runItEnemy = false;
+        runItParty = true;
     }
-
-
 }
