@@ -9,6 +9,7 @@ public class PartyMemberClass : MonoBehaviour
     public int currentHealth;
     public int currentEP;
     public bool currentlyGuarding = false;
+    public ModifierDictionary buffDebuff;
     public AffinityDictionary affinities;
     public StatDictionary stats;
     public GameObject[] moves; //MAKE THIS SIZE 8
@@ -22,10 +23,21 @@ public class PartyMemberClass : MonoBehaviour
         moves = _moves;
         harmonic = _harm;
     }
+
+}
+
+public class Modifier
+{
+    public string statName { get; set; }
+    public int amount { get; set; }
+    public int turnTime { get; set; }
 }
 
 [System.Serializable]
 public class AffinityDictionary : SerializableDictionary<string, string> { }
+
+[System.Serializable]
+public class ModifierDictionary : SerializableDictionary<string, Modifier> { }
 
 [System.Serializable]
 public class StatDictionary : SerializableDictionary<string, int> { }

@@ -1,9 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
+
+/*
+ * Ok, so, this file is long as heck. So here's an explanation.
+ * Basically, the battle class gets attached to an empty gameobject in the scene,
+ * and handles all of the enemyAI and move handling,
+ * along with player interactivity. 
+ * The EnemyMove method is the longest, but it's not too complex if ya sit and think. And also breathe. A lot.
+ * You can do this. :)
+ */
 
 public class BattleClass : MonoBehaviour
-{ 
+{
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
     public string difficulty;
@@ -142,7 +152,7 @@ public class BattleClass : MonoBehaviour
     //actual enemy attack
     private void EnemyMove(EnemyClass doer, MoveClass move)
     {
-        switch(move.type)
+        switch (move.type)
         {
             case "Physical": //attack
             case "Drum":
@@ -151,17 +161,17 @@ public class BattleClass : MonoBehaviour
             case "Piano":
                 //Determine who we're attacking
                 PartyMemberClass victim;
-                if(difficulty == "Easy")
+                if (difficulty == "Easy")
                 {
                     //Pick the worst enemy to attack
                     victim = PickWorstPartyToHit(move.type);
                 }
-                else if(difficulty == "Medium")
+                else if (difficulty == "Medium")
                 {
                     //Randomly pick an enemy
                     victim = party[Random.Range(0, maxPartySize + 1)].GetComponent<PartyMemberClass>();
                 }
-                else if(difficulty == "Hard")
+                else if (difficulty == "Hard")
                 {
                     //Pick the best enemy to attack
                     victim = PickBestPartyToHit(move.type);
@@ -179,19 +189,53 @@ public class BattleClass : MonoBehaviour
                 int agility;
                 victim.affinities.TryGetValue(move.type, out affinityInQuestion);
                 victim.stats.TryGetValue("Agility", out agility);
-                if(move.type == "Physical")
+                if (move.type == "Physical")
                 {
                     victim.stats.TryGetValue("Physical Defence", out statInQuestion);
+                    Modifier buffs;
+                    victim.buffDebuff.TryGetValue("Physical Defence", out buffs);
+                    if (buffs != null && buffs.turnTime != 0)
+                    {
+                        statInQuestion += buffs.amount;
+                        buffs.turnTime--;
+                    }
+                    else
+                    {
+                        victim.buffDebuff.Remove("Physical Defence");
+                    }
                 }
                 else
                 {
                     victim.stats.TryGetValue("Rhythm Defence", out statInQuestion);
+                    Modifier buffs;
+                    victim.buffDebuff.TryGetValue("Rhythm Defence", out buffs);
+                    if (buffs != null && buffs.turnTime != 0)
+                    {
+                        statInQuestion += buffs.amount;
+                        buffs.turnTime--;
+                    }
+                    else
+                    {
+                        victim.buffDebuff.Remove("Rhythm Defence");
+                    }
                 }
                 int crit = 1;
-                if(d20 >= 19 || affinityInQuestion == "Weak") { crit = 2; }
+                if (d20 >= 19 || affinityInQuestion == "Weak") { crit = 2; }
 
                 //Do they dodge?
                 int d100 = Random.Range(1, 101);
+                Modifier buffsAgility;
+                victim.buffDebuff.TryGetValue("Agility", out buffsAgility);
+                if (buffsAgility != null && buffsAgility.turnTime != 0)
+                {
+                    agility += buffsAgility.amount;
+                    buffsAgility.turnTime--;
+                }
+                else
+                {
+                    victim.buffDebuff.Remove("Agility");
+                }
+
                 if (d100 <= agility)
                 {
                     //DODGE STUFF HERE
@@ -202,19 +246,48 @@ public class BattleClass : MonoBehaviour
                 //If not, calculate damage
                 double damagePercent = (crit * percent) + 0.6;
                 int potentialDamage;
-                doer.stats.TryGetValue(move.type, out potentialDamage);
-                double damageDealt = damagePercent * potentialDamage;
+                if (move.type == "Physical")
+                {
+                    doer.stats.TryGetValue("Physical", out potentialDamage);
+                    Modifier buffsPhysical;
+                    victim.buffDebuff.TryGetValue("Physical", out buffsPhysical);
+                    if (buffsPhysical != null && buffsPhysical.turnTime != 0)
+                    {
+                        potentialDamage += buffsPhysical.amount;
+                        buffsPhysical.turnTime--;
+                    }
+                    else
+                    {
+                        victim.buffDebuff.Remove("Physical");
+                    }
+                }
+                else
+                {
+                    doer.stats.TryGetValue("Rhythm", out potentialDamage);
+                    Modifier buffsRhythm;
+                    victim.buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
+                    if (buffsRhythm != null && buffsRhythm.turnTime != 0)
+                    {
+                        potentialDamage += buffsRhythm.amount;
+                        buffsRhythm.turnTime--;
+                    }
+                    else
+                    {
+                        victim.buffDebuff.Remove("Rhythm");
+                    }
+                }
+                double damageDealt = damagePercent * potentialDamage * move.effective;
 
                 int d20def = Random.Range(1, 21);
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt * percentDefended;
-                if(affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
-                int damage = (int) System.Math.Round(damageNotRounded);
+                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
+                int damage = (int)System.Math.Round(damageNotRounded);
 
                 //Impact numbers
                 if (affinityInQuestion == "Absorb") { victim.currentHealth += damage; }
-                else if (affinityInQuestion == "Reflect") {doer.currentHealth -= damage; }//REFLECT (FIX LATER)
+                else if (affinityInQuestion == "Reflect") { doer.currentHealth -= damage; }//REFLECT (FIX LATER)
                 else { victim.currentHealth -= damage; }
 
                 break;
@@ -224,6 +297,36 @@ public class BattleClass : MonoBehaviour
             case "Rhythm Defence Buff":
             case "Agility Buff":
             case "Potential Buff":
+                Regex regexBuff = new Regex("(\\s+( Buff)\\s*)$");
+                string moveStringBuff = regexBuff.Replace(move.type, "");
+                EnemyClass buddy;
+                if (difficulty == "Easy")
+                {
+
+                    buddy = PickWorstEnemyToBuff(moveStringBuff);
+                }
+                else if (difficulty == "Medium")
+                {
+
+                    buddy = enemies[Random.Range(0, maxNumberOfRows + 1)][Random.Range(0, maxRowSize + 1)].GetComponent<EnemyClass>();
+                }
+                else if (difficulty == "Hard")
+                {
+
+                    buddy = PickBestEnemyToBuff(moveStringBuff);
+                }
+                else
+                {
+                    throw new System.Exception("No difficulty selected in battle class");
+                }
+
+                Modifier buff = new Modifier();
+                buff.statName = moveStringBuff;
+                buff.amount = (int)Mathf.Round(move.effective);
+                buff.turnTime = 3;
+
+                //ADD THE BUFF
+                buddy.buffDebuff.Add(buff.statName, buff);
 
                 break;
             case "Strength Debuff": //Debuffs
@@ -232,9 +335,62 @@ public class BattleClass : MonoBehaviour
             case "Rhythm Defence Debuff":
             case "Agility Debuff":
             case "Potential Debuff":
+                Regex regexDebuff = new Regex("(\\s+( Debuff)\\s*)$");
+                string moveStringDebuff = regexDebuff.Replace(move.type, "");
+                PartyMemberClass notBuddy;
+                if (difficulty == "Easy")
+                {
+
+                    notBuddy = PickWorstPartyToDebuff(moveStringDebuff);
+                }
+                else if (difficulty == "Medium")
+                {
+
+                    notBuddy = party[Random.Range(0, maxPartySize + 1)].GetComponent<PartyMemberClass>();
+                }
+                else if (difficulty == "Hard")
+                {
+
+                    notBuddy = PickBestPartyToDebuff(moveStringDebuff);
+                }
+                else
+                {
+                    throw new System.Exception("No difficulty selected in battle class");
+                }
+
+                Modifier debuff = new Modifier();
+                debuff.statName = moveStringDebuff;
+                debuff.amount = (int)Mathf.Round(move.effective);
+                debuff.turnTime = 3;
+
+                //ADD THE DEBUFF
+                notBuddy.buffDebuff.Add(debuff.statName, debuff);
 
                 break;
             case "Heal": //Healing.... obv
+                //Find the member of the enemies with the lowest health and HEAL THAT FOOL
+                int lowestHealth = 500000;
+                int xPos = 0;
+                int yPos = 0;
+                for (int x = 0; x < maxNumberOfRows; x++)
+                {
+                    for (int y = 0; y < maxRowSize; y++)
+                    {
+                        if (lowestHealth > enemies[x][y].currentHealth)
+                        {
+                            lowestHealth = enemies[x][y].currentHealth;
+                            xPos = x;
+                            yPos = y;
+                        }
+                    }
+                }
+
+                int maxHealth;
+                enemies[xPos][yPos].stats.TryGetValue("HP", out maxHealth);
+                float healies = move.effective * maxHealth;
+                int heals = (int)Mathf.Round(healies);
+                enemies[xPos][yPos].currentHealth += heals;
+                if(enemies[xPos][yPos].currentHealth > maxHealth) { enemies[xPos][yPos] = maxHealth;  }
 
                 break;
             default:
@@ -245,12 +401,124 @@ public class BattleClass : MonoBehaviour
     public struct data
     {
         public string affinity { get; set; }
+        public int stat { get; set; }
         public float healthPercentage { get; set; }
         public bool currentlyGuarding { get; set; }
         public int points { get; set; }
     }
 
     //AI STUFF
+    private PartyMemberClass PickWorstPartyToDebuff(string type)
+    {
+        data[] information = new data[party.Length];
+        for (int x = 0; x < party.Length; x++)
+        {
+            int temp;
+            party[x].stats.TryGetValue(type, out temp);
+            information[x].stat = temp;
+        }
+
+        int lowest = 100;
+        int pos = -1;
+        for (int x = 0; x < party.Length; x++)
+        {
+            if (lowest > information[x].stat)
+            {
+                lowest = information[x].stat;
+                pos = x;
+            }
+        }
+
+        return party[pos];
+    }
+
+    private PartyMemberClass PickBestPartyToDebuff(string type)
+    {
+        data[] information = new data[party.Length];
+        for (int x = 0; x < party.Length; x++)
+        {
+            int temp;
+            party[x].stats.TryGetValue(type, out temp);
+            information[x].stat = temp;
+        }
+
+        int highest = -100;
+        int pos = -1;
+        for (int x = 0; x < party.Length; x++)
+        {
+            if (highest < information[x].stat)
+            {
+                highest = information[x].stat;
+                pos = x;
+            }
+        }
+
+        return party[pos];
+    }
+    
+    private EnemyClass PickWorstEnemyToBuff(string type)
+    {
+        data[,] information = new data[maxNumberOfRows, maxRowSize];
+        for(int x = 0; x < maxNumberOfRows; x++)
+        {
+            for(int y = 0; y < maxRowSize; y++)
+            {
+                int result;
+                enemies[x][y].stats.TryGetValue(type, out result);
+                information[x, y].stat = result;
+            }
+        }
+
+        int highest = -100;
+        int xPos = -1;
+        int yPos = -1;
+        for (int x = 0; x < maxNumberOfRows; x++)
+        {
+            for (int y = 0; y < maxRowSize; y++)
+            {
+                if(highest < information[x, y].stat)
+                {
+                    highest = information[x, y].stat;
+                    xPos = x;
+                    yPos = y;
+                }
+            }
+        }
+
+        return enemies[xPos][yPos];
+    }
+
+    private EnemyClass PickBestEnemyToBuff(string type)
+    {
+        data[,] information = new data[maxNumberOfRows, maxRowSize];
+        for (int x = 0; x < maxNumberOfRows; x++)
+        {
+            for (int y = 0; y < maxRowSize; y++)
+            {
+                int result;
+                enemies[x][y].stats.TryGetValue(type, out result);
+                information[x, y].stat = result;
+            }
+        }
+
+        int lowest = 100;
+        int xPos = -1;
+        int yPos = -1;
+        for (int x = 0; x < maxNumberOfRows; x++)
+        {
+            for (int y = 0; y < maxRowSize; y++)
+            {
+                if (lowest >= information[x, y].stat)
+                {
+                    lowest = information[x, y].stat;
+                    xPos = x;
+                    yPos = y;
+                }
+            }
+        }
+
+        return enemies[xPos][yPos];
+    }
     private PartyMemberClass PickWorstPartyToHit(string type)
     {
         data[] information = new data[party.Length];
