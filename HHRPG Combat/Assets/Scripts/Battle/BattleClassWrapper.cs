@@ -19,6 +19,8 @@ public class BattleClassWrapper : MonoBehaviour
     public EnemyClass[] mid;
     public EnemyClass[] back;
 
+    public Camera cam;
+
     BattleClass battle;
 
     // Start is called before the first frame update
@@ -48,7 +50,7 @@ public class BattleClassWrapper : MonoBehaviour
             }
         }
 
-        battle = new BattleClass(leader, maxRowSize, restOfParty, enemies, difficulty);
+        battle = new BattleClass(leader, maxRowSize, restOfParty, enemies, difficulty, cam);
     }
 
     private void Update()

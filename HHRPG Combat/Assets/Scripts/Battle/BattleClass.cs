@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 
 public class BattleClass
 {
+    private Camera camera;
+
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
     public string difficulty;
@@ -29,7 +31,7 @@ public class BattleClass
 
     public PartyMemberClass[] restOfParty = new PartyMemberClass[maxPartySize];
 
-    public BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[,] _enemy, string _bpm)
+    public BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[,] _enemy, string _bpm, Camera _cam)
     {
         leader = _lead;
         maxRowSize = _rowSize;
@@ -67,9 +69,11 @@ public class BattleClass
         enemies = _enemy;
 
         difficulty = _bpm;
+
+        camera = _cam;
     }
 
-    
+
     /*
      *
      * WORK NEEDS TO BE DONE HERE
@@ -80,7 +84,21 @@ public class BattleClass
     {
         //PUT INTERACTIVE STUFF HERE
         Debug.Log("In Party Member Turn for " + person.memberName);
+
+        //Raycast to get enemy information
+        RaycastHit hit;
+        Ray ray;
+        ray = camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log(hit.transform.gameObject.name);
+            }
+        }
     }
+
 
     /*
     *
