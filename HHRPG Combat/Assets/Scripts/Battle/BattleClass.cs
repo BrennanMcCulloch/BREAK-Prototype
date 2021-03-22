@@ -90,15 +90,31 @@ public class BattleClass
         RaycastHit hit;
         Ray ray;
         ray = camera.ScreenPointToRay(Input.mousePosition);
+        bool hitEnemy = false;
         if (Physics.Raycast(ray, out hit))
         {
-
-            if (Input.GetMouseButtonDown(0))
+            if (hit.transform.gameObject.GetComponent<EnemyClass>().enemyName != null)
             {
                 Debug.Log(hit.transform.gameObject.name);
+                hitEnemy = true;
             }
+       
         }
     }
+
+    IEnumerator<float> _WaitForInputClick()
+    {
+        while(true)
+        {
+            //Debug.Log("in coroutine");
+            bool temp = Input.GetMouseButtonDown(0);
+            if(temp)
+            {
+                break;
+            }
+            yield return Timing.WaitForOneFrame;
+        }
+    } 
 
 
     /*

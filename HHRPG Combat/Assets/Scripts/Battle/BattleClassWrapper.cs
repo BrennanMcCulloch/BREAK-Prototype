@@ -20,12 +20,14 @@ public class BattleClassWrapper : MonoBehaviour
     public EnemyClass[] back;
 
     public Camera cam;
+    private bool click; 
 
     BattleClass battle;
 
     // Start is called before the first frame update
     void Start()
     {
+        click = false;
         runItParty = true;
         EnemyClass[,] enemies = new EnemyClass[3, maxRowSize];
 
@@ -55,16 +57,28 @@ public class BattleClassWrapper : MonoBehaviour
 
     private void Update()
     {
-        if (runItParty)
+        var view = cam.ScreenToViewportPoint(Input.mousePosition);
+        var isOutside = view.x < 0 || view.x > 1 || view.y < 0 || view.y > 1;
+        if (isOutside == false)
         {
-            isItRunningParty = true;
-            if (isItRunningParty) { battle.PartyPhase(ref isItRunningParty, ref runItParty, ref runItEnemy); }
-        }
-        else if (runItEnemy)
-        {
-            isItRunningEnemy = true;
-            if (isItRunningEnemy) { battle.EnemyPhase(ref isItRunningEnemy, ref runItParty, ref runItEnemy); }
-        }
+            if(click == false)
+            {
+                click = Input.GetMouseButton(0);
+            }
+            else
+            {
+                if (runItParty)
+                {
+                    isItRunningParty = true;
+                    if (isItRunningParty) { battle.PartyPhase(ref isItRunningParty, ref runItParty, ref runItEnemy); }
+                }
+                else if (runItEnemy)
+                {
+                    isItRunningEnemy = true;
+                    if (isItRunningEnemy) { battle.EnemyPhase(ref isItRunningEnemy, ref runItParty, ref runItEnemy); }
+                }
 
+            }
+        }
     }
 }
