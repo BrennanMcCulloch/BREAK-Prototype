@@ -10,12 +10,28 @@ public class MoveListInserter : MonoBehaviour
     //INITIALIZE TO ALL POSSIBLE MOVES
     public MoveClass[] allMoves;
     public TextAsset moveList;
+    private int isItDone = 0;
+
+    private void Start()
+    {
+        isItDone = 0;
+    }
 
     private void Update()
     {
 #if UNITY_EDITOR
+        if(isItDone == 0)
+        {
+            DoTheThing();
+            isItDone++;
+        }
+#endif
+    }
+    
+    private void DoTheThing()
+    {
         AssetDatabase.ImportAsset("Assets/Resources/JSON/AllMovesList.json");
-        moveList = (TextAsset) AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/AllMovesList.json");
+        moveList = (TextAsset)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/AllMovesList.json");
         allMoves = JsonHelper.FromJson<MoveClass>(moveList.text);
         string fixitstring = JsonHelper.ToJson<MoveClass>(allMoves, true);
 
@@ -25,11 +41,12 @@ public class MoveListInserter : MonoBehaviour
         {
             bool isItThereAlready = false;
 
-            foreach (var child in this.transform.GetComponentsInChildren(typeof(MoveClassWrapper), true)) {
+            foreach (var child in this.transform.GetComponentsInChildren(typeof(MoveClassWrapper), true))
+            {
                 if (child.name == allMoves[x].GetName()) { isItThereAlready = true; break; }
             }
 
-            if(isItThereAlready == true) { continue; }
+            if (isItThereAlready == true) { continue; }
 
             GameObject temp = new GameObject();
             temp.transform.parent = this.gameObject.transform;
@@ -39,7 +56,7 @@ public class MoveListInserter : MonoBehaviour
 
             System.Type myType = System.Type.GetType("MoveClass");
 
-            
+
             MoveClassWrapper thing = temp.AddComponent<MoveClassWrapper>();
             thing.MoveClass.SetName(current.GetName());
             thing.MoveClass.SetMoveType(current.GetMoveType());
@@ -48,9 +65,7 @@ public class MoveListInserter : MonoBehaviour
             thing.MoveClass.SetCost(current.GetCost());
             thing.MoveClass.SetFriend(current.GetFriend());
             thing.MoveClass.SetHarm(current.GetHarm());
-            
+
         }
-#endif
     }
-    
 }
