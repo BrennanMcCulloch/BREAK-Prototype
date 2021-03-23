@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MEC; //coroutine stuff
 using UnityEngine;
+using UnityEngine.UI;
 using System.Text.RegularExpressions;
 
 /*
@@ -15,7 +16,12 @@ using System.Text.RegularExpressions;
 
 public class BattleClass : MonoBehaviour
 {
+    public GameObject canvas;
+    public GameObject PartyButtons;
+
     public Camera camera;
+
+    public string toDo;
 
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
@@ -130,10 +136,66 @@ public class BattleClass : MonoBehaviour
     //Interactivity code for party member turn
     IEnumerator PartyMemberTurn(PartyMemberClass person, int leader)
     {
-        //PUT INTERACTIVE STUFF HERE
-        Debug.Log("In Party Member Turn for " + person.memberName);
+        toDo = null;
+        var partyButtons = Instantiate(PartyButtons);
+        var xPos = person.gameObject.transform.position.x;
+        var zPos = person.gameObject.transform.position.z;
+        //POSITIONING UI ELEMENTS
+        Vector3 temp = new Vector3(xPos * (-Screen.width / (Screen.width / 50)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 50)), 1);
+        partyButtons.gameObject.transform.position = temp;
+        partyButtons.transform.SetParent(canvas.transform, false);
 
-        //Raycast to get enemy information
+        foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
+        {
+            but.onClick.AddListener(() => changeToDo(but.GetComponentInChildren<Text>().text));
+            if(leader != 0 && but.GetComponentInChildren<Text>().text == "EQ") { but.gameObject.SetActive(false); }
+        }
+
+        while(toDo == null)
+        {
+            //PUT INTERACTIVE STUFF HERE
+
+            yield return null;
+            while(toDo == "EQ")
+            {
+                yield return null;
+                Debug.Log("EQ");
+                yield break;
+            }
+            
+            while(toDo == "Attack")
+            {
+                yield return null;
+
+                yield break;
+            }
+
+            while(toDo == "Guard")
+            {
+                yield return null;
+
+                yield break;
+            }
+
+            while(toDo == "Rhythm")
+            {
+                yield return null;
+
+                yield break;
+            }
+
+            while(toDo == "BREAK")
+            {
+                yield return null;
+
+                yield break;
+            }
+        }
+
+        DestroyImmediate(partyButtons);
+
+
+        /*Raycast to get enemy information
         RaycastHit hit;
         Ray ray;
         bool hitEnemy = false;
@@ -152,6 +214,13 @@ public class BattleClass : MonoBehaviour
                 }
             }
         }
+        */
+    }
+
+    public void changeToDo(string thing)
+    {
+        Debug.Log(thing);
+        toDo = thing;
     }
 
     IEnumerator _WaitForInputClick()
@@ -164,7 +233,7 @@ public class BattleClass : MonoBehaviour
             temp = Input.GetMouseButtonDown(0);
         }
         yield break;
-    } 
+    }
 
 
     /*
@@ -172,9 +241,260 @@ public class BattleClass : MonoBehaviour
     * WORK NEEDS TO BE DONE HERE
     * 
     */
-    private void PartyMove()
+    IEnumerator PartyMove(PartyMemberClass doerP, GameObject victimP, MoveClass moveP)
     {
-        //MORE INTERACTIVE STUFF HERE
+        switch (moveP.type)
+        {
+            //ALL FORMS OF ATTACK. ONCE NEW TYPES ARE ADDED, THEY GO HERE.
+            case "Physical":
+            case "Drum":
+            case "Bass":
+            case "Guitar":
+            case "Piano":
+                //Determine who we're attacking
+                //Determine attack value
+                int d20 = Random.Range(1, 21);
+                double percent = d20 * 0.02;
+                int statInQuestion;
+                string affinityInQuestion;
+                int agility;
+                victimP.gameObject.GetComponent<EnemyClass>().affinities.TryGetValue(moveP.type, out affinityInQuestion);
+                victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Agility", out agility);
+                if (moveP.type == "Physical")
+                {
+                    victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Physical Defence", out statInQuestion);
+                    Modifier buffs;
+                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Physical Defence", out buffs);
+                    if (buffs != null && buffs.turnTime != 0)
+                    {
+                        statInQuestion += buffs.amount;
+                        buffs.turnTime--;
+                    }
+                    else
+                    {
+                        victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Physical Defence");
+                    }
+                }
+                else
+                {
+                    victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Rhythm Defence", out statInQuestion);
+                    Modifier buffs;
+                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Rhythm Defence", out buffs);
+                    if (buffs != null && buffs.turnTime != 0)
+                    {
+                        statInQuestion += buffs.amount;
+                        buffs.turnTime--;
+                    }
+                    else
+                    {
+                        victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Rhythm Defence");
+                    }
+                }
+                int crit = 1;
+                if (d20 >= 19 || affinityInQuestion == "Weak") { crit = 2; }
+
+                //Do they dodge?
+                int d100 = Random.Range(1, 101);
+                Modifier buffsAgility;
+                victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Agility", out buffsAgility);
+                if (buffsAgility != null && buffsAgility.turnTime != 0)
+                {
+                    agility += buffsAgility.amount;
+                    buffsAgility.turnTime--;
+                }
+                else
+                {
+                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Agility");
+                }
+
+                if (d100 <= agility)
+                {
+                    //DODGE STUFF HERE
+                    Debug.Log("Dodge!");
+                    break;
+                }
+
+                //If not, calculate damage
+                double damagePercent = (crit * percent) + 0.6;
+                int potentialDamage;
+                if (moveP.type == "Physical")
+                {
+                    doerP.stats.TryGetValue("Physical", out potentialDamage);
+                    Modifier buffsPhysical;
+                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Physical", out buffsPhysical);
+                    if (buffsPhysical != null && buffsPhysical.turnTime != 0)
+                    {
+                        potentialDamage += buffsPhysical.amount;
+                        buffsPhysical.turnTime--;
+                    }
+                    else
+                    {
+                        victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Physical");
+                    }
+                }
+                else
+                {
+                    doerP.stats.TryGetValue("Rhythm", out potentialDamage);
+                    Modifier buffsRhythm;
+                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
+                    if (buffsRhythm != null && buffsRhythm.turnTime != 0)
+                    {
+                        potentialDamage += buffsRhythm.amount;
+                        buffsRhythm.turnTime--;
+                    }
+                    else
+                    {
+                        victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Rhythm");
+                    }
+                }
+                double damageDealt = damagePercent * potentialDamage * moveP.effective;
+
+                int d20def = Random.Range(1, 21);
+                double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
+
+                double damageNotRounded = damageDealt * percentDefended;
+                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
+                int damage = (int)System.Math.Round(damageNotRounded);
+
+                //Impact numbers
+                if (affinityInQuestion == "Absorb")
+                {
+                    victimP.gameObject.GetComponent<EnemyClass>().currentHealth += damage;
+                    int maxHealthParty;
+                    victimP.gameObject.GetComponent<PartyMemberClass>().stats.TryGetValue("HP", out maxHealthParty);
+                    if (victimP.gameObject.GetComponent<EnemyClass>().currentHealth > maxHealthParty)
+                    {
+                        victimP.gameObject.GetComponent<EnemyClass>().currentHealth = maxHealthParty;
+                    }
+                }
+                else if (affinityInQuestion == "Reflect") { doerP.currentHealth -= damage; }//REFLECT (FIX LATER)
+                else { victimP.gameObject.GetComponent<EnemyClass>().currentHealth -= damage; }
+
+                //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
+                Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<EnemyClass>().name + " for " + damage);
+
+                break;
+            //ALL BUFFS GO HERE.
+            case "Strength Buff":
+            case "Rhythm Buff":
+            case "Physical Defence Buff":
+            case "Rhythm Defence Buff":
+            case "Agility Buff":
+            case "Potential Buff":
+                Regex regexBuff = new Regex("(\\s+( Buff)\\s*)$");
+                string moveStringBuff = regexBuff.Replace(moveP.type, "");
+
+                Modifier buff = new Modifier();
+                buff.statName = moveStringBuff;
+                buff.amount = (int)Mathf.Round(moveP.effective);
+                buff.turnTime = 3;
+
+                //ADD THE BUFF
+                Modifier thingBuff;
+                PartyMemberClass buddy = victimP.gameObject.GetComponent<PartyMemberClass>();
+                buddy.buffDebuff.TryGetValue(buff.statName, out thingBuff);
+                if (thingBuff == null)
+                {
+                    buddy.buffDebuff.Add(buff.statName, buff);
+                }
+                else //there's already a buff or debuff in that category
+                {
+                    if (thingBuff.amount < 0)
+                    {
+                        thingBuff.amount = buff.amount;
+                        thingBuff.turnTime = 3;
+                    }
+                    else if (thingBuff.amount == buff.amount)
+                    {
+                        thingBuff.turnTime += buff.turnTime;
+                    }
+                    else if (thingBuff.amount > 0)
+                    {
+                        thingBuff.amount += buff.amount;
+                        thingBuff.turnTime = 3;
+                    }
+                    else
+                    {
+                        Debug.Log("shouldn't break anything, but the buff isn't working");
+                    }
+                }
+
+                //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
+                Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + buddy.name + " for " + buff.amount);
+
+                break;
+            //ALL DEBUFFS GO HERE.
+            case "Strength Debuff":
+            case "Rhythm Debuff":
+            case "Physical Defence Debuff":
+            case "Rhythm Defence Debuff":
+            case "Agility Debuff":
+            case "Potential Debuff":
+                Regex regexDebuff = new Regex("(\\s+( Debuff)\\s*)$");
+                string moveStringDebuff = regexDebuff.Replace(moveP.type, "");
+
+                Modifier debuff = new Modifier();
+                debuff.statName = moveStringDebuff;
+                debuff.amount = (int)Mathf.Round(moveP.effective);
+                debuff.turnTime = 3;
+
+                EnemyClass notBuddy = victimP.gameObject.GetComponent<EnemyClass>();
+
+                //ADD THE DEBUFF
+                Modifier thingDebuff;
+                notBuddy.buffDebuff.TryGetValue(debuff.statName, out thingDebuff);
+                if (thingDebuff == null)
+                {
+                    notBuddy.buffDebuff.Add(debuff.statName, debuff);
+                }
+                else //there's already a buff or debuff in that category
+                {
+                    if (thingDebuff.amount > 0)
+                    {
+                        thingDebuff.amount = debuff.amount;
+                        thingDebuff.turnTime = 3;
+                    }
+                    else if (thingDebuff.amount == debuff.amount)
+                    {
+                        thingDebuff.turnTime -= debuff.turnTime;
+                    }
+                    else if (thingDebuff.amount < 0)
+                    {
+                        thingDebuff.amount -= debuff.amount;
+                        thingDebuff.turnTime = 3;
+                    }
+                    else
+                    {
+                        Debug.Log("shouldn't break anything, but the debuff isn't working");
+                    }
+                }
+
+
+                //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
+                Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + notBuddy.name + " for " + debuff.amount);
+
+                break;
+            //HEALIES FOR YOUR FEELIES
+            case "Heal":
+
+                int maxHealth;
+                victimP.gameObject.GetComponent<PartyMemberClass>().stats.TryGetValue("HP", out maxHealth);
+                float healies = moveP.effective * maxHealth;
+                int heals = (int)Mathf.Round(healies);
+                victimP.gameObject.GetComponent<PartyMemberClass>().currentHealth += heals;
+                if (victimP.gameObject.GetComponent<PartyMemberClass>().currentHealth > maxHealth) { victimP.gameObject.GetComponent<PartyMemberClass>().currentHealth = maxHealth; }
+
+                //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
+                Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<PartyMemberClass>().name + " for " + heals);
+
+                break;
+            default:
+                throw new System.Exception("Fell into default in playermove");
+        }
     }
 
     //Things to do on enemy turn
@@ -358,7 +678,16 @@ public class BattleClass : MonoBehaviour
                 int damage = (int)System.Math.Round(damageNotRounded);
 
                 //Impact numbers
-                if (affinityInQuestion == "Absorb") { victim.currentHealth += damage; }
+                if (affinityInQuestion == "Absorb")
+                {
+                    victim.currentHealth += damage;
+                    int maxHealthParty;
+                    victim.stats.TryGetValue("HP", out maxHealthParty);
+                    if (victim.currentHealth > maxHealthParty)
+                    {
+                        victim.currentHealth = maxHealthParty;
+                    }
+                }
                 else if (affinityInQuestion == "Reflect") { doer.currentHealth -= damage; }//REFLECT (FIX LATER)
                 else { victim.currentHealth -= damage; }
 
