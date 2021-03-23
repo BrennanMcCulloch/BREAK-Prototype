@@ -40,6 +40,7 @@ public class BattleClass : MonoBehaviour
     public PartyMemberClass[] restOfParty;
 
     private MoveClass currentMove;
+    private bool recentlyChained = false;
 
     //Booleans for the Update loop state machine
     private bool runItParty = false;
@@ -47,6 +48,9 @@ public class BattleClass : MonoBehaviour
     private bool runItEnemy = false;
     private bool isItRunningEnemy = false;
     private bool click = false;
+
+    private List<ChainClass> chains = new List<ChainClass>();
+    List<PartyMemberClass> partyMembersChained = new List<PartyMemberClass>();
 
     private void Start()
     {
@@ -145,6 +149,7 @@ public class BattleClass : MonoBehaviour
         var rhythmButtons = Instantiate(RhythmButtons);
         var xPos = person.gameObject.transform.position.x;
         var zPos = person.gameObject.transform.position.z;
+
         //POSITIONING UI ELEMENTS
         Vector3 temp = new Vector3(xPos * (-Screen.width / (Screen.width / 50)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 50)), 1);
         partyButtons.gameObject.transform.position = temp;
@@ -152,9 +157,15 @@ public class BattleClass : MonoBehaviour
         foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
         {
             but.onClick.AddListener(() => changeToDo(but.GetComponentInChildren<Text>().text));
-            if(leader != 0 && but.GetComponentInChildren<Text>().text == "EQ") { but.gameObject.SetActive(false); }
+            if (leader != 0 && but.GetComponentInChildren<Text>().text == "EQ") { but.gameObject.SetActive(false); }
+            if ((but.GetComponentInChildren<Text>().text == "BREAK") || (but.GetComponentInChildren<Text>().text == "Harmonic"))
+            {
+                if(person.currentlyChained == false)
+                {
+                    but.gameObject.SetActive(false);
+                }
+            }
         }
-
         rhythmButtons.gameObject.transform.position = temp;
         rhythmButtons.transform.SetParent(canvas.transform, false);
         for (int x = 0; x < person.moves.Length; x++)
@@ -166,6 +177,8 @@ public class BattleClass : MonoBehaviour
             thing.onClick.AddListener(() => changeToDo("Rhythm Targeting"));
             thing.gameObject.GetComponentInChildren<Text>().text = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass.moveName;
         }
+
+
         for(int x = person.moves.Length; x < 8; x++)
         {
             string title = "Button " + x;
@@ -173,6 +186,7 @@ public class BattleClass : MonoBehaviour
             thing.gameObject.SetActive(false);
         }
         rhythmButtons.SetActive(false);
+        partyButtons.SetActive(true);
 
         while (toDo == null)
         {
@@ -285,14 +299,86 @@ public class BattleClass : MonoBehaviour
 
             while(toDo == "BREAK")
             {
+                partyButtons.SetActive(false);
                 yield return null;
                 Debug.Log("BREAK");
+                int totalEnemies = 0;
+                int totalChains = 0;
+                List<EnemyClass> enemiesChained = new List<EnemyClass>();
+                partyMembersChained = new List<PartyMemberClass>();
+                foreach (ChainClass chainThing in chains)
+                {
+                    totalChains++;
+                    if(enemiesChained.Contains(chainThing.chainVictim.GetComponent<EnemyClass>()) == false)
+                    {
+                        totalEnemies++;
+                        enemiesChained.Add(chainThing.chainVictim.GetComponent<EnemyClass>());
+                    }
+
+                    if(partyMembersChained.Contains(chainThing.chainHolder) == false)
+                    {
+                        partyMembersChained.Add(chainThing.chainHolder);
+                    }
+                    
+                }
+
+                chains = new List<ChainClass>();//reset it
+                recentlyChained = false;
+
+                int totalPotential = 0;
+                foreach (PartyMemberClass dude in partyMembersChained)
+                {
+                    int temporary;
+                    dude.stats.TryGetValue("Potential", out temporary);
+                    totalPotential += temporary;
+                }
+
+                int resultingDamage = totalPotential * (totalChains * totalChains);
+                Debug.Log("Chained enemies: " + totalEnemies);
+                foreach (EnemyClass badGuy in enemiesChained)
+                {
+                    badGuy.currentHealth -= resultingDamage;
+                    Debug.Log("Chain break! " + badGuy.name + " was broken for " + resultingDamage);
+                }
+
+                partyButtons.SetActive(true);
+                toDo = "Done";
+            }
+
+            while (toDo == "Harmonic")
+            {
+                yield return null;
+                Debug.Log("Harmonic");
+
+                partyButtons.SetActive(false);
+                RaycastHit hit;
+                Ray ray;
+                yield return _WaitForInputClick();
+
+                if (toDo == "Harmonic")
+                {
+                    ray = camera.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        PartyMemberClass friendlyperson = hit.transform.gameObject.GetComponent<PartyMemberClass>();
+                        if (friendlyperson != null && partyMembersChained.Contains(friendlyperson) == false)
+                        {
+                            yield return PartyMemberTurn(friendlyperson, 1);
+                            toDo = "Done";
+                        }
+                    }
+                }
+
+                partyButtons.SetActive(true);
+
                 toDo = "Done";
             }
         }
 
         DestroyImmediate(partyButtons);
         DestroyImmediate(rhythmButtons);
+        chains = new List<ChainClass>();
+        recentlyChained = false;
     }
 
     public void changeToDo(string thing)
@@ -368,7 +454,19 @@ public class BattleClass : MonoBehaviour
                     }
                 }
                 int crit = 1;
-                if (d20 >= 19 || affinityInQuestion == "Weak") { crit = 2; }
+                if (d20 >= 19 || affinityInQuestion == "Weak")//ADD CHAIN
+                {
+                    crit = 2;
+                    ChainClass surprise = new ChainClass();
+                    surprise.chainHolder = doerP;
+                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
+                    Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false)
+                    {
+                        chains.Add(surprise);
+                        doerP.currentlyChained = true;
+                    }
+                } 
 
                 //Do they dodge?
                 int d100 = Random.Range(1, 101);
@@ -451,6 +549,12 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<EnemyClass>().name + " for " + damage);
+
+                //IF CHAINED, GO BACK TO TOP OF LOOP THING
+                if(crit > 1)
+                {
+                    yield return PartyMemberTurn(doerP, 1);
+                }
 
                 break;
             //ALL BUFFS GO HERE.

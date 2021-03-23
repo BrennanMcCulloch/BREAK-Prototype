@@ -578,6 +578,7 @@ MonoBehaviour:
   memberName: Sora
   currentHealth: 75
   currentEP: 30
+  currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
@@ -1303,6 +1304,7 @@ MonoBehaviour:
   memberName: Scrooge
   currentHealth: 30
   currentEP: 30
+  currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
@@ -2834,6 +2836,7 @@ MonoBehaviour:
   memberName: Joker
   currentHealth: 50
   currentEP: 40
+  currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
@@ -3040,6 +3043,7 @@ MonoBehaviour:
   memberName: Ruby
   currentHealth: 40
   currentEP: 60
+  currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
