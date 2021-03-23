@@ -232,9 +232,19 @@ public class BattleClass : MonoBehaviour
 
                     if (currentMove.group == true)
                     {
-                        foreach (EnemyClass foe in enemies)
+                        if(currentMove.friendly == true)
                         {
-                            yield return PartyMove(person, foe.gameObject, currentMove);
+                            foreach (PartyMemberClass homie in party)
+                            {
+                                yield return PartyMove(person, homie.gameObject, currentMove);
+                            }
+                        }
+                        else
+                        {
+                            foreach (EnemyClass foe in enemies)
+                            {
+                                yield return PartyMove(person, foe.gameObject, currentMove);
+                            }
                         }
                         toDo = "Done";
                     }
@@ -246,10 +256,21 @@ public class BattleClass : MonoBehaviour
                         ray = camera.ScreenPointToRay(Input.mousePosition);
                         if (Physics.Raycast(ray, out hit))
                         {
-                            if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                            if(currentMove.friendly == true)
                             {
-                                yield return PartyMove(person, hit.transform.gameObject, currentMove);
-                                toDo = "Done";
+                                if (hit.transform.gameObject.GetComponent<PartyMemberClass>() != null)
+                                {
+                                    yield return PartyMove(person, hit.transform.gameObject, currentMove);
+                                    toDo = "Done";
+                                }
+                            }
+                            else
+                            {
+                                if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                                {
+                                    yield return PartyMove(person, hit.transform.gameObject, currentMove);
+                                    toDo = "Done";
+                                }
                             }
                         }
                     }
