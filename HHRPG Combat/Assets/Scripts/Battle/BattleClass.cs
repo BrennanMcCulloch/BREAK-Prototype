@@ -18,6 +18,7 @@ public class BattleClass : MonoBehaviour
 {
     public GameObject canvas;
     public GameObject PartyButtons;
+    public GameObject RhythmButtons;
 
     public Camera camera;
 
@@ -37,6 +38,8 @@ public class BattleClass : MonoBehaviour
     public EnemyClass[,] enemies;
 
     public PartyMemberClass[] restOfParty;
+
+    private MoveClass currentMove;
 
     //Booleans for the Update loop state machine
     private bool runItParty = false;
@@ -139,20 +142,39 @@ public class BattleClass : MonoBehaviour
         person.currentlyGuarding = false;
         toDo = null;
         var partyButtons = Instantiate(PartyButtons);
+        var rhythmButtons = Instantiate(RhythmButtons);
         var xPos = person.gameObject.transform.position.x;
         var zPos = person.gameObject.transform.position.z;
         //POSITIONING UI ELEMENTS
         Vector3 temp = new Vector3(xPos * (-Screen.width / (Screen.width / 50)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 50)), 1);
         partyButtons.gameObject.transform.position = temp;
         partyButtons.transform.SetParent(canvas.transform, false);
-
         foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
         {
             but.onClick.AddListener(() => changeToDo(but.GetComponentInChildren<Text>().text));
             if(leader != 0 && but.GetComponentInChildren<Text>().text == "EQ") { but.gameObject.SetActive(false); }
         }
 
-        while(toDo == null)
+        rhythmButtons.gameObject.transform.position = temp;
+        rhythmButtons.transform.SetParent(canvas.transform, false);
+        for (int x = 0; x < person.moves.Length; x++)
+        {
+            MoveClass moveIt = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass;
+            string title = "Button " + x;
+            Button thing = rhythmButtons.transform.Find(title).gameObject.GetComponent<Button>();
+            thing.onClick.AddListener(() => UpdateMove(moveIt));
+            thing.onClick.AddListener(() => changeToDo("Rhythm Targeting"));
+            thing.gameObject.GetComponentInChildren<Text>().text = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass.moveName;
+        }
+        for(int x = person.moves.Length; x < 8; x++)
+        {
+            string title = "Button " + x;
+            Button thing = rhythmButtons.transform.Find(title).gameObject.GetComponent<Button>();
+            thing.gameObject.SetActive(false);
+        }
+        rhythmButtons.SetActive(false);
+
+        while (toDo == null)
         {
             //PUT INTERACTIVE STUFF HERE
 
@@ -191,49 +213,65 @@ public class BattleClass : MonoBehaviour
 
             while(toDo == "Guard")
             {
+                partyButtons.SetActive(false);
                 yield return null;
-
+                person.currentlyGuarding = true;
                 toDo = "Done";
+                partyButtons.SetActive(true);
             }
 
             while(toDo == "Rhythm")
             {
-                yield return null;
+                partyButtons.SetActive(false);
+                rhythmButtons.SetActive(true);
+                yield return _WaitForInputClick();
 
-                toDo = "Done";
+                while (toDo == "Rhythm Targeting")
+                {
+                    rhythmButtons.SetActive(false);
+
+                    if (currentMove.group == true)
+                    {
+                        foreach (EnemyClass foe in enemies)
+                        {
+                            yield return PartyMove(person, foe.gameObject, currentMove);
+                        }
+                        toDo = "Done";
+                    }
+                    else
+                    {
+                        RaycastHit hit;
+                        Ray ray;
+
+                        ray = camera.ScreenPointToRay(Input.mousePosition);
+                        if (Physics.Raycast(ray, out hit))
+                        {
+                            if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                            {
+                                yield return PartyMove(person, hit.transform.gameObject, currentMove);
+                                toDo = "Done";
+                            }
+                        }
+                    }
+
+                    if(toDo == "Rhythm Targeting") { yield return _WaitForInputClick(); }
+                }
+
+                rhythmButtons.SetActive(false);
+                partyButtons.SetActive(true);
+                currentMove = null;
             }
 
             while(toDo == "BREAK")
             {
                 yield return null;
-
+                Debug.Log("BREAK");
                 toDo = "Done";
             }
         }
 
         DestroyImmediate(partyButtons);
-
-
-        /*Raycast to get enemy information
-        RaycastHit hit;
-        Ray ray;
-        bool hitEnemy = false;
-
-        while (hitEnemy == false)
-        {
-            yield return _WaitForInputClick(); 
-
-            ray = camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
-                {
-                    Debug.Log(hit.transform.gameObject.name);
-                    hitEnemy = true;
-                }
-            }
-        }
-        */
+        DestroyImmediate(rhythmButtons);
     }
 
     public void changeToDo(string thing)
@@ -242,16 +280,21 @@ public class BattleClass : MonoBehaviour
         toDo = thing;
     }
 
+    public void UpdateMove(MoveClass move)
+    {
+        Debug.Log(move.moveName);
+        currentMove = move;
+    }
+
     IEnumerator _WaitForInputClick()
     {
-        yield return null; //need this to not duplicate click choices
+        //yield return null; //need this to not duplicate click choices
         bool temp = Input.GetMouseButtonDown(0);
         while(temp == false)
         {
             yield return null;
             temp = Input.GetMouseButtonDown(0);
         }
-        yield break;
     }
 
     IEnumerator PartyMove(PartyMemberClass doerP, GameObject victimP, MoveClass moveP)
@@ -366,6 +409,7 @@ public class BattleClass : MonoBehaviour
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
+                //Debug.Log(potentialDamage);
                 if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
                 int damage = (int)System.Math.Round(damageNotRounded);
 

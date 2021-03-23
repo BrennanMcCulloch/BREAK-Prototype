@@ -407,16 +407,16 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: ffffffff0200000005000000ffffffff040000000300000001000000
-    _HashCodes: 96861807e5f46b162a217f621f9c261ef67a1d6cbfd98d6700000000
-    _Next: ffffffff00000000ffffffffffffffffffffffffffffffff00000000
+    _Buckets: ffffffff0200000005000000ffffffff040000000100000000000000
+    _HashCodes: 968618071913a31a2a217f621f9c261ef67a1d6cbfd98d6700000000
+    _Next: ffffffff03000000ffffffffffffffffffffffffffffffff00000000
     _Count: 6
-    _Version: 103
+    _Version: 105
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
-    - Strength
+    - Physical
     - Rhythm
     - Physical Defence
     - Rhythm Defence
@@ -616,17 +616,17 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
-    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff06000000ffffffffffffffff00000000ffffffff030000000200000001000000ffffffff07000000ffffffff
+    _HashCodes: 96861807898618071913a31a2a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffff05000000ffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
     _Count: 8
-    _Version: 187
+    _Version: 189
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
     - EP
-    - Strength
+    - Physical
     - Rhythm
     - Physical Defence
     - Rhythm Defence
@@ -1341,17 +1341,17 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
-    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff06000000ffffffffffffffff00000000ffffffff030000000200000001000000ffffffff07000000ffffffff
+    _HashCodes: 96861807898618071913a31a2a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffff05000000ffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
     _Count: 8
-    _Version: 214
+    _Version: 216
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
     - EP
-    - Strength
+    - Physical
     - Rhythm
     - Physical Defence
     - Rhythm Defence
@@ -1844,6 +1844,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1318098257}
   PartyButtons: {fileID: 1837989628833622505, guid: c8fe609af8a3de54c8f748d789ac84b6,
+    type: 3}
+  RhythmButtons: {fileID: 7234178577154270690, guid: e0052b33e7cc7c74599711ee88a2c5f1,
     type: 3}
   camera: {fileID: 963194227}
   toDo: 
@@ -2463,17 +2465,17 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: ffffffff0200000005000000ffffffff040000000300000001000000
-    _HashCodes: 96861807e5f46b162a217f621f9c261ef67a1d6cbfd98d6700000000
-    _Next: ffffffff00000000ffffffffffffffffffffffffffffffff00000000
+    _Buckets: ffffffffffffffff05000000ffffffff040000000200000001000000
+    _HashCodes: 96861807e5f46b161913a31a1f9c261ef67a1d6cbfd98d6700000000
+    _Next: ffffffff0000000003000000ffffffffffffffffffffffff00000000
     _Count: 6
-    _Version: 112
+    _Version: 114
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
     - Strength
-    - Rhythm
+    - Physical
     - Physical Defence
     - Rhythm Defence
     - Agility
@@ -2870,17 +2872,17 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
-    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff06000000ffffffffffffffff00000000ffffffff030000000200000001000000ffffffff07000000ffffffff
+    _HashCodes: 96861807898618071913a31a2a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffff05000000ffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
     _Count: 8
-    _Version: 175
+    _Version: 191
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
     - EP
-    - Strength
+    - Physical
     - Rhythm
     - Physical Defence
     - Rhythm Defence
@@ -3076,17 +3078,17 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff0600000002000000ffffffff00000000ffffffff030000000500000001000000ffffffff07000000ffffffff
-    _HashCodes: 9686180789861807e5f46b162a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Buckets: 04000000ffffffffffffffffffffffffffffffffffffffff06000000ffffffffffffffff00000000ffffffff030000000200000001000000ffffffff07000000ffffffff
+    _HashCodes: 96861807898618071913a31a2a217f621f9c261ef67a1d6cbfd98d672cd8d622000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffff05000000ffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000000000000000000000
     _Count: 8
-    _Version: 201
+    _Version: 203
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
     - EP
-    - Strength
+    - Physical
     - Rhythm
     - Physical Defence
     - Rhythm Defence
@@ -3393,16 +3395,16 @@ MonoBehaviour:
     - 
     - 
   stats:
-    _Buckets: ffffffff0200000005000000ffffffff040000000300000001000000
-    _HashCodes: 96861807e5f46b162a217f621f9c261ef67a1d6cbfd98d6700000000
-    _Next: ffffffff00000000ffffffffffffffffffffffffffffffff00000000
+    _Buckets: ffffffff0200000005000000ffffffff040000000100000000000000
+    _HashCodes: 968618071913a31a2a217f621f9c261ef67a1d6cbfd98d6700000000
+    _Next: ffffffff03000000ffffffffffffffffffffffffffffffff00000000
     _Count: 6
-    _Version: 110
+    _Version: 112
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - HP
-    - Strength
+    - Physical
     - Rhythm
     - Physical Defence
     - Rhythm Defence
