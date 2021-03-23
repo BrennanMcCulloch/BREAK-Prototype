@@ -334,7 +334,7 @@ public class BattleClass : MonoBehaviour
                 {
                     doerP.stats.TryGetValue("Physical", out potentialDamage);
                     Modifier buffsPhysical;
-                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Physical", out buffsPhysical);
+                    doerP.buffDebuff.TryGetValue("Physical", out buffsPhysical);
                     if (buffsPhysical != null && buffsPhysical.turnTime != 0)
                     {
                         potentialDamage += buffsPhysical.amount;
@@ -349,7 +349,7 @@ public class BattleClass : MonoBehaviour
                 {
                     doerP.stats.TryGetValue("Rhythm", out potentialDamage);
                     Modifier buffsRhythm;
-                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
+                    doerP.buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
                     if (buffsRhythm != null && buffsRhythm.turnTime != 0)
                     {
                         potentialDamage += buffsRhythm.amount;
@@ -365,7 +365,7 @@ public class BattleClass : MonoBehaviour
                 int d20def = Random.Range(1, 21);
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
-                double damageNotRounded = damageDealt * percentDefended;
+                double damageNotRounded = damageDealt - (damageDealt * percentDefended);
                 if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
                 int damage = (int)System.Math.Round(damageNotRounded);
 
@@ -655,7 +655,7 @@ public class BattleClass : MonoBehaviour
                 {
                     doer.stats.TryGetValue("Physical", out potentialDamage);
                     Modifier buffsPhysical;
-                    victim.buffDebuff.TryGetValue("Physical", out buffsPhysical);
+                    doer.buffDebuff.TryGetValue("Physical", out buffsPhysical);
                     if (buffsPhysical != null && buffsPhysical.turnTime != 0)
                     {
                         potentialDamage += buffsPhysical.amount;
@@ -670,7 +670,7 @@ public class BattleClass : MonoBehaviour
                 {
                     doer.stats.TryGetValue("Rhythm", out potentialDamage);
                     Modifier buffsRhythm;
-                    victim.buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
+                    doer.buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
                     if (buffsRhythm != null && buffsRhythm.turnTime != 0)
                     {
                         potentialDamage += buffsRhythm.amount;
@@ -686,7 +686,7 @@ public class BattleClass : MonoBehaviour
                 int d20def = Random.Range(1, 21);
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
-                double damageNotRounded = damageDealt * percentDefended;
+                double damageNotRounded = damageDealt - (damageDealt * percentDefended);
                 if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
                 int damage = (int)System.Math.Round(damageNotRounded);
 
