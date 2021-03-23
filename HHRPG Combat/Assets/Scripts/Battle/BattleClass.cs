@@ -13,41 +13,95 @@ using System.Text.RegularExpressions;
  * You can do this. :)
  */
 
-public class BattleClass
+public class BattleClass : MonoBehaviour
 {
-    private Camera camera;
+    public Camera camera;
 
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
     public string difficulty;
 
     private static int maxPartySize = 3;
-    public int maxRowSize = 4;
+    public int maxRowSize = 1;
     private static int maxNumberOfRows = 3;
 
     public EnemyClass[] front;
     public EnemyClass[] mid;
     public EnemyClass[] back;
-    private EnemyClass[,] enemies;
+    public EnemyClass[,] enemies;
 
-    public PartyMemberClass[] restOfParty = new PartyMemberClass[maxPartySize];
+    public PartyMemberClass[] restOfParty;
 
-    public BattleClass(PartyMemberClass _lead, int _rowSize, PartyMemberClass[] _party, EnemyClass[,] _enemy, string _bpm, Camera _cam)
+    //Booleans for the Update loop state machine
+    private bool runItParty = false;
+    private bool isItRunningParty = false;
+    private bool runItEnemy = false;
+    private bool isItRunningEnemy = false;
+    private bool click = false;
+
+    private void Start()
     {
-        leader = _lead;
-        maxRowSize = _rowSize;
-        //enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
+        enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
+        setUpEnemies();
+        SetUpParty();
+        runItParty = true;
+        isItRunningParty = true;
+    }
 
-        //initializing rest of party array
-        for (int x = 0; x < _party.Length; x++)
+    private void Update()
+    {
+        var view = camera.ScreenToViewportPoint(Input.mousePosition);
+        var isOutside = view.x < 0 || view.x > 1 || view.y < 0 || view.y > 1;
+        if (isOutside == false)
         {
-            if (x >= maxPartySize) { throw new System.Exception("Tried to put too many people in the party!"); }
-            restOfParty[x] = _party[x];
+            if (click == false)
+            {
+                click = Input.GetMouseButtonDown(0);
+            }
+            else
+            {
+                if (runItParty)
+                {
+                    if (isItRunningParty) { StartCoroutine(PartyPhase()); }
+                }
+                else if (runItEnemy)
+                {
+                    if (isItRunningEnemy) { StartCoroutine(EnemyPhase()); }
+                }
+
+            }
         }
+    }
 
+    public void setUpEnemies()
+    {
+        for (int x = 0; x < maxNumberOfRows; x++)
+        {
+            for (int y = 0; y < maxRowSize; y++)
+            {
+                switch (x)
+                {
+                    case 0:
+                        enemies[x, y] = front[y];
+                        break;
+                    case 1:
+                        enemies[x, y] = mid[y];
+                        break;
+                    case 2:
+                        enemies[x, y] = back[y];
+                        break;
+                    default:
+                        Debug.Log("Fell into default in setupenemies in battleclass");
+                        break;
+                }
+            }
+        }
+    }
 
+    public void SetUpParty()
+    {
         //initializing party array with random assortment besides leader
-        party = new PartyMemberClass[_party.Length + 1];
+        party = new PartyMemberClass[restOfParty.Length + 1];
         int currentSlot = 0;
         for (float x = restOfParty.Length; x >= 0; x--)
         {
@@ -66,14 +120,7 @@ public class BattleClass
             }
         }
 
-        //initializing enemy 2D array
-        enemies = _enemy;
-
-        difficulty = _bpm;
-
-        camera = _cam;
     }
-
 
     /*
      *
@@ -81,7 +128,7 @@ public class BattleClass
      * 
      */
     //Interactivity code for party member turn
-    private void PartyMemberTurn(PartyMemberClass person, int leader)
+    IEnumerator PartyMemberTurn(PartyMemberClass person, int leader)
     {
         //PUT INTERACTIVE STUFF HERE
         Debug.Log("In Party Member Turn for " + person.memberName);
@@ -89,31 +136,34 @@ public class BattleClass
         //Raycast to get enemy information
         RaycastHit hit;
         Ray ray;
-        ray = camera.ScreenPointToRay(Input.mousePosition);
         bool hitEnemy = false;
-        if (Physics.Raycast(ray, out hit))
+
+        while (hitEnemy == false)
         {
-            if (hit.transform.gameObject.GetComponent<EnemyClass>().enemyName != null)
+            yield return _WaitForInputClick(); 
+
+            ray = camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log(hit.transform.gameObject.name);
-                hitEnemy = true;
+                if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                {
+                    Debug.Log(hit.transform.gameObject.name);
+                    hitEnemy = true;
+                }
             }
-       
         }
     }
 
-    IEnumerator<float> _WaitForInputClick()
+    IEnumerator _WaitForInputClick()
     {
-        while(true)
+        yield return null; //need this to not duplicate click choices
+        bool temp = Input.GetMouseButtonDown(0);
+        while(temp == false)
         {
-            //Debug.Log("in coroutine");
-            bool temp = Input.GetMouseButtonDown(0);
-            if(temp)
-            {
-                break;
-            }
-            yield return Timing.WaitForOneFrame;
+            yield return null;
+            temp = Input.GetMouseButtonDown(0);
         }
+        yield break;
     } 
 
 
@@ -128,8 +178,9 @@ public class BattleClass
     }
 
     //Things to do on enemy turn
-    private void EnemyTurn(EnemyClass enemy, int row, int col)
+    IEnumerator EnemyTurn(EnemyClass enemy, int row, int col)
     {
+        //Debug.Log("In EnemyTurn");
         switch(row)
         {
             case 0: //front row
@@ -139,7 +190,7 @@ public class BattleClass
                     GameObject doItFront = enemy.frontMoves[whichFront];
                     MoveClassWrapper theThingFrontBasis = doItFront.GetComponent<MoveClassWrapper>();
                     MoveClass theThingFront = theThingFrontBasis.MoveClass;
-                    EnemyMove(enemy, theThingFront);
+                    yield return EnemyMove(enemy, theThingFront);
                 }
                 break;
             case 1: //mid row
@@ -149,7 +200,7 @@ public class BattleClass
                     GameObject doItMid = enemy.midMoves[whichMid];
                     MoveClassWrapper theThingMidBasis = doItMid.GetComponent<MoveClassWrapper>();
                     MoveClass theThingMid = theThingMidBasis.MoveClass;
-                    EnemyMove(enemy, theThingMid);
+                    yield return EnemyMove(enemy, theThingMid);
                 }
                 break;
             case 2: //back row
@@ -159,7 +210,7 @@ public class BattleClass
                     GameObject doItBack = enemy.backMoves[whichBack];
                     MoveClassWrapper theThingBackBasis = doItBack.GetComponent<MoveClassWrapper>();
                     MoveClass theThingBack = theThingBackBasis.MoveClass;
-                    EnemyMove(enemy, theThingBack);
+                    yield return EnemyMove(enemy, theThingBack);
                 }
                 break;
             default:
@@ -170,7 +221,7 @@ public class BattleClass
 
 
     //actual enemy attack
-    private void EnemyMove(EnemyClass doer, MoveClass move)
+    IEnumerator EnemyMove(EnemyClass doer, MoveClass move)
     {
         switch (move.type)
         {
@@ -312,6 +363,7 @@ public class BattleClass
                 else { victim.currentHealth -= damage; }
 
                 //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + victim.name + " for " + damage);
 
                 break;
@@ -380,6 +432,7 @@ public class BattleClass
                 }
 
                 //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + buddy.name + " for " + buff.amount);
 
                 break;
@@ -449,6 +502,7 @@ public class BattleClass
 
 
                 //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + notBuddy.name + " for " + debuff.amount);
 
 
@@ -480,10 +534,12 @@ public class BattleClass
                 if(enemies[xPos, yPos].currentHealth > maxHealth) { enemies[xPos, yPos].currentHealth = maxHealth;  }
 
                 //DISPLAY IT
+                yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + enemies[xPos, yPos].name + " for " + heals);
 
                 break;
             default:
+                yield return new WaitForSeconds(1.0f);
                 Debug.Log("The enemy did nothing.");
                 break;
         }
@@ -705,23 +761,23 @@ public class BattleClass
     }
 
     //Party Phase of battle overview and turn movement
-    public void PartyPhase(ref bool isItRunningParty, ref bool runItParty, ref bool runItEnemy)
+    IEnumerator PartyPhase()
     {
         isItRunningParty = false;
         Debug.Log("PARTY PHASE");
         int turn = 0;
         while (turn < party.Length)
         {
-            PartyMemberTurn(party[turn], turn);
+            yield return PartyMemberTurn(party[turn], turn);
             turn++;
         }
-
         runItParty = false;
         runItEnemy = true;
+        isItRunningEnemy = true;
     }
 
     //Enemy Phase of battle overview and turn movement
-    public void EnemyPhase(ref bool isItRunningEnemy, ref bool runItParty, ref bool runItEnemy)
+    IEnumerator EnemyPhase()
     {
         Debug.Log("ENEMY PHASE");
         isItRunningEnemy = false;
@@ -729,11 +785,13 @@ public class BattleClass
         {
             for (int col = 0; col < maxRowSize; col++)
             {
-                if (enemies[row, col] != null) { EnemyTurn(enemies[row, col], row, col); }
+                //Debug.Log("in row " + row + " and col " + col);
+                if (enemies[row, col] != null) { yield return EnemyTurn(enemies[row, col], row, col); }
             }
         }
 
         runItEnemy = false;
         runItParty = true;
+        isItRunningParty = true;
     }
 }
