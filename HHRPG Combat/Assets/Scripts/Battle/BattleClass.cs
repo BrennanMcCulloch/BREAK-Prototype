@@ -136,6 +136,7 @@ public class BattleClass : MonoBehaviour
     //Interactivity code for party member turn
     IEnumerator PartyMemberTurn(PartyMemberClass person, int leader)
     {
+        person.currentlyGuarding = false;
         toDo = null;
         var partyButtons = Instantiate(PartyButtons);
         var xPos = person.gameObject.transform.position.x;
@@ -160,35 +161,53 @@ public class BattleClass : MonoBehaviour
             {
                 yield return null;
                 Debug.Log("EQ");
-                yield break;
+                toDo = "Done";
             }
             
             while(toDo == "Attack")
             {
-                yield return null;
+                partyButtons.SetActive(false);
+                RaycastHit hit;
+                Ray ray;
+                yield return _WaitForInputClick();
 
-                yield break;
+                if(toDo == "Attack")
+                {
+                    ray = camera.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                        {
+                            MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, false);
+
+                            yield return PartyMove(person, hit.transform.gameObject, hitThem);
+                            toDo = "Done";
+                        }
+                    }
+                }
+
+                partyButtons.SetActive(true);
             }
 
             while(toDo == "Guard")
             {
                 yield return null;
 
-                yield break;
+                toDo = "Done";
             }
 
             while(toDo == "Rhythm")
             {
                 yield return null;
 
-                yield break;
+                toDo = "Done";
             }
 
             while(toDo == "BREAK")
             {
                 yield return null;
 
-                yield break;
+                toDo = "Done";
             }
         }
 
@@ -235,12 +254,6 @@ public class BattleClass : MonoBehaviour
         yield break;
     }
 
-
-    /*
-    *
-    * WORK NEEDS TO BE DONE HERE
-    * 
-    */
     IEnumerator PartyMove(PartyMemberClass doerP, GameObject victimP, MoveClass moveP)
     {
         switch (moveP.type)
