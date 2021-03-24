@@ -36,6 +36,7 @@ public class BattleClass : MonoBehaviour
     public EnemyClass[] mid;
     public EnemyClass[] back;
     public EnemyClass[,] enemies;
+    private GameObject[,] planes;
 
     public PartyMemberClass[] restOfParty;
 
@@ -57,6 +58,7 @@ public class BattleClass : MonoBehaviour
     private void Start()
     {
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
+        planes = new GameObject[maxNumberOfRows, maxRowSize];
         setUpEnemies();
         SetUpParty();
         runItParty = true;
@@ -98,12 +100,60 @@ public class BattleClass : MonoBehaviour
                 {
                     case 0:
                         enemies[x, y] = front[y];
+
+                        float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2) * (Screen.width / 3)); //3 is MAGIC NUMBER. bad.
+                        float yPosFront = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2) - 1;
+                        float zPosFront = -30 - (x * 10);
+                        Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
+
+                        positionFront.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        enemies[x, y].gameObject.transform.position = positionFront;
+                        planes[x, y] = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                        planes[x, y].transform.position = positionFront;
+                        Vector3 tempFront = new Vector3(90, 0, 0);
+                        Quaternion rotationOfPlaneFront = Quaternion.Euler(tempFront);
+                        planes[x, y].transform.rotation = rotationOfPlaneFront;
+                        planes[x, y].transform.localScale = new Vector3(0.5f, 1, 0.5f);
+                        planes[x, y].gameObject.GetComponent<Renderer>().enabled = false;
+
                         break;
                     case 1:
                         enemies[x, y] = mid[y];
+
+                        float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2) * (Screen.width / 3)); //3 is MAGIC NUMBER. bad.
+                        float yPosMid = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        float zPosMid = -30 - (x * 10); ;
+                        Vector3 positionMid = new Vector3(xPosMid, yPosMid, zPosMid);
+
+                        positionMid.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        enemies[x, y].gameObject.transform.position = positionMid;
+                        planes[x, y] = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                        planes[x, y].transform.position = positionMid;
+                        Vector3 tempMid = new Vector3(90, 0, 0);
+                        Quaternion rotationOfPlaneMid = Quaternion.Euler(tempMid);
+                        planes[x, y].transform.rotation = rotationOfPlaneMid;
+                        planes[x, y].transform.localScale = new Vector3(0.5f, 1, 0.5f);
+                        planes[x, y].gameObject.GetComponent<Renderer>().enabled = false;
+
                         break;
                     case 2:
                         enemies[x, y] = back[y];
+
+                        float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2) * (Screen.width / 3)); //3 is MAGIC NUMBER. bad.
+                        float yPosBack = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        float zPosBack = -30 - (x * 10); ;
+                        Vector3 positionBack = new Vector3(xPosBack, yPosBack, zPosBack);
+
+                        positionBack.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        enemies[x, y].gameObject.transform.position = positionBack;
+                        planes[x, y] = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                        planes[x, y].transform.position = positionBack;
+                        Vector3 tempBack = new Vector3(90, 0, 0);
+                        Quaternion rotationOfPlaneBack = Quaternion.Euler(tempBack);
+                        planes[x, y].transform.localScale = new Vector3(0.5f, 1, 0.5f);
+                        planes[x, y].transform.rotation = rotationOfPlaneBack;
+                        planes[x, y].gameObject.GetComponent<Renderer>().enabled = false;
+
                         break;
                     default:
                         Debug.Log("Fell into default in setupenemies in battleclass");
@@ -194,6 +244,12 @@ public class BattleClass : MonoBehaviour
         {
             //PUT INTERACTIVE STUFF HERE
 
+
+            /*
+             *
+             * DO WORK HERE
+             * 
+             */
             yield return null;
             while(toDo == "EQ")
             {
@@ -550,6 +606,13 @@ public class BattleClass : MonoBehaviour
                         victimP.gameObject.GetComponent<EnemyClass>().currentHealth = maxHealthParty;
                     }
                 }
+
+            /*
+             *
+             * DO WORK HERE
+             * 
+             */
+
                 else if (affinityInQuestion == "Reflect") { doerP.currentHealth -= damage; }//REFLECT (FIX LATER)
                 else { victimP.gameObject.GetComponent<EnemyClass>().currentHealth -= damage; }
 
@@ -878,6 +941,13 @@ public class BattleClass : MonoBehaviour
                         victim.currentHealth = maxHealthParty;
                     }
                 }
+
+            /*
+             *
+             * DO WORK HERE
+             * 
+             */
+
                 else if (affinityInQuestion == "Reflect") { doer.currentHealth -= damage; }//REFLECT (FIX LATER)
                 else { victim.currentHealth -= damage; }
 
