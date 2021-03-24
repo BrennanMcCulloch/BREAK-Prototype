@@ -42,6 +42,8 @@ public class BattleClass : MonoBehaviour
     private MoveClass currentMove;
     private bool recentlyChained = false;
 
+    private bool currentlyBreaking = false;
+
     //Booleans for the Update loop state machine
     private bool runItParty = false;
     private bool isItRunningParty = false;
@@ -151,7 +153,7 @@ public class BattleClass : MonoBehaviour
         var zPos = person.gameObject.transform.position.z;
 
         //POSITIONING UI ELEMENTS
-        Vector3 temp = new Vector3(xPos * (-Screen.width / (Screen.width / 50)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 50)), 1);
+        Vector3 temp = new Vector3(xPos * (-Screen.width / (Screen.width / 30)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 25)), 1);
         partyButtons.gameObject.transform.position = temp;
         partyButtons.transform.SetParent(canvas.transform, false);
         foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
@@ -188,7 +190,7 @@ public class BattleClass : MonoBehaviour
         rhythmButtons.SetActive(false);
         partyButtons.SetActive(true);
 
-        while (toDo == null)
+        while (toDo == null && currentlyBreaking == false)
         {
             //PUT INTERACTIVE STUFF HERE
 
@@ -299,6 +301,7 @@ public class BattleClass : MonoBehaviour
 
             while(toDo == "BREAK")
             {
+                currentlyBreaking = true;
                 partyButtons.SetActive(false);
                 yield return null;
                 Debug.Log("BREAK");
@@ -341,7 +344,7 @@ public class BattleClass : MonoBehaviour
                     Debug.Log("Chain break! " + badGuy.name + " was broken for " + resultingDamage);
                 }
 
-                partyButtons.SetActive(true);
+                //partyButtons.SetActive(true);
                 toDo = "Done";
             }
 
@@ -369,8 +372,9 @@ public class BattleClass : MonoBehaviour
                     }
                 }
 
-                partyButtons.SetActive(true);
+                //partyButtons.SetActive(true);
 
+                person.currentlyChained = false;
                 toDo = "Done";
             }
         }
@@ -379,6 +383,8 @@ public class BattleClass : MonoBehaviour
         DestroyImmediate(rhythmButtons);
         chains = new List<ChainClass>();
         recentlyChained = false;
+        currentlyBreaking = false;
+        person.currentlyChained = false;
     }
 
     public void changeToDo(string thing)
@@ -528,6 +534,7 @@ public class BattleClass : MonoBehaviour
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
+                
                 //Debug.Log(potentialDamage);
                 if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
                 int damage = (int)System.Math.Round(damageNotRounded);
@@ -856,6 +863,7 @@ public class BattleClass : MonoBehaviour
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
+                if (victim.currentlyGuarding == true) { damageNotRounded = damageNotRounded * 0.5;  }
                 if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
                 int damage = (int)System.Math.Round(damageNotRounded);
 
