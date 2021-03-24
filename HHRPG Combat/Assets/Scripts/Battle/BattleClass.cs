@@ -255,6 +255,9 @@ public class BattleClass : MonoBehaviour
             {
                 yield return null;
                 Debug.Log("EQ");
+
+
+
                 toDo = "Done";
             }
             
@@ -463,6 +466,17 @@ public class BattleClass : MonoBehaviour
         {
             yield return null;
             temp = Input.GetMouseButtonDown(0);
+        }
+    }
+
+    IEnumerator _WaitForInputClickLift()
+    {
+        //yield return null; //need this to not duplicate click choices
+        bool temp = Input.GetMouseButtonUp(0);
+        while (temp == false)
+        {
+            yield return null;
+            temp = Input.GetMouseButtonUp(0);
         }
     }
 
