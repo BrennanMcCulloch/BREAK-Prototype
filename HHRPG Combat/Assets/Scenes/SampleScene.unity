@@ -1849,6 +1849,8 @@ MonoBehaviour:
     type: 3}
   RhythmButtons: {fileID: 7234178577154270690, guid: e0052b33e7cc7c74599711ee88a2c5f1,
     type: 3}
+  EQButton: {fileID: 9210261842802719530, guid: 13de0f8a492638b4481c11de85a00ef8,
+    type: 3}
   camera: {fileID: 963194227}
   toDo: 
   leader: {fileID: 1587424049}

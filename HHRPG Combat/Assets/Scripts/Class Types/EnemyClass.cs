@@ -12,4 +12,15 @@ public class EnemyClass : MonoBehaviour
     public GameObject[] frontMoves;
     public GameObject[] midMoves;
     public GameObject[] backMoves;
+
+    public IEnumerator holdPosition()
+    {
+        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, this.transform.position.z);
+        this.transform.position = mousePos;
+        yield return null;
+        if(Input.GetMouseButton(0) == false) //if you've let go of the mouse
+        {
+            yield break;
+        }
+    }
 }

@@ -19,6 +19,7 @@ public class BattleClass : MonoBehaviour
     public GameObject canvas;
     public GameObject PartyButtons;
     public GameObject RhythmButtons;
+    public GameObject EQButton;
 
     public Camera camera;
 
@@ -36,7 +37,6 @@ public class BattleClass : MonoBehaviour
     public EnemyClass[] mid;
     public EnemyClass[] back;
     public EnemyClass[,] enemies;
-    private GameObject[,] planes;
 
     public PartyMemberClass[] restOfParty;
 
@@ -58,8 +58,7 @@ public class BattleClass : MonoBehaviour
     private void Start()
     {
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
-        planes = new GameObject[maxNumberOfRows, maxRowSize];
-        setUpEnemies();
+        SetUpEnemies();
         SetUpParty();
         runItParty = true;
         isItRunningParty = true;
@@ -90,7 +89,8 @@ public class BattleClass : MonoBehaviour
         }
     }
 
-    public void setUpEnemies()
+
+    public void SetUpEnemies()
     {
         for (int x = 0; x < maxNumberOfRows; x++)
         {
@@ -108,13 +108,6 @@ public class BattleClass : MonoBehaviour
 
                         positionFront.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
                         enemies[x, y].gameObject.transform.position = positionFront;
-                        planes[x, y] = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                        planes[x, y].transform.position = positionFront;
-                        Vector3 tempFront = new Vector3(90, 0, 0);
-                        Quaternion rotationOfPlaneFront = Quaternion.Euler(tempFront);
-                        planes[x, y].transform.rotation = rotationOfPlaneFront;
-                        planes[x, y].transform.localScale = new Vector3(0.5f, 1, 0.5f);
-                        planes[x, y].gameObject.GetComponent<Renderer>().enabled = false;
 
                         break;
                     case 1:
@@ -127,13 +120,6 @@ public class BattleClass : MonoBehaviour
 
                         positionMid.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
                         enemies[x, y].gameObject.transform.position = positionMid;
-                        planes[x, y] = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                        planes[x, y].transform.position = positionMid;
-                        Vector3 tempMid = new Vector3(90, 0, 0);
-                        Quaternion rotationOfPlaneMid = Quaternion.Euler(tempMid);
-                        planes[x, y].transform.rotation = rotationOfPlaneMid;
-                        planes[x, y].transform.localScale = new Vector3(0.5f, 1, 0.5f);
-                        planes[x, y].gameObject.GetComponent<Renderer>().enabled = false;
 
                         break;
                     case 2:
@@ -146,13 +132,6 @@ public class BattleClass : MonoBehaviour
 
                         positionBack.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
                         enemies[x, y].gameObject.transform.position = positionBack;
-                        planes[x, y] = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                        planes[x, y].transform.position = positionBack;
-                        Vector3 tempBack = new Vector3(90, 0, 0);
-                        Quaternion rotationOfPlaneBack = Quaternion.Euler(tempBack);
-                        planes[x, y].transform.localScale = new Vector3(0.5f, 1, 0.5f);
-                        planes[x, y].transform.rotation = rotationOfPlaneBack;
-                        planes[x, y].gameObject.GetComponent<Renderer>().enabled = false;
 
                         break;
                     default:
@@ -199,6 +178,7 @@ public class BattleClass : MonoBehaviour
         toDo = null;
         var partyButtons = Instantiate(PartyButtons);
         var rhythmButtons = Instantiate(RhythmButtons);
+        var EQMenu = Instantiate(EQButton);
         var xPos = person.gameObject.transform.position.x;
         var zPos = person.gameObject.transform.position.z;
 
@@ -218,6 +198,7 @@ public class BattleClass : MonoBehaviour
                 }
             }
         }
+
         rhythmButtons.gameObject.transform.position = temp;
         rhythmButtons.transform.SetParent(canvas.transform, false);
         for (int x = 0; x < person.moves.Length; x++)
@@ -229,36 +210,138 @@ public class BattleClass : MonoBehaviour
             thing.onClick.AddListener(() => changeToDo("Rhythm Targeting"));
             thing.gameObject.GetComponentInChildren<Text>().text = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass.moveName;
         }
-
-
-        for(int x = person.moves.Length; x < 8; x++)
+        for (int x = person.moves.Length; x < 8; x++)
         {
             string title = "Button " + x;
             Button thing = rhythmButtons.transform.Find(title).gameObject.GetComponent<Button>();
             thing.gameObject.SetActive(false);
         }
+
+        EQMenu.gameObject.transform.position = temp;
+        EQMenu.transform.SetParent(canvas.transform, false);
+        Button goBackBut = EQMenu.transform.GetComponent<Button>();
+        goBackBut.onClick.AddListener(() => changeToDo(null));
+        goBackBut.gameObject.GetComponentInChildren<Text>().text = "Go Back";
+
+        EQMenu.SetActive(false);
         rhythmButtons.SetActive(false);
         partyButtons.SetActive(true);
 
         while (toDo == null && currentlyBreaking == false)
         {
             //PUT INTERACTIVE STUFF HERE
-
-
-            /*
-             *
-             * DO WORK HERE
-             * 
-             */
             yield return null;
             while(toDo == "EQ")
             {
-                yield return null;
                 Debug.Log("EQ");
 
+                partyButtons.SetActive(false);
+                EQMenu.SetActive(true);
+                RaycastHit hit;
+                Ray ray;
+                yield return _WaitForInputClick();
+                GameObject enemyClicked = null;
+                int xEnemy = -1;
+                int yEnemy = -1;
 
+                if(toDo == "EQ")
+                {
+                    ray = camera.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if(hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                        {
+                            toDo = "EQ Release";
+                            enemyClicked = hit.transform.gameObject;
+                            for(int x = 0; x < maxNumberOfRows; x++)
+                            {
+                                for(int y = 0; y < maxRowSize; y++)
+                                {
+                                    if(enemies[x, y] == enemyClicked.GetComponent<EnemyClass>())
+                                    {
+                                        xEnemy = x;
+                                        yEnemy = y;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
-                toDo = "Done";
+                if(toDo == "EQ Release")
+                {
+                    yield return _WaitForInputClickLift();
+
+                    ray = camera.ScreenPointToRay(Input.mousePosition);
+                    if(Physics.Raycast(ray, out hit))
+                    {
+                        for(int x = 0; x < maxNumberOfRows; x++)
+                        {
+                            for(int y = 0; y < maxRowSize; y++)
+                            {
+                                if (hit.transform.gameObject.GetComponent<EnemyClass>() == enemies[x, y]) //for each flat, if you've hit THAT flat when releasing the mouse
+                                {
+                                    //DO THE EXCHANGE
+                                    if(x == 0)
+                                    {
+                                        EnemyClass vic = front[y];
+                                        front[y] = enemyClicked.GetComponent<EnemyClass>();
+                                        if (xEnemy == 0) { front[yEnemy] = vic; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vic; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vic; }
+
+                                        SetUpEnemies();
+
+                                        Debug.Log(x + " " + y + " switched with " + xEnemy + " " + yEnemy);
+                                    }
+                                    else if(x == 1)
+                                    {
+                                        EnemyClass vicMid = mid[y];
+                                        mid[y] = enemyClicked.GetComponent<EnemyClass>();
+                                        if (xEnemy == 0) { front[yEnemy] = vicMid; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vicMid; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vicMid; }
+
+                                        SetUpEnemies();
+
+                                        Debug.Log(x + " " + y + " switched with " + xEnemy + " " + yEnemy);
+                                    }
+                                    else if(x == 2)
+                                    {
+                                        EnemyClass vicB = back[y];
+                                        back[y] = enemyClicked.GetComponent<EnemyClass>();
+                                        if (xEnemy == 0) { front[yEnemy] = vicB; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vicB; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vicB; }
+
+                                        SetUpEnemies();
+
+                                        Debug.Log(x + " " + y + " switched with " + xEnemy + " " + yEnemy);
+                                    }
+                                    else
+                                    {
+                                        throw new System.Exception("EQ method failed");
+                                    }
+
+                                }
+                                else
+                                {
+                                    //PUT IT BACK
+                                }
+                            }
+                        }
+                        toDo = "EQ";
+                        enemyClicked = null;
+                        xEnemy = -1;
+                        yEnemy = -1;
+                    }
+                }
+
+                partyButtons.SetActive(true);
+                EQMenu.SetActive(false);
+                enemyClicked = null;
+                xEnemy = -1;
+                yEnemy = -1;
             }
             
             while(toDo == "Attack")
