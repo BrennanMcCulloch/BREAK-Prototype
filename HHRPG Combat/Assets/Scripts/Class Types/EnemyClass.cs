@@ -23,4 +23,12 @@ public class EnemyClass : MonoBehaviour
             yield break;
         }
     }
+
+    private void Update()
+    {
+        if(currentHealth <= 0)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
 }

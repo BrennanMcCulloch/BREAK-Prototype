@@ -45,6 +45,9 @@ public class BattleClass : MonoBehaviour
 
     private bool currentlyBreaking = false;
 
+    private bool groupMove = false;
+    private bool lastCrit = false;
+
     //Booleans for the Update loop state machine
     private bool runItParty = false;
     private bool isItRunningParty = false;
@@ -208,8 +211,8 @@ public class BattleClass : MonoBehaviour
             MoveClass moveIt = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass;
             string title = "Button " + x;
             Button thing = rhythmButtons.transform.Find(title).gameObject.GetComponent<Button>();
-            thing.onClick.AddListener(() => UpdateMove(moveIt));
             thing.onClick.AddListener(() => changeToDo("Rhythm Targeting"));
+            thing.onClick.AddListener(() => UpdateMove(moveIt, person));
             thing.gameObject.GetComponentInChildren<Text>().text = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass.moveName;
         }
         for (int x = person.moves.Length; x < 8; x++)
@@ -218,6 +221,10 @@ public class BattleClass : MonoBehaviour
             Button thing = rhythmButtons.transform.Find(title).gameObject.GetComponent<Button>();
             thing.gameObject.SetActive(false);
         }
+        string temporaryButton = "Button 8";
+        Button tempButt = rhythmButtons.transform.Find(temporaryButton).gameObject.GetComponent<Button>();
+        tempButt.onClick.AddListener(() => changeToDo(null));
+        tempButt.gameObject.GetComponentInChildren<Text>().text = "Go Back";
 
         EQMenu.gameObject.transform.position = temp;
         EQMenu.transform.SetParent(canvas.transform, false);
@@ -229,7 +236,7 @@ public class BattleClass : MonoBehaviour
         rhythmButtons.SetActive(false);
         partyButtons.SetActive(true);
 
-        while (toDo == null && currentlyBreaking == false)
+        while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0)
         {
             //PUT INTERACTIVE STUFF HERE
             yield return null;
@@ -349,6 +356,7 @@ public class BattleClass : MonoBehaviour
             while(toDo == "Attack")
             {
                 partyButtons.SetActive(false);
+                EQMenu.SetActive(true);
                 RaycastHit hit;
                 Ray ray;
                 yield return _WaitForInputClick();
@@ -369,6 +377,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 partyButtons.SetActive(true);
+                EQMenu.SetActive(false);
             }
 
             while(toDo == "Guard")
@@ -390,52 +399,71 @@ public class BattleClass : MonoBehaviour
                 {
                     rhythmButtons.SetActive(false);
 
-                    if (currentMove.group == true)
+                    if(currentMove != null)
                     {
-                        if(currentMove.friendly == true)
-                        {
-                            foreach (PartyMemberClass homie in party)
-                            {
-                                yield return PartyMove(person, homie.gameObject, currentMove);
-                            }
-                        }
-                        else
-                        {
-                            foreach (EnemyClass foe in enemies)
-                            {
-                                yield return PartyMove(person, foe.gameObject, currentMove);
-                            }
-                        }
-                        toDo = "Done";
-                    }
-                    else
-                    {
-                        RaycastHit hit;
-                        Ray ray;
 
-                        ray = camera.ScreenPointToRay(Input.mousePosition);
-                        if (Physics.Raycast(ray, out hit))
+                        if (currentMove.group == true)
                         {
-                            if(currentMove.friendly == true)
+                            person.currentEP -= currentMove.cost; //UPDATE EP
+
+                            if (currentMove.friendly == true)
                             {
-                                if (hit.transform.gameObject.GetComponent<PartyMemberClass>() != null)
+                                foreach (PartyMemberClass homie in party)
                                 {
-                                    yield return PartyMove(person, hit.transform.gameObject, currentMove);
-                                    toDo = "Done";
+                                    yield return PartyMove(person, homie.gameObject, currentMove);
                                 }
                             }
                             else
                             {
-                                if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                                //DID THIS SO GROUP ATTACKS DON'T CAUSE MULTIPLE CALLBACKS
+                                groupMove = true;
+                                for(int x = 0; x < maxNumberOfRows; x++)
                                 {
-                                    yield return PartyMove(person, hit.transform.gameObject, currentMove);
-                                    toDo = "Done";
+                                    for(int y = 0; y < maxRowSize; y++)
+                                    {
+                                        yield return PartyMove(person, enemies[x, y].gameObject, currentMove);
+                                    }
+                                }
+                                groupMove = false;
+                                if(lastCrit)
+                                {
+                                    yield return PartyMemberTurn(person, 1);
+                                    lastCrit = false;
+                                }
+                            }
+                            toDo = "Done";
+                        }
+                        else
+                        {
+                            RaycastHit hit;
+                            Ray ray;
+
+                            ray = camera.ScreenPointToRay(Input.mousePosition);
+                            if (Physics.Raycast(ray, out hit))
+                            {
+                                if (currentMove.friendly == true)
+                                {
+                                    if (hit.transform.gameObject.GetComponent<PartyMemberClass>() != null)
+                                    {
+                                        person.currentEP -= currentMove.cost; //UPDATE EP
+                                        yield return PartyMove(person, hit.transform.gameObject, currentMove);
+                                        toDo = "Done";
+                                    }
+                                }
+                                else
+                                {
+                                    if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                                    {
+                                        person.currentEP -= currentMove.cost; //UPDATE EP
+                                        yield return PartyMove(person, hit.transform.gameObject, currentMove);
+                                        toDo = "Done";
+                                    }
                                 }
                             }
                         }
                     }
 
-                    if(toDo == "Rhythm Targeting") { yield return _WaitForInputClick(); }
+                    yield return null;
                 }
 
                 rhythmButtons.SetActive(false);
@@ -471,7 +499,7 @@ public class BattleClass : MonoBehaviour
                     int temporary;
                     
                     dude.stats.TryGetValue("Potential", out temporary);
-                    Debug.Log(temporary);
+                    //Debug.Log(temporary);
                     totalPotential += temporary;
                     dude.currentlyChained = false;
                 }
@@ -499,6 +527,7 @@ public class BattleClass : MonoBehaviour
                 Debug.Log("Harmonic");
 
                 partyButtons.SetActive(false);
+                EQMenu.SetActive(true);
                 RaycastHit hit;
                 Ray ray;
                 yield return _WaitForInputClick();
@@ -511,6 +540,7 @@ public class BattleClass : MonoBehaviour
                         PartyMemberClass friendlyperson = hit.transform.gameObject.GetComponent<PartyMemberClass>();
                         if (friendlyperson != null && friendlyperson.currentlyChained == false)
                         {
+                            EQMenu.SetActive(false);
                             yield return PartyMemberTurn(friendlyperson, 1);
                             person.currentlyChained = false;
                             toDo = "Done";
@@ -522,8 +552,9 @@ public class BattleClass : MonoBehaviour
                     }
                 }
 
-                //partyButtons.SetActive(true);
-                //toDo = "Done";
+                partyButtons.SetActive(true);
+                EQMenu.SetActive(false);
+                toDo = "Done";
             }
         }
 
@@ -532,7 +563,7 @@ public class BattleClass : MonoBehaviour
         DestroyImmediate(rhythmButtons);
         chains = new List<ChainClass>();
 
-        Debug.Log(person.name + "'s turn just ended");
+        //Debug.Log(person.name + "'s turn just ended");
 
         recentlyChained = false;
         person.currentlyChained = false;
@@ -544,10 +575,18 @@ public class BattleClass : MonoBehaviour
         toDo = thing;
     }
 
-    public void UpdateMove(MoveClass move)
+    public void UpdateMove(MoveClass move, PartyMemberClass doingIt)
     {
         Debug.Log(move.moveName);
-        currentMove = move;
+        if (move.cost <= doingIt.currentEP)
+        {
+            currentMove = move;
+        }
+        else
+        {
+            DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "NO EP", 1, 0, 1);
+            toDo = null;
+        }
     }
 
     IEnumerator _WaitForInputClick()
@@ -765,7 +804,14 @@ public class BattleClass : MonoBehaviour
                 //IF CHAINED, GO BACK TO TOP OF LOOP THING
                 if(crit > 1)
                 {
-                    yield return PartyMemberTurn(doerP, 1);
+                    if(moveP.group == true)
+                    {
+                        lastCrit = true;
+                    }
+                    else
+                    {
+                        yield return PartyMemberTurn(doerP, 1);
+                    }
                 }
 
                 break;
@@ -966,6 +1012,10 @@ public class BattleClass : MonoBehaviour
                 {
                     //Pick the worst enemy to attack
                     victim = PickWorstPartyToHit(move.type);
+                    if(victim == null)
+                    {
+                        break;
+                    }
                 }
                 else if (difficulty == "Medium")
                 {
@@ -976,6 +1026,10 @@ public class BattleClass : MonoBehaviour
                 {
                     //Pick the best enemy to attack
                     victim = PickBestPartyToHit(move.type);
+                    if (victim == null)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
@@ -1359,20 +1413,30 @@ public class BattleClass : MonoBehaviour
             int temp;
             party[x].stats.TryGetValue(type, out temp);
             information[x].stat = temp;
+            int maxHealth;
+            party[x].stats.TryGetValue("HP", out maxHealth);
+            information[x].healthPercentage = party[x].currentHealth / maxHealth;
         }
 
         int lowest = 100;
         int pos = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (lowest > information[x].stat)
+            if (lowest > information[x].stat && information[x].healthPercentage != 0)
             {
                 lowest = information[x].stat;
                 pos = x;
             }
         }
 
-        return party[pos];
+        if (pos == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return party[pos];
+        }
     }
 
     private PartyMemberClass PickBestPartyToDebuff(string type)
@@ -1383,20 +1447,30 @@ public class BattleClass : MonoBehaviour
             int temp;
             party[x].stats.TryGetValue(type, out temp);
             information[x].stat = temp;
+            int maxHealth;
+            party[x].stats.TryGetValue("HP", out maxHealth);
+            information[x].healthPercentage = party[x].currentHealth / maxHealth;
         }
 
         int highest = -100;
         int pos = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (highest < information[x].stat)
+            if (highest < information[x].stat && information[x].healthPercentage != 0)
             {
                 highest = information[x].stat;
                 pos = x;
             }
         }
 
-        return party[pos];
+        if (pos == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return party[pos];
+        }
     }
     
     private EnemyClass PickWorstEnemyToBuff(string type)
@@ -1491,6 +1565,8 @@ public class BattleClass : MonoBehaviour
 
             if (information[x].currentlyGuarding == true) { information[x].points -= 2; }
             else { information[x].points += 3; }
+
+            if (information[x].healthPercentage == 0) { information[x].points = -100; }
         }
 
         //pick WORST one
@@ -1498,15 +1574,22 @@ public class BattleClass : MonoBehaviour
         int lowestPerson = -1;
         for(int x = 0; x < party.Length; x++)
         {
-            if(information[x].points <= lowestPoint)
+            if(information[x].points <= lowestPoint && information[x].points != -100)
             {
                 lowestPoint = information[x].points;
                 lowestPerson = x;
             }
         }
 
-        victim = party[lowestPerson];
-        return victim;
+        if(lowestPerson == -1)
+        {
+            return null;
+        }
+        else
+        {
+            victim = party[lowestPerson];
+            return victim;
+        }
     }
 
     private PartyMemberClass PickBestPartyToHit(string type)
@@ -1538,6 +1621,8 @@ public class BattleClass : MonoBehaviour
 
             if (information[x].currentlyGuarding == true) { information[x].points -= 2; }
             else { information[x].points += 3; }
+
+            if (information[x].healthPercentage == 0) { information[x].points = -100; }
         }
 
         //pick BEST one
@@ -1545,15 +1630,22 @@ public class BattleClass : MonoBehaviour
         int highestPerson = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (information[x].points > highestPoint)
+            if (information[x].points > highestPoint && information[x].points != -100)
             {
                 highestPoint = information[x].points;
                 highestPerson = x;
             }
         }
 
-        victim = party[highestPerson];
-        return victim;
+        if (highestPerson == -1)
+        {
+            return null;
+        }
+        else
+        {
+            victim = party[highestPerson];
+            return victim;
+        }
     }
 
     //Party Phase of battle overview and turn movement
