@@ -469,17 +469,23 @@ public class BattleClass : MonoBehaviour
                 foreach (PartyMemberClass dude in partyMembersChained)
                 {
                     int temporary;
+                    
                     dude.stats.TryGetValue("Potential", out temporary);
+                    Debug.Log(temporary);
                     totalPotential += temporary;
                     dude.currentlyChained = false;
                 }
 
                 int resultingDamage = totalPotential * (totalChains * totalChains);
+                //Debug.Log(totalPotential);
                 Debug.Log("Chained enemies: " + totalEnemies);
                 foreach (EnemyClass badGuy in enemiesChained)
                 {
                     badGuy.currentHealth -= resultingDamage;
                     Debug.Log("Chain break! " + badGuy.name + " was broken for " + resultingDamage);
+                    Vector3 chainposition = badGuy.transform.position;
+                    chainposition.z += 2;
+                    DamagePopup.Create(chainposition, resultingDamage.ToString(), 0, 1, 1);
                 }
 
                 //partyButtons.SetActive(true);
@@ -568,6 +574,21 @@ public class BattleClass : MonoBehaviour
 
     IEnumerator PartyMove(PartyMemberClass doerP, GameObject victimP, MoveClass moveP)
     {
+        Vector3 damagePosition = victimP.transform.position;
+        damagePosition.z += 2;
+        damagePosition.x -= 1;
+        Vector3 affinityPosition = victimP.transform.position;
+        affinityPosition.z += 2;
+        affinityPosition.x -= 1;
+        affinityPosition.y += 3;
+        Vector3 doerDamagePosition = doerP.transform.position;
+        doerDamagePosition.z += 2;
+        doerDamagePosition.x -= 1;
+        Vector3 doerAffinityPosition = doerP.transform.position;
+        doerAffinityPosition.z += 2;
+        doerAffinityPosition.x -= 1;
+        doerAffinityPosition.y += 3;
+
         switch (moveP.type)
         {
             //ALL FORMS OF ATTACK. ONCE NEW TYPES ARE ADDED, THEY GO HERE.
@@ -615,20 +636,6 @@ public class BattleClass : MonoBehaviour
                         victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Rhythm Defence");
                     }
                 }
-                int crit = 1;
-                if (d20 >= 19 || affinityInQuestion == "Weak")//ADD CHAIN
-                {
-                    crit = 2;
-                    ChainClass surprise = new ChainClass();
-                    surprise.chainHolder = doerP;
-                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
-                    Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false)
-                    {
-                        chains.Add(surprise);
-                        doerP.currentlyChained = true;
-                    }
-                } 
 
                 //Do they dodge?
                 int d100 = Random.Range(1, 101);
@@ -648,7 +655,27 @@ public class BattleClass : MonoBehaviour
                 {
                     //DODGE STUFF HERE
                     Debug.Log("Dodge!");
+                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
+                    yield return new WaitForSeconds(0.5f);
                     break;
+                }
+
+                int crit = 1;
+                if (d20 >= 19 || affinityInQuestion == "Weak")//ADD CHAIN
+                {
+                    DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
+                    partyMembersChained.Add(doerP);
+                    yield return new WaitForSeconds(0.5f);
+                    crit = 2;
+                    ChainClass surprise = new ChainClass();
+                    surprise.chainHolder = doerP;
+                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
+                    Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false)
+                    {
+                        chains.Add(surprise);
+                        doerP.currentlyChained = true;
+                    }
                 }
 
                 //If not, calculate damage
@@ -692,8 +719,14 @@ public class BattleClass : MonoBehaviour
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
                 
                 //Debug.Log(potentialDamage);
-                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
+                if (affinityInQuestion == "Strong")
+                {
+                    damageNotRounded = damageNotRounded * 0.5;
+                    DamagePopup.Create(affinityPosition, "STRONG", 1, 1, 1);
+                    yield return new WaitForSeconds(0.5f);
+                }
                 int damage = (int)System.Math.Round(damageNotRounded);
+                affinityPosition.y += 3;
 
                 //Impact numbers
                 if (affinityInQuestion == "Absorb")
@@ -705,6 +738,7 @@ public class BattleClass : MonoBehaviour
                     {
                         victimP.gameObject.GetComponent<EnemyClass>().currentHealth = maxHealthParty;
                     }
+                    DamagePopup.Create(damagePosition, damage.ToString(), 0, 1, 0);
                 }
 
             /*
@@ -713,8 +747,16 @@ public class BattleClass : MonoBehaviour
              * 
              */
 
-                else if (affinityInQuestion == "Reflect") { doerP.currentHealth -= damage; }//REFLECT (FIX LATER)
-                else { victimP.gameObject.GetComponent<EnemyClass>().currentHealth -= damage; }
+                else if (affinityInQuestion == "Reflect")
+                {
+                    doerP.currentHealth -= damage;
+                }//REFLECT (FIX LATER)
+                else
+                {
+                    victimP.gameObject.GetComponent<EnemyClass>().currentHealth -= damage;
+                    DamagePopup.Create(damagePosition, damage.ToString(), 1, 0, 0);
+
+                }
 
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
@@ -773,6 +815,9 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //DISPLAY IT
+                DamagePopup.Create(affinityPosition, "BUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
+
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + buddy.name + " for " + buff.amount);
 
@@ -827,6 +872,8 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + notBuddy.name + " for " + debuff.amount);
+                DamagePopup.Create(affinityPosition, "DEBUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
             //HEALIES FOR YOUR FEELIES
@@ -842,6 +889,7 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<PartyMemberClass>().name + " for " + heals);
+                DamagePopup.Create(damagePosition, heals.ToString(), 0, 1, 0);
 
                 break;
             default:
@@ -895,6 +943,15 @@ public class BattleClass : MonoBehaviour
     //actual enemy attack
     IEnumerator EnemyMove(EnemyClass doer, MoveClass move)
     {
+        Vector3 damagePosition;
+        Vector3 affinityPosition;
+        Vector3 doerDamagePosition = doer.transform.position;
+        doerDamagePosition.z += 2;
+        doerDamagePosition.x -= 1;
+        Vector3 doerAffinityPosition = doer.transform.position;
+        doerAffinityPosition.z += 2;
+        doerAffinityPosition.x -= 1;
+        doerAffinityPosition.y += 3;
         switch (move.type)
         {
             //ALL FORMS OF ATTACK. ONCE NEW TYPES ARE ADDED, THEY GO HERE.
@@ -924,6 +981,14 @@ public class BattleClass : MonoBehaviour
                 {
                     throw new System.Exception("No difficulty selected in battle class");
                 }
+
+                damagePosition = victim.transform.position;
+                damagePosition.z += 2;
+                damagePosition.x -= 1;
+                affinityPosition = victim.transform.position;
+                affinityPosition.z += 2;
+                affinityPosition.x -= 1;
+                affinityPosition.y += 3;
 
                 //Determine attack value
                 int d20 = Random.Range(1, 21);
@@ -964,7 +1029,12 @@ public class BattleClass : MonoBehaviour
                     }
                 }
                 int crit = 1;
-                if (d20 >= 19 || affinityInQuestion == "Weak") { crit = 2; }
+                if (d20 >= 19 || affinityInQuestion == "Weak")
+                {
+                    crit = 2;
+                    DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
+                    yield return new WaitForSeconds(0.5f);
+                }
 
                 //Do they dodge?
                 int d100 = Random.Range(1, 101);
@@ -984,6 +1054,7 @@ public class BattleClass : MonoBehaviour
                 {
                     //DODGE STUFF HERE
                     Debug.Log("Dodge!");
+                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
                     break;
                 }
 
@@ -1027,7 +1098,7 @@ public class BattleClass : MonoBehaviour
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
                 if (victim.currentlyGuarding == true) { damageNotRounded = damageNotRounded * 0.5;  }
-                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; }
+                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; DamagePopup.Create(affinityPosition, "STRONG", 1, 1, 1); yield return new WaitForSeconds(0.5f); }
                 int damage = (int)System.Math.Round(damageNotRounded);
 
                 //Impact numbers
@@ -1040,6 +1111,7 @@ public class BattleClass : MonoBehaviour
                     {
                         victim.currentHealth = maxHealthParty;
                     }
+                    DamagePopup.Create(damagePosition, damage.ToString(), 0, 1, 0);
                 }
 
             /*
@@ -1048,8 +1120,15 @@ public class BattleClass : MonoBehaviour
              * 
              */
 
-                else if (affinityInQuestion == "Reflect") { doer.currentHealth -= damage; }//REFLECT (FIX LATER)
-                else { victim.currentHealth -= damage; }
+                else if (affinityInQuestion == "Reflect")
+                {
+                    doer.currentHealth -= damage;
+                }//REFLECT (FIX LATER)
+                else
+                {
+                    victim.currentHealth -= damage;
+                    DamagePopup.Create(damagePosition, damage.ToString(), 1, 0, 0);
+                }
 
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
@@ -1085,6 +1164,14 @@ public class BattleClass : MonoBehaviour
                 {
                     throw new System.Exception("No difficulty selected in battle class");
                 }
+
+                damagePosition = buddy.transform.position;
+                damagePosition.z += 2;
+                damagePosition.x -= 1;
+                affinityPosition = buddy.transform.position;
+                affinityPosition.z += 2;
+                affinityPosition.x -= 1;
+                affinityPosition.y += 3;
 
                 Modifier buff = new Modifier();
                 buff.statName = moveStringBuff;
@@ -1123,6 +1210,8 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + buddy.name + " for " + buff.amount);
+                DamagePopup.Create(affinityPosition, "BUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
             //ALL DEBUFFS GO HERE.
@@ -1154,6 +1243,14 @@ public class BattleClass : MonoBehaviour
                 {
                     throw new System.Exception("No difficulty selected in battle class");
                 }
+
+                damagePosition = notBuddy.transform.position;
+                damagePosition.z += 2;
+                damagePosition.x -= 1;
+                affinityPosition = notBuddy.transform.position;
+                affinityPosition.z += 2;
+                affinityPosition.x -= 1;
+                affinityPosition.y += 3;
 
                 Modifier debuff = new Modifier();
                 debuff.statName = moveStringDebuff;
@@ -1193,7 +1290,8 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + notBuddy.name + " for " + debuff.amount);
-
+                DamagePopup.Create(affinityPosition, "DEBUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
             //HEALIES FOR YOUR FEELIES
@@ -1215,6 +1313,14 @@ public class BattleClass : MonoBehaviour
                     }
                 }
 
+                damagePosition = enemies[xPos, yPos].transform.position;
+                damagePosition.z += 2;
+                damagePosition.x -= 1;
+                affinityPosition = enemies[xPos, yPos].transform.position;
+                affinityPosition.z += 2;
+                affinityPosition.x -= 1;
+                affinityPosition.y += 3;
+
                 int maxHealth;
                 enemies[xPos, yPos].stats.TryGetValue("HP", out maxHealth);
                 float healies = move.effective * maxHealth;
@@ -1225,6 +1331,7 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + enemies[xPos, yPos].name + " for " + heals);
+                DamagePopup.Create(damagePosition, heals.ToString(), 0, 1, 0);
 
                 break;
             default:
