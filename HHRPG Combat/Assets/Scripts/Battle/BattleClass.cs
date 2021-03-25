@@ -62,6 +62,7 @@ public class BattleClass : MonoBehaviour
         SetUpParty();
         runItParty = true;
         isItRunningParty = true;
+        toDo = null;
     }
 
     private void Update()
@@ -176,6 +177,7 @@ public class BattleClass : MonoBehaviour
     {
         person.currentlyGuarding = false;
         toDo = null;
+        currentlyBreaking = false;
         var partyButtons = Instantiate(PartyButtons);
         var rhythmButtons = Instantiate(RhythmButtons);
         var EQMenu = Instantiate(EQButton);
@@ -450,7 +452,6 @@ public class BattleClass : MonoBehaviour
                 int totalEnemies = 0;
                 int totalChains = 0;
                 List<EnemyClass> enemiesChained = new List<EnemyClass>();
-                partyMembersChained = new List<PartyMemberClass>();
                 foreach (ChainClass chainThing in chains)
                 {
                     totalChains++;
@@ -459,12 +460,6 @@ public class BattleClass : MonoBehaviour
                         totalEnemies++;
                         enemiesChained.Add(chainThing.chainVictim.GetComponent<EnemyClass>());
                     }
-
-                    if(partyMembersChained.Contains(chainThing.chainHolder) == false)
-                    {
-                        partyMembersChained.Add(chainThing.chainHolder);
-                    }
-                    
                 }
 
                 chains = new List<ChainClass>();//reset it
@@ -476,6 +471,7 @@ public class BattleClass : MonoBehaviour
                     int temporary;
                     dude.stats.TryGetValue("Potential", out temporary);
                     totalPotential += temporary;
+                    dude.currentlyChained = false;
                 }
 
                 int resultingDamage = totalPotential * (totalChains * totalChains);
@@ -487,6 +483,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //partyButtons.SetActive(true);
+                partyMembersChained = new List<PartyMemberClass>();
                 toDo = "Done";
             }
 
@@ -506,26 +503,32 @@ public class BattleClass : MonoBehaviour
                     if (Physics.Raycast(ray, out hit))
                     {
                         PartyMemberClass friendlyperson = hit.transform.gameObject.GetComponent<PartyMemberClass>();
-                        if (friendlyperson != null && partyMembersChained.Contains(friendlyperson) == false)
+                        if (friendlyperson != null && friendlyperson.currentlyChained == false)
                         {
                             yield return PartyMemberTurn(friendlyperson, 1);
+                            person.currentlyChained = false;
                             toDo = "Done";
+                        }
+                        else
+                        {
+                            Debug.Log("Cannot harmonic members currently chained");
                         }
                     }
                 }
 
                 //partyButtons.SetActive(true);
-
-                person.currentlyChained = false;
-                toDo = "Done";
+                //toDo = "Done";
             }
         }
 
+        toDo = "Turn Ended";
         DestroyImmediate(partyButtons);
         DestroyImmediate(rhythmButtons);
         chains = new List<ChainClass>();
+
+        Debug.Log(person.name + "'s turn just ended");
+
         recentlyChained = false;
-        currentlyBreaking = false;
         person.currentlyChained = false;
     }
 

@@ -127,7 +127,7 @@
 			"harmonic": false
 		},
 		{
-			"moveName": "Finger",
+			"moveName": "Strum",
 			"type": "Guitar",
 			"effective": 1,
 			"group": false,
@@ -136,7 +136,7 @@
 			"harmonic": false
 		},
 		{
-			"moveName": "Strum",
+			"moveName": "Open",
 			"type": "Guitar",
 			"effective": 1.5,
 			"group": false,
