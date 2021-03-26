@@ -21,6 +21,8 @@ public class BattleClass : MonoBehaviour
     public GameObject RhythmButtons;
     public GameObject EQButton;
 
+    public float timing = 0.3f;
+
     public Camera camera;
 
     public string toDo;
@@ -696,7 +698,7 @@ public class BattleClass : MonoBehaviour
                     //DODGE STUFF HERE
                     Debug.Log("Dodge!");
                     DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(timing);
                     break;
                 }
 
@@ -705,7 +707,7 @@ public class BattleClass : MonoBehaviour
                 {
                     DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
                     partyMembersChained.Add(doerP);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(timing);
                     crit = 2;
                     ChainClass surprise = new ChainClass();
                     surprise.chainHolder = doerP;
@@ -762,8 +764,8 @@ public class BattleClass : MonoBehaviour
                 if (affinityInQuestion == "Strong")
                 {
                     damageNotRounded = damageNotRounded * 0.5;
-                    DamagePopup.Create(affinityPosition, "STRONG", 1, 1, 1);
-                    yield return new WaitForSeconds(0.5f);
+                    DamagePopup.Create(affinityPosition, "RESIST", 1, 1, 1);
+                    yield return new WaitForSeconds(timing);
                 }
                 int damage = (int)System.Math.Round(damageNotRounded);
                 affinityPosition.y += 3;
@@ -799,7 +801,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                //yield return new WaitForSeconds(1.0f);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<EnemyClass>().name + " for " + damage);
 
                 //IF CHAINED, GO BACK TO TOP OF LOOP THING
@@ -876,7 +878,7 @@ public class BattleClass : MonoBehaviour
                 DamagePopup.Create(affinityPosition, "BUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
 
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(timing * 4);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + buddy.name + " for " + buff.amount);
 
                 break;
@@ -928,7 +930,7 @@ public class BattleClass : MonoBehaviour
 
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(timing * 4);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + notBuddy.name + " for " + debuff.amount);
                 DamagePopup.Create(affinityPosition, "DEBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
@@ -945,7 +947,7 @@ public class BattleClass : MonoBehaviour
                 if (victimP.gameObject.GetComponent<PartyMemberClass>().currentHealth > maxHealth) { victimP.gameObject.GetComponent<PartyMemberClass>().currentHealth = maxHealth; }
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(timing * 4);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<PartyMemberClass>().name + " for " + heals);
                 DamagePopup.Create(damagePosition, heals.ToString(), 0, 1, 0);
 
@@ -958,7 +960,6 @@ public class BattleClass : MonoBehaviour
     //Things to do on enemy turn
     IEnumerator EnemyTurn(EnemyClass enemy, int row, int col)
     {
-        //Debug.Log("In EnemyTurn");
         switch(row)
         {
             case 0: //front row
@@ -1026,13 +1027,18 @@ public class BattleClass : MonoBehaviour
                     victim = PickWorstPartyToHit(move.type);
                     if(victim == null)
                     {
+                        Debug.Log("No victim");
                         break;
                     }
                 }
                 else if (difficulty == "Medium")
                 {
                     //Randomly pick an enemy
-                    victim = party[Random.Range(0, maxPartySize + 1)].GetComponent<PartyMemberClass>();
+                    PartyMemberClass vicA = PickWorstPartyToHit(move.type);
+                    PartyMemberClass vicB = PickBestPartyToHit(move.type);
+                    float coin = Random.value;
+                    if(coin >= 0.5) { victim = vicA; }
+                    else{ victim = vicB; }
                 }
                 else if (difficulty == "Hard")
                 {
@@ -1040,6 +1046,7 @@ public class BattleClass : MonoBehaviour
                     victim = PickBestPartyToHit(move.type);
                     if (victim == null)
                     {
+                        Debug.Log("No victim");
                         break;
                     }
                 }
@@ -1099,7 +1106,7 @@ public class BattleClass : MonoBehaviour
                 {
                     crit = 2;
                     DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(timing * 4);
                 }
 
                 //Do they dodge?
@@ -1164,7 +1171,7 @@ public class BattleClass : MonoBehaviour
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
                 if (victim.currentlyGuarding == true) { damageNotRounded = damageNotRounded * 0.5;  }
-                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; DamagePopup.Create(affinityPosition, "STRONG", 1, 1, 1); yield return new WaitForSeconds(0.5f); }
+                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; DamagePopup.Create(affinityPosition, "RESIST", 1, 1, 1); yield return new WaitForSeconds(timing * 4); }
                 int damage = (int)System.Math.Round(damageNotRounded);
 
                 //Impact numbers
@@ -1197,7 +1204,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                //yield return new WaitForSeconds(1.0f);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + victim.name + " for " + damage);
 
                 break;
@@ -1219,7 +1226,12 @@ public class BattleClass : MonoBehaviour
                 else if (difficulty == "Medium")
                 {
 
-                    buddy = enemies[Random.Range(0, maxNumberOfRows + 1), Random.Range(0, maxRowSize + 1)].GetComponent<EnemyClass>();
+                    //Randomly pick an enemy
+                    EnemyClass vicA = PickWorstEnemyToBuff(move.type);
+                    EnemyClass vicB = PickBestEnemyToBuff(move.type);
+                    float coin = Random.value;
+                    if (coin >= 0.5) { buddy = vicA; }
+                    else { buddy = vicB; }
                 }
                 else if (difficulty == "Hard")
                 {
@@ -1231,6 +1243,8 @@ public class BattleClass : MonoBehaviour
                     throw new System.Exception("No difficulty selected in battle class");
                 }
 
+                //Debug.Log(doer + " " + buddy);
+                if (buddy == null) { break; };
                 damagePosition = buddy.transform.position;
                 damagePosition.z += 2;
                 damagePosition.x -= 1;
@@ -1274,7 +1288,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(timing);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + buddy.name + " for " + buff.amount);
                 DamagePopup.Create(affinityPosition, "BUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
@@ -1292,13 +1306,17 @@ public class BattleClass : MonoBehaviour
                 PartyMemberClass notBuddy;
                 if (difficulty == "Easy")
                 {
-
                     notBuddy = PickWorstPartyToDebuff(moveStringDebuff);
                 }
                 else if (difficulty == "Medium")
                 {
 
-                    notBuddy = party[Random.Range(0, maxPartySize + 1)].GetComponent<PartyMemberClass>();
+                    //Randomly pick an enemy
+                    PartyMemberClass vicA = PickWorstPartyToDebuff(move.type);
+                    PartyMemberClass vicB = PickBestPartyToDebuff(move.type);
+                    float coin = Random.value;
+                    if (coin >= 0.5) { notBuddy = vicA; }
+                    else { notBuddy = vicB; }
                 }
                 else if (difficulty == "Hard")
                 {
@@ -1354,7 +1372,7 @@ public class BattleClass : MonoBehaviour
 
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(timing);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + notBuddy.name + " for " + debuff.amount);
                 DamagePopup.Create(affinityPosition, "DEBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
@@ -1395,13 +1413,13 @@ public class BattleClass : MonoBehaviour
                 if(enemies[xPos, yPos].currentHealth > maxHealth) { enemies[xPos, yPos].currentHealth = maxHealth;  }
 
                 //DISPLAY IT
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(timing);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + enemies[xPos, yPos].name + " for " + heals);
                 DamagePopup.Create(damagePosition, heals.ToString(), 0, 1, 0);
 
                 break;
             default:
-                yield return new WaitForSeconds(1.0f);
+                //yield return new WaitForSeconds(timing);
                 Debug.Log("The enemy did nothing.");
                 break;
         }
@@ -1443,6 +1461,7 @@ public class BattleClass : MonoBehaviour
 
         if (pos == -1)
         {
+            Debug.Log("couldn't find a party to debuff");
             return null;
         }
         else
@@ -1477,6 +1496,7 @@ public class BattleClass : MonoBehaviour
 
         if (pos == -1)
         {
+            Debug.Log("couldn't find a party to debuff");
             return null;
         }
         else
@@ -1508,7 +1528,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if(highest < information[x, y].stat && information[x, y].healthPercentage != 0)
+                if(highest < information[x, y].stat)
                 {
                     highest = information[x, y].stat;
                     xPos = x;
@@ -1517,8 +1537,9 @@ public class BattleClass : MonoBehaviour
             }
         }
 
-        if (xPos == -1 || yPos == -1)
+        if (xPos == -1)
         {
+            Debug.Log("couldn't find an enemy to buff");
             return null;
         }
         else
@@ -1550,7 +1571,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if (lowest >= information[x, y].stat && information[x, y].healthPercentage != 0)
+                if (lowest >= information[x, y].stat)
                 {
                     lowest = information[x, y].stat;
                     xPos = x;
@@ -1559,8 +1580,9 @@ public class BattleClass : MonoBehaviour
             }
         }
 
-        if (xPos == -1 || yPos == -1)
+        if (xPos == -1)
         {
+            Debug.Log("couldn't find an enemy to buff");
             return null;
         }
         else
@@ -1598,7 +1620,7 @@ public class BattleClass : MonoBehaviour
             if (information[x].currentlyGuarding == true) { information[x].points -= 2; }
             else { information[x].points += 3; }
 
-            if (information[x].healthPercentage == 0) { information[x].points = -100; }
+            if (information[x].healthPercentage == 0) { information[x].points = 100; }
         }
 
         //pick WORST one
@@ -1606,7 +1628,7 @@ public class BattleClass : MonoBehaviour
         int lowestPerson = -1;
         for(int x = 0; x < party.Length; x++)
         {
-            if(information[x].points <= lowestPoint && information[x].points != -100)
+            if(information[x].points <= lowestPoint)
             {
                 lowestPoint = information[x].points;
                 lowestPerson = x;
@@ -1615,6 +1637,7 @@ public class BattleClass : MonoBehaviour
 
         if(lowestPerson == -1)
         {
+            Debug.Log("AI returned null");
             return null;
         }
         else
@@ -1662,7 +1685,7 @@ public class BattleClass : MonoBehaviour
         int highestPerson = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (information[x].points > highestPoint && information[x].points != -100)
+            if ((information[x].points > highestPoint))
             {
                 highestPoint = information[x].points;
                 highestPerson = x;
@@ -1686,7 +1709,7 @@ public class BattleClass : MonoBehaviour
         isItRunningParty = false;
         Debug.Log("PARTY PHASE");
         int turn = 0;
-        while (turn < party.Length)
+        while (turn < party.Length && party[turn].gameObject.activeSelf)
         {
             yield return PartyMemberTurn(party[turn], turn);
             turn++;
@@ -1706,7 +1729,7 @@ public class BattleClass : MonoBehaviour
             for (int col = 0; col < maxRowSize; col++)
             {
                 //Debug.Log("in row " + row + " and col " + col);
-                if (enemies[row, col] != null) { yield return EnemyTurn(enemies[row, col], row, col); }
+                if (enemies[row, col].gameObject.activeSelf) { yield return EnemyTurn(enemies[row, col], row, col); }
             }
         }
 

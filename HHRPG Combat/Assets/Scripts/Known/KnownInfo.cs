@@ -5,7 +5,7 @@ using UnityEditor;
 
 public class KnownInfo : MonoBehaviour
 {
-    public long totalEnemies;
+    public static long totalEnemies;
     public KnownInfoDataType[] knownInfo;
 
     private void Start()
@@ -18,12 +18,12 @@ public class KnownInfo : MonoBehaviour
         KnownInfoDataType temp = null;
         for(int x = 0; x < knownInfo.Length; x++)
         {
-            if (knownInfo[x].name == "?")
+            if (knownInfo[x].name == "?")//We looked through all known instances
             {
                 temp = knownInfo[x];
                 knownInfo[x].name = name;
                 break;
-            } //We looked through all known instances
+            } 
             if (knownInfo[x].name == name)
             {
                 temp = knownInfo[x];
