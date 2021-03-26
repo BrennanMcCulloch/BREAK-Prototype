@@ -105,7 +105,7 @@ public class BattleClass : MonoBehaviour
                     case 0:
                         enemies[x, y] = front[y];
 
-                        float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2) * (Screen.width / 3)); //3 is MAGIC NUMBER. bad.
+                        float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
                         float yPosFront = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2) - 1;
                         float zPosFront = -30 - (x * 10);
                         Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
@@ -117,7 +117,7 @@ public class BattleClass : MonoBehaviour
                     case 1:
                         enemies[x, y] = mid[y];
 
-                        float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2) * (Screen.width / 3)); //3 is MAGIC NUMBER. bad.
+                        float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
                         float yPosMid = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2);
                         float zPosMid = -30 - (x * 10); ;
                         Vector3 positionMid = new Vector3(xPosMid, yPosMid, zPosMid);
@@ -129,7 +129,7 @@ public class BattleClass : MonoBehaviour
                     case 2:
                         enemies[x, y] = back[y];
 
-                        float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2) * (Screen.width / 3)); //3 is MAGIC NUMBER. bad.
+                        float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
                         float yPosBack = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2);
                         float zPosBack = -30 - (x * 10); ;
                         Vector3 positionBack = new Vector3(xPosBack, yPosBack, zPosBack);
