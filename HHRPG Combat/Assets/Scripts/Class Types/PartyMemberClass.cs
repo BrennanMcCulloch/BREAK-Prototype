@@ -101,12 +101,6 @@ public class Modifier
     public int turnTime { get; set; }
 }
 
-public class ChainClass
-{
-    public PartyMemberClass chainHolder;
-    public EnemyClass chainVictim;
-}
-
 [System.Serializable]
 public class AffinityDictionary : SerializableDictionary<string, string> { }
 

@@ -10,7 +10,7 @@ public class KnownInfo : MonoBehaviour
 
     private void Start()
     {
-        InitializeJSON();
+        InitializeJSONNew();
     }
 
     public KnownInfoDataType getFromJSON(string name)
@@ -43,6 +43,7 @@ public class KnownInfo : MonoBehaviour
             currentPos++;
         }
         knownInfo[currentPos] = thingToWrite;
+        Debug.Log("Updated!");
     }
 
     public void InitializeJSON()

@@ -374,6 +374,7 @@ public class BattleClass : MonoBehaviour
                         {
                             MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, false);
 
+                            EQMenu.SetActive(false);
                             yield return PartyMove(person, hit.transform.gameObject, hitThem);
                             toDo = "Done";
                         }
@@ -491,6 +492,7 @@ public class BattleClass : MonoBehaviour
                         totalChains++;
                         enemiesChained.Add(chainThing.chainVictim.GetComponent<EnemyClass>());
                     }
+                    Destroy(chainThing.gameObject);
                 }
 
                 chains = new List<ChainClass>();//reset it
@@ -563,6 +565,10 @@ public class BattleClass : MonoBehaviour
         toDo = "Turn Ended";
         DestroyImmediate(partyButtons);
         DestroyImmediate(rhythmButtons);
+        foreach (ChainClass chainThing in chains)
+        {
+            Destroy(chainThing.gameObject);
+        }
         chains = new List<ChainClass>();
 
         //Debug.Log(person.name + "'s turn just ended");
@@ -702,6 +708,16 @@ public class BattleClass : MonoBehaviour
                     break;
                 }
 
+                for (int x = 0; x < keepIt.affinities.Length; x++)
+                {
+                    if (keepIt.affinities[x].affName == moveP.GetMoveType())
+                    {
+                        keepIt.affinities[x].affValue = affinityInQuestion;
+                        break;
+                    }
+                }
+                this.GetComponent<KnownInfo>().writeToJSON(keepIt);
+
                 int crit = 1;
                 if (d20 >= 19 || affinityInQuestion == "Weak")//ADD CHAIN
                 {
@@ -709,14 +725,21 @@ public class BattleClass : MonoBehaviour
                     partyMembersChained.Add(doerP);
                     yield return new WaitForSeconds(timing);
                     crit = 2;
-                    ChainClass surprise = new ChainClass();
+                    GameObject temporaryThing = new GameObject();
+                    temporaryThing.AddComponent<ChainClass>();
+                    ChainClass surprise = temporaryThing.GetComponent<ChainClass>();
                     surprise.chainHolder = doerP;
                     surprise.chainVictim = victimP.GetComponent<EnemyClass>();
+                    surprise.Initialize();
                     if (doerP.currentlyChained == false && chains.Contains(surprise) == false)
                     {
                         chains.Add(surprise);
                         Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
                         doerP.currentlyChained = true;
+                    }
+                    else
+                    {
+                        Destroy(surprise.gameObject);
                     }
                 }
 
@@ -818,15 +841,6 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //retain learned information
-                for(int x = 0; x < keepIt.affinities.Length; x++)
-                {
-                    if(keepIt.affinities[x].affName == moveP.type)
-                    {
-                        keepIt.affinities[x].affValue = affinityInQuestion;
-                        break;
-                    }
-                }
-                this.GetComponent<KnownInfo>().writeToJSON(keepIt);
 
                 break;
             //ALL BUFFS GO HERE.
