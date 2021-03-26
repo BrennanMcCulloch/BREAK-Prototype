@@ -15,6 +15,15 @@ public class PartyMemberClass : MonoBehaviour
     public StatDictionary stats;
     public GameObject[] moves; //MAKE THIS SIZE 8
     public GameObject harmonic;
+
+    private void Update()
+    {
+        if (currentHealth <= 0)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
 }
 
 public class Modifier

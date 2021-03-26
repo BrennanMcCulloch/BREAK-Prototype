@@ -339,11 +339,12 @@ public class BattleClass : MonoBehaviour
                                 }
                             }
                         }
-                        toDo = "EQ";
-                        enemyClicked = null;
-                        xEnemy = -1;
-                        yEnemy = -1;
                     }
+
+                    toDo = "EQ";
+                    enemyClicked = null;
+                    xEnemy = -1;
+                    yEnemy = -1;
                 }
 
                 partyButtons.SetActive(true);
@@ -410,7 +411,8 @@ public class BattleClass : MonoBehaviour
                             {
                                 foreach (PartyMemberClass homie in party)
                                 {
-                                    yield return PartyMove(person, homie.gameObject, currentMove);
+                                   
+                                    if(homie.currentHealth > 0) { yield return PartyMove(person, homie.gameObject, currentMove); }
                                 }
                             }
                             else
@@ -421,7 +423,7 @@ public class BattleClass : MonoBehaviour
                                 {
                                     for(int y = 0; y < maxRowSize; y++)
                                     {
-                                        yield return PartyMove(person, enemies[x, y].gameObject, currentMove);
+                                        if (enemies[x, y].currentHealth > 0) { yield return PartyMove(person, enemies[x, y].gameObject, currentMove); }
                                     }
                                 }
                                 groupMove = false;
@@ -477,15 +479,13 @@ public class BattleClass : MonoBehaviour
                 partyButtons.SetActive(false);
                 yield return null;
                 Debug.Log("BREAK");
-                int totalEnemies = 0;
                 int totalChains = 0;
                 List<EnemyClass> enemiesChained = new List<EnemyClass>();
                 foreach (ChainClass chainThing in chains)
                 {
-                    totalChains++;
                     if(enemiesChained.Contains(chainThing.chainVictim.GetComponent<EnemyClass>()) == false)
                     {
-                        totalEnemies++;
+                        totalChains++;
                         enemiesChained.Add(chainThing.chainVictim.GetComponent<EnemyClass>());
                     }
                 }
@@ -506,7 +506,6 @@ public class BattleClass : MonoBehaviour
 
                 int resultingDamage = totalPotential * (totalChains * totalChains);
                 //Debug.Log(totalPotential);
-                Debug.Log("Chained enemies: " + totalEnemies);
                 foreach (EnemyClass badGuy in enemiesChained)
                 {
                     badGuy.currentHealth -= resultingDamage;
@@ -709,10 +708,10 @@ public class BattleClass : MonoBehaviour
                     ChainClass surprise = new ChainClass();
                     surprise.chainHolder = doerP;
                     surprise.chainVictim = victimP.GetComponent<EnemyClass>();
-                    Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
                     if (doerP.currentlyChained == false && chains.Contains(surprise) == false)
                     {
                         chains.Add(surprise);
+                        Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
                         doerP.currentlyChained = true;
                     }
                 }
@@ -950,7 +949,7 @@ public class BattleClass : MonoBehaviour
         switch(row)
         {
             case 0: //front row
-                if(enemy.frontMoves.Length > 0)
+                if(enemy.frontMoves.Length > 0 && enemy.currentHealth > 0)
                 {
                     int whichFront = Random.Range(0, enemy.frontMoves.Length);
                     GameObject doItFront = enemy.frontMoves[whichFront];
@@ -960,7 +959,7 @@ public class BattleClass : MonoBehaviour
                 }
                 break;
             case 1: //mid row
-                if(enemy.midMoves.Length > 0)
+                if(enemy.midMoves.Length > 0 && enemy.currentHealth > 0)
                 {
                     int whichMid = Random.Range(0, enemy.midMoves.Length);
                     GameObject doItMid = enemy.midMoves[whichMid];
@@ -970,7 +969,7 @@ public class BattleClass : MonoBehaviour
                 }
                 break;
             case 2: //back row
-                if(enemy.backMoves.Length > 0)
+                if(enemy.backMoves.Length > 0 && enemy.currentHealth > 0)
                 {
                     int whichBack = Random.Range(0, enemy.backMoves.Length);
                     GameObject doItBack = enemy.backMoves[whichBack];
@@ -1483,6 +1482,9 @@ public class BattleClass : MonoBehaviour
                 int result;
                 enemies[x, y].stats.TryGetValue(type, out result);
                 information[x, y].stat = result;
+                int maxHealth;
+                party[x].stats.TryGetValue("HP", out maxHealth);
+                information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
             }
         }
 
@@ -1493,7 +1495,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if(highest < information[x, y].stat)
+                if(highest < information[x, y].stat && information[x, y].healthPercentage != 0)
                 {
                     highest = information[x, y].stat;
                     xPos = x;
@@ -1502,7 +1504,14 @@ public class BattleClass : MonoBehaviour
             }
         }
 
-        return enemies[xPos, yPos];
+        if (xPos == -1 || yPos == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return enemies[xPos, yPos];
+        }
     }
 
     private EnemyClass PickBestEnemyToBuff(string type)
@@ -1515,6 +1524,9 @@ public class BattleClass : MonoBehaviour
                 int result;
                 enemies[x, y].stats.TryGetValue(type, out result);
                 information[x, y].stat = result;
+                int maxHealth;
+                party[x].stats.TryGetValue("HP", out maxHealth);
+                information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
             }
         }
 
@@ -1525,7 +1537,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if (lowest >= information[x, y].stat)
+                if (lowest >= information[x, y].stat && information[x, y].healthPercentage != 0)
                 {
                     lowest = information[x, y].stat;
                     xPos = x;
@@ -1534,7 +1546,14 @@ public class BattleClass : MonoBehaviour
             }
         }
 
-        return enemies[xPos, yPos];
+        if (xPos == -1 || yPos == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return enemies[xPos, yPos];
+        }
     }
     private PartyMemberClass PickWorstPartyToHit(string type)
     {
