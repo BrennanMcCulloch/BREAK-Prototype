@@ -41,6 +41,7 @@ public class BattleClass : MonoBehaviour
     public PartyMemberClass[] restOfParty;
 
     private MoveClass currentMove;
+
     private bool recentlyChained = false;
 
     private bool currentlyBreaking = false;
@@ -637,6 +638,7 @@ public class BattleClass : MonoBehaviour
             case "Piano":
                 //Determine who we're attacking
                 //Determine attack value
+                KnownInfoDataType keepIt = this.GetComponent<KnownInfo>().getFromJSON(victimP.GetComponent<EnemyClass>().enemyName);
                 int d20 = Random.Range(1, 21);
                 double percent = d20 * 0.02;
                 int statInQuestion;
@@ -812,6 +814,17 @@ public class BattleClass : MonoBehaviour
                         yield return PartyMemberTurn(doerP, 1);
                     }
                 }
+
+                //retain learned information
+                for(int x = 0; x < keepIt.affinities.Length; x++)
+                {
+                    if(keepIt.affinities[x].affName == moveP.type)
+                    {
+                        keepIt.affinities[x].affValue = affinityInQuestion;
+                        break;
+                    }
+                }
+                this.GetComponent<KnownInfo>().writeToJSON(keepIt);
 
                 break;
             //ALL BUFFS GO HERE.
