@@ -4,6 +4,7 @@ using MEC; //coroutine stuff
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEditor;
 
 /*
  * Ok, so, this file is long as heck. So here's an explanation.
@@ -51,6 +52,8 @@ public class BattleClass : MonoBehaviour
     private bool groupMove = false;
     private bool lastCrit = false;
 
+    private bool chainedAgain = false;
+
     //Booleans for the Update loop state machine
     private bool runItParty = false;
     private bool isItRunningParty = false;
@@ -96,6 +99,38 @@ public class BattleClass : MonoBehaviour
         }
     }
 
+    public void UpdateEnemies()
+    {
+        for (int x = 0; x < maxNumberOfRows; x++)
+        {
+            for (int y = 0; y < maxRowSize; y++)
+            {
+                float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
+                float yPosFront = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2) - 1;
+                float zPosFront = -30 - (x * 10);
+                Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
+
+                positionFront.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
+                enemies[x, y].gameObject.transform.position = positionFront;
+
+                switch(x)
+                {
+                    case 0:
+                        front[y] = enemies[x, y];
+                        break;
+                    case 1:
+                        mid[y] = enemies[x, y];
+                        break;
+                    case 2:
+                        back[y] = enemies[x, y];
+                        break;
+                    default:
+                        Debug.Log("Lance yelled at me while I was writing this debug statement");
+                        break;
+                }
+            }
+        }
+    }
 
     public void SetUpEnemies()
     {
@@ -239,9 +274,12 @@ public class BattleClass : MonoBehaviour
         rhythmButtons.SetActive(false);
         partyButtons.SetActive(true);
 
-        while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0)
+        int EQPoints = 2;
+
+        while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0 && chainedAgain == false)
         {
             //PUT INTERACTIVE STUFF HERE
+
             yield return null;
             while(toDo == "EQ")
             {
@@ -283,10 +321,19 @@ public class BattleClass : MonoBehaviour
                 if(toDo == "EQ Release")
                 {
                     yield return _WaitForInputClickLift();
+                    if(person.currentEP < EQPoints)
+                    {
+                        DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "NO EP", 1, 0, 1);
+                        EQMenu.SetActive(false);
+                        partyButtons.SetActive(true);
+                        toDo = null;
+                        continue;
+                    }
 
                     ray = camera.ScreenPointToRay(Input.mousePosition);
                     if(Physics.Raycast(ray, out hit))
                     {
+                        bool didItHit = false;
                         for(int x = 0; x < maxNumberOfRows; x++)
                         {
                             for(int y = 0; y < maxRowSize; y++)
@@ -294,6 +341,7 @@ public class BattleClass : MonoBehaviour
                                 if (hit.transform.gameObject.GetComponent<EnemyClass>() == enemies[x, y]) //for each flat, if you've hit THAT flat when releasing the mouse
                                 {
                                     //DO THE EXCHANGE
+                                    didItHit = true;
                                     if(x == 0)
                                     {
                                         EnemyClass vic = front[y];
@@ -341,6 +389,12 @@ public class BattleClass : MonoBehaviour
                                     //PUT IT BACK
                                 }
                             }
+                        }
+
+                        if(didItHit)
+                        {
+                            person.currentEP = person.currentEP - EQPoints;
+                            EQPoints = EQPoints * 2;
                         }
                     }
 
@@ -534,6 +588,7 @@ public class BattleClass : MonoBehaviour
                 EQMenu.SetActive(true);
                 RaycastHit hit;
                 Ray ray;
+
                 yield return _WaitForInputClick();
 
                 if (toDo == "Harmonic")
@@ -552,13 +607,14 @@ public class BattleClass : MonoBehaviour
                         else
                         {
                             Debug.Log("Cannot harmonic members currently chained");
+                            toDo = "Harmonic";
                         }
                     }
                 }
 
+                yield return null;
                 partyButtons.SetActive(true);
                 EQMenu.SetActive(false);
-                toDo = "Done";
             }
         }
 
@@ -575,6 +631,7 @@ public class BattleClass : MonoBehaviour
 
         recentlyChained = false;
         person.currentlyChained = false;
+        chainedAgain = false;
     }
 
     public void changeToDo(string thing)
@@ -719,8 +776,12 @@ public class BattleClass : MonoBehaviour
                 this.GetComponent<KnownInfo>().writeToJSON(keepIt);
 
                 int crit = 1;
-                if (d20 >= 19 || affinityInQuestion == "Weak")//ADD CHAIN
+                if (d20 >= 19 || affinityInQuestion == "Weak")
                 {
+                    if(doerP.currentlyChained == true && moveP.group == false)
+                    {
+                        chainedAgain = true;
+                    }
                     DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
                     partyMembersChained.Add(doerP);
                     yield return new WaitForSeconds(timing);
@@ -731,7 +792,9 @@ public class BattleClass : MonoBehaviour
                     surprise.chainHolder = doerP;
                     surprise.chainVictim = victimP.GetComponent<EnemyClass>();
                     surprise.Initialize();
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false)
+
+                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon)
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && ArrayUtility.Contains<EnemyClass>(front, victimP.GetComponent<EnemyClass>()) == true)
                     {
                         chains.Add(surprise);
                         Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
@@ -828,7 +891,7 @@ public class BattleClass : MonoBehaviour
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<EnemyClass>().name + " for " + damage);
 
                 //IF CHAINED, GO BACK TO TOP OF LOOP THING
-                if(crit > 1)
+                if(doerP.currentlyChained == true)
                 {
                     if(moveP.group == true)
                     {
@@ -1396,20 +1459,25 @@ public class BattleClass : MonoBehaviour
             case "Heal":
                 //Find the member of the enemies with the lowest health and HEAL THAT FOOL
                 int lowestHealth = 500000;
-                int xPos = 0;
-                int yPos = 0;
+                int xPos = -1;
+                int yPos = -1;
                 for (int x = 0; x < maxNumberOfRows; x++)
                 {
                     for (int y = 0; y < maxRowSize; y++)
                     {
-                        if (lowestHealth > enemies[x, y].currentHealth)
+                        if(enemies[x, y].gameObject.activeSelf == true)
                         {
-                            lowestHealth = enemies[x, y].currentHealth;
-                            xPos = x;
-                            yPos = y;
+                            if (lowestHealth > enemies[x, y].currentHealth)
+                            {
+                                lowestHealth = enemies[x, y].currentHealth;
+                                xPos = x;
+                                yPos = y;
+                            }
                         }
                     }
                 }
+
+                if (lowestHealth == 500000) { Debug.Log("couldn't heal"); break; }
 
                 damagePosition = enemies[xPos, yPos].transform.position;
                 damagePosition.z += 2;
@@ -1734,10 +1802,69 @@ public class BattleClass : MonoBehaviour
     }
 
     //Enemy Phase of battle overview and turn movement
+    public struct Line
+    {
+        public GameObject enemy;
+        public int xPos;
+        public int yPos;
+    }
+
     IEnumerator EnemyPhase()
     {
         Debug.Log("ENEMY PHASE");
         isItRunningEnemy = false;
+        int sizee = maxNumberOfRows * maxRowSize;
+        Line[] line = new Line[sizee];
+
+        //MAKE ENEMIES FALL
+        int spot = 0;
+        for(int row = 0; row < maxNumberOfRows; row++)
+        {
+            for(int col = 0; col < maxRowSize; col++)
+            {
+                line[spot].enemy = enemies[row, col].gameObject; //testing backwards to see if it falls how i want it to DO WORK HERE
+                line[spot].xPos = row;
+                line[spot].yPos = col;
+                spot++;
+            }
+        }
+
+        //if it's not active, replace it with one that is, IF there's one behind it that's active
+        for(int yes = 0; yes < line.Length; yes++)
+        {
+            if (line[yes].enemy.activeSelf == false)
+            {
+                //go through rest of line
+                int pos = yes + 1;
+                EnemyClass newThing = null;
+                while(pos < line.Length - 1)
+                {
+                    if(line[pos].enemy != null && line[pos].enemy.activeSelf == true)
+                    {
+                        newThing = line[pos].enemy.GetComponent<EnemyClass>();
+                        break;
+                    }
+                    pos++;
+                }
+
+                if(newThing == null) { break; }
+                int xPos1 = line[yes].xPos;
+                int yPos1 = line[yes].yPos;
+                int xPos2 = line[pos].xPos;
+                int yPos2 = line[pos].yPos;
+                Debug.Log("MOVED " + xPos1 + yPos1 + " TO " + xPos2 + yPos2);
+                EnemyClass temp = enemies[xPos1, yPos1];
+                enemies[xPos1, yPos1] = enemies[xPos2, yPos2];
+                enemies[xPos2, yPos2] = temp;
+                Line temporary = line[yes];
+                line[yes] = line[pos];
+                line[pos] = temporary;
+            }
+        }
+
+        UpdateEnemies();
+
+        //DO MOVES
         for (int row = 0; row < maxNumberOfRows; row++)
         {
             for (int col = 0; col < maxRowSize; col++)

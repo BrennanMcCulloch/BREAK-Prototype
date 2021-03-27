@@ -63,6 +63,7 @@ public class PartyMemberClass : MonoBehaviour
                     string display = "EP: " + currentEP;
                     Text child = theThing.GetComponent<Text>();
                     child.text = display;
+                    theThing.gameObject.SetActive(true);
                 }
                 for (int x = 0; x < affinities.Count; x++)
                 {

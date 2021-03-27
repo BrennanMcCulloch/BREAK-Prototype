@@ -49,7 +49,8 @@ public class EnemyClass : MonoBehaviour
                 }
                 if(theThing.name == "EP")
                 {
-                    theThing.gameObject.SetActive(false);
+                    Text child = theThing.GetComponent<Text>();
+                    child.text = "";
                 }
                 for(int x = 0; x < knownThing.affinities.Length; x++)
                 {
