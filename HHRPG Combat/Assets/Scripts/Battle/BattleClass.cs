@@ -76,26 +76,13 @@ public class BattleClass : MonoBehaviour
 
     private void Update()
     {
-        var view = camera.ScreenToViewportPoint(Input.mousePosition);
-        var isOutside = view.x < 0 || view.x > 1 || view.y < 0 || view.y > 1;
-        if (isOutside == false)
+        if (runItParty)
         {
-            if (click == false)
-            {
-                click = Input.GetMouseButtonDown(0);
-            }
-            else
-            {
-                if (runItParty)
-                {
-                    if (isItRunningParty) { StartCoroutine(PartyPhase()); }
-                }
-                else if (runItEnemy)
-                {
-                    if (isItRunningEnemy) { StartCoroutine(EnemyPhase()); }
-                }
-
-            }
+            if (isItRunningParty) { StartCoroutine(PartyPhase()); }
+        }
+        else if (runItEnemy)
+        {
+            if (isItRunningEnemy) { StartCoroutine(EnemyPhase()); }
         }
     }
 
@@ -216,6 +203,7 @@ public class BattleClass : MonoBehaviour
     //Interactivity code for party member turn
     IEnumerator PartyMemberTurn(PartyMemberClass person, int leader)
     {
+        Debug.Log("In " + person.memberName + "'s move");
         person.currentlyGuarding = false;
         toDo = null;
         currentlyBreaking = false;
@@ -226,7 +214,7 @@ public class BattleClass : MonoBehaviour
         var zPos = person.gameObject.transform.position.z;
 
         //POSITIONING UI ELEMENTS
-        Vector3 temp = new Vector3(xPos * (-Screen.width / (Screen.width / 30)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 25)), 1);
+        Vector3 temp = new Vector3(xPos * (Screen.width / (Screen.width / 40)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 40)), 1);
         partyButtons.gameObject.transform.position = temp;
         partyButtons.transform.SetParent(canvas.transform, false);
         foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
@@ -242,6 +230,7 @@ public class BattleClass : MonoBehaviour
             }
         }
 
+        //readjust for stuff in ground
         rhythmButtons.gameObject.transform.position = temp;
         rhythmButtons.transform.SetParent(canvas.transform, false);
         for (int x = 0; x < person.moves.Length; x++)
@@ -279,7 +268,6 @@ public class BattleClass : MonoBehaviour
         while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0 && chainedAgain == false)
         {
             //PUT INTERACTIVE STUFF HERE
-
             yield return null;
             while(toDo == "EQ")
             {
@@ -563,6 +551,7 @@ public class BattleClass : MonoBehaviour
                     dude.currentlyChained = false;
                 }
 
+                partyMembersChained = new List<PartyMemberClass>();
                 int resultingDamage = totalPotential * (totalChains * totalChains);
                 //Debug.Log(totalPotential);
                 foreach (EnemyClass badGuy in enemiesChained)
@@ -575,7 +564,6 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //partyButtons.SetActive(true);
-                partyMembersChained = new List<PartyMemberClass>();
                 toDo = "Done";
             }
 
@@ -627,7 +615,7 @@ public class BattleClass : MonoBehaviour
         }
         chains = new List<ChainClass>();
 
-        //Debug.Log(person.name + "'s turn just ended");
+        Debug.Log(person.name + "'s turn just ended");
 
         recentlyChained = false;
         person.currentlyChained = false;
@@ -1140,6 +1128,7 @@ public class BattleClass : MonoBehaviour
                 affinityPosition.x -= 1;
                 affinityPosition.y += 3;
 
+
                 //Determine attack value
                 int d20 = Random.Range(1, 21);
                 double percent = d20 * 0.02;
@@ -1178,13 +1167,6 @@ public class BattleClass : MonoBehaviour
                         victim.buffDebuff.Remove("Rhythm Defence");
                     }
                 }
-                int crit = 1;
-                if (d20 >= 19 || affinityInQuestion == "Weak")
-                {
-                    crit = 2;
-                    DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
-                    yield return new WaitForSeconds(timing * 4);
-                }
 
                 //Do they dodge?
                 int d100 = Random.Range(1, 101);
@@ -1206,6 +1188,15 @@ public class BattleClass : MonoBehaviour
                     Debug.Log("Dodge!");
                     DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
                     break;
+                }
+
+
+                int crit = 1;
+                if (d20 >= 19 || affinityInQuestion == "Weak")
+                {
+                    crit = 2;
+                    DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
+                    yield return new WaitForSeconds(timing * 4);
                 }
 
                 //If not, calculate damage

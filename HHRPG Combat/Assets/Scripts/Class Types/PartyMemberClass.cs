@@ -18,6 +18,11 @@ public class PartyMemberClass : MonoBehaviour
     public GameObject[] moves; //MAKE THIS SIZE 8
     public GameObject harmonic;
     private string[] names = new string[10];
+    private Canvas HPEP;
+    private int max;
+    private int maxE;
+    private Slider healthBar;
+    private Slider epBar;
 
     private void Start()
     {
@@ -31,10 +36,33 @@ public class PartyMemberClass : MonoBehaviour
         names[7] = "Synth";
         names[8] = "Noise";
         names[9] = "Lyrics";
+
+        HPEP = this.gameObject.GetComponentInChildren<Canvas>();
+        stats.TryGetValue("HP", out max);
+        stats.TryGetValue("EP", out maxE);
+
+        foreach (Slider slide in HPEP.gameObject.GetComponentsInChildren<Slider>())
+        {
+            if (slide.name == "HP")
+            {
+                slide.maxValue = max;
+                healthBar = slide;
+                healthBar.gameObject.SetActive(true);
+            }
+            else if (slide.name == "EP")
+            {
+                slide.maxValue = maxE;
+                epBar = slide;
+                epBar.gameObject.SetActive(true);
+            }
+        }
     }
 
     private void Update()
     {
+        healthBar.value = currentHealth;
+        epBar.value = currentEP;
+
         if (currentHealth <= 0)
         {
             this.gameObject.SetActive(false);

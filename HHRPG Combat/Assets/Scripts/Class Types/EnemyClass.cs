@@ -16,10 +16,31 @@ public class EnemyClass : MonoBehaviour
     public GameObject[] backMoves;
     public KnownInfo known; //keep current known affinities
     KnownInfoDataType knownThing;
+    private Canvas HPEP;
+    private int max;
+    private Slider healthBar;
+    private Slider epBar;
 
     private void Start()
     {
         UIStuff.SetActive(false);
+        HPEP = this.gameObject.GetComponentInChildren<Canvas>();
+        stats.TryGetValue("HP", out max);
+
+        foreach (Slider slide in HPEP.gameObject.GetComponentsInChildren<Slider>())
+        {
+            if(slide.name == "HP")
+            {
+                slide.maxValue = max;
+                healthBar = slide;
+                healthBar.gameObject.SetActive(false);
+            }
+            else if(slide.name == "EP")
+            {
+                epBar = slide;
+                epBar.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void Update()
@@ -28,6 +49,12 @@ public class EnemyClass : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
+        if(currentHealth < max)
+        {
+            healthBar.gameObject.SetActive(true);
+            healthBar.value = currentHealth;
+        }
+        
     }
 
     private void UpdateUI()
