@@ -89,6 +89,8 @@ GameObject:
   - component: {fileID: 2642275646613269218}
   - component: {fileID: 2642275646613269219}
   - component: {fileID: 2642275646613269220}
+  - component: {fileID: 284099512252887140}
+  - component: {fileID: 4269816381185677993}
   m_Layer: 5
   m_Name: Button 1
   m_TagString: Untagged
@@ -195,6 +197,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &284099512252887140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275646613269222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275646613269222}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &4269816381185677993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275646613269222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275646678699291
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +275,8 @@ GameObject:
   - component: {fileID: 2642275646678699303}
   - component: {fileID: 2642275646678699288}
   - component: {fileID: 2642275646678699289}
+  - component: {fileID: 2389687051720932756}
+  - component: {fileID: 465225558922799562}
   m_Layer: 5
   m_Name: Button 7
   m_TagString: Untagged
@@ -313,6 +383,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2389687051720932756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275646678699291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275646678699291}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &465225558922799562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275646678699291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275646935024537
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +692,8 @@ GameObject:
   - component: {fileID: 2642275647465615104}
   - component: {fileID: 2642275647465615105}
   - component: {fileID: 2642275647465615106}
+  - component: {fileID: 8195349262882425284}
+  - component: {fileID: 1038081610414118079}
   m_Layer: 5
   m_Name: Button 3
   m_TagString: Untagged
@@ -662,6 +800,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8195349262882425284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275647465615108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275647465615108}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1038081610414118079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275647465615108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275647588736511
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,6 +878,8 @@ GameObject:
   - component: {fileID: 2642275647588736507}
   - component: {fileID: 2642275647588736508}
   - component: {fileID: 2642275647588736509}
+  - component: {fileID: 3824908917181169875}
+  - component: {fileID: 5388512010045040312}
   m_Layer: 5
   m_Name: Button 4
   m_TagString: Untagged
@@ -780,6 +986,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3824908917181169875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275647588736511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275647588736511}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &5388512010045040312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275647588736511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275647612662895
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,6 +1141,8 @@ GameObject:
   - component: {fileID: 2642275647917909163}
   - component: {fileID: 2642275647917909164}
   - component: {fileID: 2642275647917909165}
+  - component: {fileID: 7520561419543724587}
+  - component: {fileID: 3419657603439076940}
   m_Layer: 5
   m_Name: Button 0
   m_TagString: Untagged
@@ -975,6 +1249,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7520561419543724587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275647917909167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275647917909167}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &3419657603439076940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275647917909167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275648053684804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,6 +1404,8 @@ GameObject:
   - component: {fileID: 2642275648212528706}
   - component: {fileID: 2642275648212528707}
   - component: {fileID: 2642275648212528708}
+  - component: {fileID: 3730513982027155683}
+  - component: {fileID: 8058582084539053093}
   m_Layer: 5
   m_Name: Button 2
   m_TagString: Untagged
@@ -1170,6 +1512,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3730513982027155683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275648212528710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275648212528710}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &8058582084539053093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275648212528710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275648292670650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,6 +1590,8 @@ GameObject:
   - component: {fileID: 2642275648292670662}
   - component: {fileID: 2642275648292670663}
   - component: {fileID: 2642275648292670648}
+  - component: {fileID: 6786754245156146584}
+  - component: {fileID: 6365509861977471667}
   m_Layer: 5
   m_Name: Button 5
   m_TagString: Untagged
@@ -1288,6 +1698,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6786754245156146584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275648292670650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275648292670650}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &6365509861977471667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275648292670650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275648308438207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1776,8 @@ GameObject:
   - component: {fileID: 2642275648308438203}
   - component: {fileID: 2642275648308438204}
   - component: {fileID: 2642275648308438205}
+  - component: {fileID: 3667910227937662499}
+  - component: {fileID: 5484572819724456453}
   m_Layer: 5
   m_Name: Button 6
   m_TagString: Untagged
@@ -1406,6 +1884,72 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3667910227937662499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275648308438207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: ShowDesc
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2642275648308438207}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4326724220340268975, guid: 0ae9c90aff08ea140a813d63f47d7506,
+            type: 3}
+          m_MethodName: HideDesc
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &5484572819724456453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642275648308438207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: OVERWRITE THIS
+    type: 
+    effective: 3
+    group: 0
+    cost: 0
+    friendly: 0
+    description: OVERWRITE THIS TOO
+    harmonic: 0
 --- !u!1 &2642275648482678197
 GameObject:
   m_ObjectHideFlags: 0

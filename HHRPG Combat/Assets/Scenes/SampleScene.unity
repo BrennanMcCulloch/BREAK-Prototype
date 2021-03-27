@@ -121,57 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &7913734
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7913735}
-  - component: {fileID: 7913736}
-  m_Layer: 0
-  m_Name: Push The Fader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7913735
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7913734}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 26
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7913736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7913734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Push The Fader
-    type: Heal
-    effective: 0.2
-    group: 0
-    cost: 6
-    friendly: 1
-    harmonic: 0
 --- !u!1 &18952052
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,11 +210,11 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 1670859320}
+  - {fileID: 324284753}
   midMoves:
-  - {fileID: 1036802895}
+  - {fileID: 510196734}
   backMoves:
-  - {fileID: 88753404}
+  - {fileID: 597675593}
   known: {fileID: 1300073382}
 --- !u!135 &18952054
 SphereCollider:
@@ -342,7 +291,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &22386009
+--- !u!1 &34259598
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,99 +299,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 22386010}
-  - component: {fileID: 22386011}
+  - component: {fileID: 34259599}
+  - component: {fileID: 34259600}
   m_Layer: 0
-  m_Name: Mosh Pit
+  m_Name: Jam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &22386010
+--- !u!4 &34259599
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22386009}
+  m_GameObject: {fileID: 34259598}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 1
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &22386011
+--- !u!114 &34259600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 22386009}
+  m_GameObject: {fileID: 34259598}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Mosh Pit
-    type: Physical
+    moveName: Jam
+    type: Bass
     effective: 1
     group: 1
-    cost: 2
+    cost: 10
     friendly: 0
-    harmonic: 0
---- !u!1 &37805041
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 37805042}
-  - component: {fileID: 37805043}
-  m_Layer: 0
-  m_Name: Strum
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &37805042
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37805041}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &37805043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37805041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Strum
-    type: Guitar
-    effective: 1
-    group: 0
-    cost: 4
-    friendly: 0
+    description: A weak bass attack that hits every enemy.
     harmonic: 0
 --- !u!224 &87585248 stripped
 RectTransform:
@@ -450,108 +349,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6354224533798910793}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &88753404
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 88753405}
-  - component: {fileID: 88753406}
-  m_Layer: 0
-  m_Name: Pick The Bass Back Up
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &88753405
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88753404}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 27
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &88753406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88753404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Pick The Bass Back Up
-    type: Heal
-    effective: 0.15
-    group: 0
-    cost: 6
-    friendly: 1
-    harmonic: 0
---- !u!1 &158967463
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 158967464}
-  - component: {fileID: 158967465}
-  m_Layer: 0
-  m_Name: Pluck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &158967464
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158967463}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &158967465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158967463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Pluck
-    type: Bass
-    effective: 1.5
-    group: 0
-    cost: 8
-    friendly: 0
-    harmonic: 0
 --- !u!1001 &191975175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -842,57 +639,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 196766764}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &207450147
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 207450148}
-  - component: {fileID: 207450149}
-  m_Layer: 0
-  m_Name: Silencers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &207450148
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207450147}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 29
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &207450149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207450147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Silencers
-    type: Physical Defence Buff
-    effective: 3
-    group: 0
-    cost: 7
-    friendly: 1
-    harmonic: 0
 --- !u!1 &222546561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,12 +803,64 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 1670859320}
+  - {fileID: 324284753}
   midMoves:
-  - {fileID: 1036802895}
+  - {fileID: 510196734}
   backMoves:
-  - {fileID: 88753404}
+  - {fileID: 597675593}
   known: {fileID: 1300073382}
+--- !u!1 &232209148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 232209149}
+  - component: {fileID: 232209150}
+  m_Layer: 0
+  m_Name: Barre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &232209149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232209148}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &232209150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232209148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Barre
+    type: Guitar
+    effective: 1.5
+    group: 1
+    cost: 20
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
 --- !u!1001 &240013932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1147,7 +945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d53b445d10d49243aa858dd2d9af469, type: 3}
---- !u!1 &243585101
+--- !u!1 &263631296
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1155,48 +953,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 243585102}
-  - component: {fileID: 243585103}
+  - component: {fileID: 263631297}
+  - component: {fileID: 263631298}
   m_Layer: 0
-  m_Name: Jam
+  m_Name: Nocturne
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &243585102
+--- !u!4 &263631297
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243585101}
+  m_GameObject: {fileID: 263631296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 11
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &243585103
+--- !u!114 &263631298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 243585101}
+  m_GameObject: {fileID: 263631296}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Jam
-    type: Bass
-    effective: 1
-    group: 1
-    cost: 10
+    moveName: Nocturne
+    type: Piano
+    effective: 2
+    group: 0
+    cost: 12
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
 --- !u!1 &264479532 stripped
 GameObject:
@@ -1210,57 +1009,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 498254581}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &265857401
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 265857402}
-  - component: {fileID: 265857403}
-  m_Layer: 0
-  m_Name: Up To 11
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &265857402
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265857401}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &265857403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265857401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Up To 11
-    type: Rhythm Buff
-    effective: 4
-    group: 0
-    cost: 10
-    friendly: 1
-    harmonic: 0
 --- !u!1001 &313270335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1561,7 +1309,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 318625902}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &324009892
+--- !u!1 &324284753
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1569,8 +1317,60 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 324009893}
-  - component: {fileID: 324009894}
+  - component: {fileID: 324284754}
+  - component: {fileID: 324284755}
+  m_Layer: 0
+  m_Name: Smack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &324284754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324284753}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &324284755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324284753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Smack
+    type: Physical
+    effective: 1
+    group: 0
+    cost: 2
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &337166456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 337166457}
+  - component: {fileID: 337166458}
   m_Layer: 0
   m_Name: Chord
   m_TagString: Untagged
@@ -1578,13 +1378,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &324009893
+--- !u!4 &337166457
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324009892}
+  m_GameObject: {fileID: 337166456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1592,13 +1392,13 @@ Transform:
   m_Father: {fileID: 1380002060}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &324009894
+--- !u!114 &337166458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324009892}
+  m_GameObject: {fileID: 337166456}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
@@ -1611,6 +1411,7 @@ MonoBehaviour:
     group: 1
     cost: 10
     friendly: 0
+    description: A weak guitar attack that hits every enemy.
     harmonic: 0
 --- !u!1001 &365030390
 PrefabInstance:
@@ -1859,9 +1660,9 @@ MonoBehaviour:
     - 
     _Values: 4b0000001e0000000e0000000700000014000000070000000600000006000000000000000000000000000000000000000000000000000000000000000000000000000000
   moves:
-  - {fileID: 1036802895}
-  - {fileID: 243585101}
-  - {fileID: 207450147}
+  - {fileID: 510196734}
+  - {fileID: 34259598}
+  - {fileID: 1026692208}
   harmonic: {fileID: 0}
 --- !u!65 &411411546
 BoxCollider:
@@ -1938,6 +1739,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &496633885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 496633886}
+  - component: {fileID: 496633887}
+  m_Layer: 0
+  m_Name: Pluck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &496633886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496633885}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &496633887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496633885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Pluck
+    type: Bass
+    effective: 1.5
+    group: 0
+    cost: 8
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
 --- !u!1001 &498254581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1945,10 +1798,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1403777307}
     m_Modifications:
+    - target: {fileID: 1806640714929932302, guid: 0ae9c90aff08ea140a813d63f47d7506,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1806640715830239914, guid: 0ae9c90aff08ea140a813d63f47d7506,
         type: 3}
       propertyPath: m_Name
       value: EnemyInfo
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806640715830239914, guid: 0ae9c90aff08ea140a813d63f47d7506,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1806640715830239925, guid: 0ae9c90aff08ea140a813d63f47d7506,
         type: 3}
@@ -2067,7 +1930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ae9c90aff08ea140a813d63f47d7506, type: 3}
---- !u!1 &499347914
+--- !u!1 &510196734
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2075,48 +1938,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 499347915}
-  - component: {fileID: 499347916}
+  - component: {fileID: 510196735}
+  - component: {fileID: 510196736}
   m_Layer: 0
-  m_Name: Groove
+  m_Name: Pick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &499347915
+--- !u!4 &510196735
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499347914}
+  m_GameObject: {fileID: 510196734}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 13
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &499347916
+--- !u!114 &510196736
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499347914}
+  m_GameObject: {fileID: 510196734}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Groove
+    moveName: Pick
     type: Bass
-    effective: 2
-    group: 1
-    cost: 30
+    effective: 1
+    group: 0
+    cost: 4
     friendly: 0
+    description: A weak, singular bass attack.
     harmonic: 0
 --- !u!1 &517607902
 GameObject:
@@ -2207,11 +2071,11 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 1670859320}
+  - {fileID: 324284753}
   midMoves:
-  - {fileID: 1036802895}
+  - {fileID: 510196734}
   backMoves:
-  - {fileID: 88753404}
+  - {fileID: 597675593}
   known: {fileID: 1300073382}
 --- !u!135 &517607904
 SphereCollider:
@@ -2288,7 +2152,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &536788988
+--- !u!1 &529241459
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2296,48 +2160,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 536788989}
-  - component: {fileID: 536788990}
+  - component: {fileID: 529241460}
+  - component: {fileID: 529241461}
   m_Layer: 0
-  m_Name: Tom
+  m_Name: Crash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &536788989
+--- !u!4 &529241460
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536788988}
+  m_GameObject: {fileID: 529241459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &536788990
+--- !u!114 &529241461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536788988}
+  m_GameObject: {fileID: 529241459}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Tom
+    moveName: Crash
     type: Drum
-    effective: 1
-    group: 0
-    cost: 4
+    effective: 2
+    group: 1
+    cost: 30
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
 --- !u!1 &569813441
 GameObject:
@@ -2405,7 +2270,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &613192425
+--- !u!1 &597675593
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2413,8 +2278,216 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 613192426}
-  - component: {fileID: 613192427}
+  - component: {fileID: 597675594}
+  - component: {fileID: 597675595}
+  m_Layer: 0
+  m_Name: Pick The Bass Back Up
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &597675594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597675593}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 27
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &597675595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597675593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Pick The Bass Back Up
+    type: Heal
+    effective: 0.15
+    group: 0
+    cost: 6
+    friendly: 1
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &602366941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 602366942}
+  - component: {fileID: 602366943}
+  m_Layer: 0
+  m_Name: Power
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &602366942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602366941}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &602366943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602366941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Power
+    type: Guitar
+    effective: 2
+    group: 1
+    cost: 30
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &606814796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 606814797}
+  - component: {fileID: 606814798}
+  m_Layer: 0
+  m_Name: Open
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &606814797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606814796}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &606814798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606814796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Open
+    type: Guitar
+    effective: 1.5
+    group: 0
+    cost: 8
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &608434523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 608434524}
+  - component: {fileID: 608434525}
+  m_Layer: 0
+  m_Name: Slap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &608434524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608434523}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &608434525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608434523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Slap
+    type: Bass
+    effective: 2
+    group: 0
+    cost: 12
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &701945983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 701945984}
+  - component: {fileID: 701945985}
   m_Layer: 0
   m_Name: Mezzo
   m_TagString: Untagged
@@ -2422,13 +2495,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &613192426
+--- !u!4 &701945984
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613192425}
+  m_GameObject: {fileID: 701945983}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -2436,13 +2509,13 @@ Transform:
   m_Father: {fileID: 1380002060}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &613192427
+--- !u!114 &701945985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613192425}
+  m_GameObject: {fileID: 701945983}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
@@ -2455,108 +2528,7 @@ MonoBehaviour:
     group: 1
     cost: 10
     friendly: 0
-    harmonic: 0
---- !u!1 &615533215
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 615533216}
-  - component: {fileID: 615533217}
-  m_Layer: 0
-  m_Name: Funk
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &615533216
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615533215}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &615533217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615533215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Funk
-    type: Bass
-    effective: 1.5
-    group: 1
-    cost: 20
-    friendly: 0
-    harmonic: 0
---- !u!1 &621839688
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 621839689}
-  - component: {fileID: 621839690}
-  m_Layer: 0
-  m_Name: Forte
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &621839689
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621839688}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 24
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &621839690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621839688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Forte
-    type: Piano
-    effective: 1.5
-    group: 1
-    cost: 20
-    friendly: 0
+    description: A weak piano attack that hits every enemy.
     harmonic: 0
 --- !u!1 &705507993
 GameObject:
@@ -2650,7 +2622,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &886685067
+--- !u!1 &710540117
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2658,48 +2630,309 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 886685068}
-  - component: {fileID: 886685069}
+  - component: {fileID: 710540118}
+  - component: {fileID: 710540119}
   m_Layer: 0
-  m_Name: Red Line
+  m_Name: Tom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &886685068
+--- !u!4 &710540118
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886685067}
+  m_GameObject: {fileID: 710540117}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 28
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &886685069
+--- !u!114 &710540119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 886685067}
+  m_GameObject: {fileID: 710540117}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Red Line
-    type: Heal
-    effective: 0.2
+    moveName: Tom
+    type: Drum
+    effective: 1
+    group: 0
+    cost: 4
+    friendly: 0
+    description: A weak, singular drum attack.
+    harmonic: 0
+--- !u!1 &748810289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 748810290}
+  - component: {fileID: 748810291}
+  m_Layer: 0
+  m_Name: Groove
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &748810290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748810289}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &748810291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748810289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Groove
+    type: Bass
+    effective: 2
     group: 1
-    cost: 15
-    friendly: 1
+    cost: 30
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &837942116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 837942117}
+  - component: {fileID: 837942118}
+  m_Layer: 0
+  m_Name: Wash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &837942117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837942116}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &837942118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837942116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Wash
+    type: Drum
+    effective: 1.5
+    group: 1
+    cost: 20
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &856586899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 856586900}
+  - component: {fileID: 856586901}
+  m_Layer: 0
+  m_Name: Snare
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &856586900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856586899}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &856586901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856586899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Snare
+    type: Drum
+    effective: 1.5
+    group: 0
+    cost: 8
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &912239911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912239912}
+  - component: {fileID: 912239913}
+  m_Layer: 0
+  m_Name: Strum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912239912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912239911}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &912239913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912239911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Strum
+    type: Guitar
+    effective: 1
+    group: 0
+    cost: 4
+    friendly: 0
+    description: A weak, singular guitar attack.
+    harmonic: 0
+--- !u!1 &935829018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 935829019}
+  - component: {fileID: 935829020}
+  m_Layer: 0
+  m_Name: Arpeggio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &935829019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935829018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &935829020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935829018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Arpeggio
+    type: Guitar
+    effective: 2
+    group: 0
+    cost: 12
+    friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
 --- !u!1 &963194225
 GameObject:
@@ -2784,57 +3017,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 13.9, y: -178.80801, z: 0}
---- !u!1 &976828204
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 976828205}
-  - component: {fileID: 976828206}
-  m_Layer: 0
-  m_Name: Subito
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &976828205
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976828204}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 25
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &976828206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976828204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Subito
-    type: Piano
-    effective: 2
-    group: 1
-    cost: 30
-    friendly: 0
-    harmonic: 0
 --- !u!1 &980143290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,9 +3119,9 @@ MonoBehaviour:
     - 
     _Values: 1e0000001e0000000f0000000f00000007000000080000001400000007000000000000000000000000000000000000000000000000000000000000000000000000000000
   moves:
-  - {fileID: 1161298014}
-  - {fileID: 613192425}
-  - {fileID: 265857401}
+  - {fileID: 1834259462}
+  - {fileID: 701945983}
+  - {fileID: 1590439146}
   harmonic: {fileID: 0}
 --- !u!65 &980143292
 BoxCollider:
@@ -3016,7 +3198,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &995500101
+--- !u!1 &988300141
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3024,50 +3206,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 995500102}
-  - component: {fileID: 995500103}
+  - component: {fileID: 988300142}
+  - component: {fileID: 988300143}
   m_Layer: 0
-  m_Name: Waltz
+  m_Name: Push The Fader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &995500102
+--- !u!4 &988300142
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995500101}
+  m_GameObject: {fileID: 988300141}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 21
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &995500103
+--- !u!114 &988300143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 995500101}
+  m_GameObject: {fileID: 988300141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Waltz
-    type: Piano
-    effective: 1.5
+    moveName: Push The Fader
+    type: Heal
+    effective: 0.2
     group: 0
-    cost: 8
-    friendly: 0
+    cost: 6
+    friendly: 1
+    description: Heal 20% of one party member's health.
     harmonic: 0
---- !u!1 &1036802895
+--- !u!1 &1026692208
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3075,48 +3258,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1036802896}
-  - component: {fileID: 1036802897}
+  - component: {fileID: 1026692209}
+  - component: {fileID: 1026692210}
   m_Layer: 0
-  m_Name: Pick
+  m_Name: Silencers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1036802896
+--- !u!4 &1026692209
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036802895}
+  m_GameObject: {fileID: 1026692208}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 8
+  m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1036802897
+--- !u!114 &1026692210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1036802895}
+  m_GameObject: {fileID: 1026692208}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Pick
-    type: Bass
-    effective: 1
+    moveName: Silencers
+    type: Physical Defence Buff
+    effective: 3
     group: 0
-    cost: 4
-    friendly: 0
+    cost: 7
+    friendly: 1
+    description: Temporarily buff one party member's defence by 3.
     harmonic: 0
 --- !u!1 &1048047885
 GameObject:
@@ -3346,7 +3530,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1060466042}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1161298014
+--- !u!1 &1121792007
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3354,99 +3538,153 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1161298015}
-  - component: {fileID: 1161298016}
+  - component: {fileID: 1121792008}
+  - component: {fileID: 1121792009}
   m_Layer: 0
-  m_Name: Plink
+  m_Name: Waltz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1161298015
+--- !u!4 &1121792008
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161298014}
+  m_GameObject: {fileID: 1121792007}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1161298016
+--- !u!114 &1121792009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1161298014}
+  m_GameObject: {fileID: 1121792007}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Plink
+    moveName: Waltz
     type: Piano
-    effective: 1
-    group: 0
-    cost: 4
-    friendly: 0
-    harmonic: 0
---- !u!1 &1171099272
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1171099273}
-  - component: {fileID: 1171099274}
-  m_Layer: 0
-  m_Name: Open
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1171099273
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171099272}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1171099274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171099272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Open
-    type: Guitar
     effective: 1.5
     group: 0
     cost: 8
     friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &1149403404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1149403405}
+  - component: {fileID: 1149403406}
+  m_Layer: 0
+  m_Name: Funk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1149403405
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149403404}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1149403406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149403404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Funk
+    type: Bass
+    effective: 1.5
+    group: 1
+    cost: 20
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &1167572858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167572859}
+  - component: {fileID: 1167572860}
+  m_Layer: 0
+  m_Name: Hi Hat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1167572859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167572858}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1167572860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167572858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Hi Hat
+    type: Drum
+    effective: 1
+    group: 1
+    cost: 10
+    friendly: 0
+    description: A weak drum attack that hits every enemy.
     harmonic: 0
 --- !u!1001 &1240716957
 PrefabInstance:
@@ -3681,7 +3919,7 @@ MonoBehaviour:
     type: 3}
   EQButton: {fileID: 9210261842802719530, guid: 13de0f8a492638b4481c11de85a00ef8,
     type: 3}
-  timing: 0.2
+  timing: 0.3
   camera: {fileID: 963194227}
   toDo: 
   leader: {fileID: 1587424049}
@@ -3792,11 +4030,11 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 22386009}
+  - {fileID: 1925584153}
   midMoves:
-  - {fileID: 1036802895}
+  - {fileID: 510196734}
   backMoves:
-  - {fileID: 207450147}
+  - {fileID: 1026692208}
   known: {fileID: 1300073382}
 --- !u!135 &1328953797
 SphereCollider:
@@ -4064,6 +4302,7 @@ MonoBehaviour:
     group: 0
     cost: 2
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Mosh Pit
     type: Physical
@@ -4071,6 +4310,7 @@ MonoBehaviour:
     group: 1
     cost: 2
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Tom
     type: Drum
@@ -4078,6 +4318,7 @@ MonoBehaviour:
     group: 0
     cost: 4
     friendly: 0
+    description: A weak, singular drum attack.
     harmonic: 0
   - moveName: Snare
     type: Drum
@@ -4085,6 +4326,7 @@ MonoBehaviour:
     group: 0
     cost: 8
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Kick
     type: Drum
@@ -4092,6 +4334,7 @@ MonoBehaviour:
     group: 0
     cost: 12
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Hi Hat
     type: Drum
@@ -4099,6 +4342,7 @@ MonoBehaviour:
     group: 1
     cost: 10
     friendly: 0
+    description: A weak drum attack that hits every enemy.
     harmonic: 0
   - moveName: Wash
     type: Drum
@@ -4106,6 +4350,7 @@ MonoBehaviour:
     group: 1
     cost: 20
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Crash
     type: Drum
@@ -4113,6 +4358,7 @@ MonoBehaviour:
     group: 1
     cost: 30
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Pick
     type: Bass
@@ -4120,6 +4366,7 @@ MonoBehaviour:
     group: 0
     cost: 4
     friendly: 0
+    description: A weak, singular bass attack.
     harmonic: 0
   - moveName: Pluck
     type: Bass
@@ -4127,6 +4374,7 @@ MonoBehaviour:
     group: 0
     cost: 8
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Slap
     type: Bass
@@ -4134,6 +4382,7 @@ MonoBehaviour:
     group: 0
     cost: 12
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Jam
     type: Bass
@@ -4141,6 +4390,7 @@ MonoBehaviour:
     group: 1
     cost: 10
     friendly: 0
+    description: A weak bass attack that hits every enemy.
     harmonic: 0
   - moveName: Funk
     type: Bass
@@ -4148,6 +4398,7 @@ MonoBehaviour:
     group: 1
     cost: 20
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Groove
     type: Bass
@@ -4155,6 +4406,7 @@ MonoBehaviour:
     group: 1
     cost: 30
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Strum
     type: Guitar
@@ -4162,6 +4414,7 @@ MonoBehaviour:
     group: 0
     cost: 4
     friendly: 0
+    description: A weak, singular guitar attack.
     harmonic: 0
   - moveName: Open
     type: Guitar
@@ -4169,6 +4422,7 @@ MonoBehaviour:
     group: 0
     cost: 8
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Arpeggio
     type: Guitar
@@ -4176,6 +4430,7 @@ MonoBehaviour:
     group: 0
     cost: 12
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Chord
     type: Guitar
@@ -4183,6 +4438,7 @@ MonoBehaviour:
     group: 1
     cost: 10
     friendly: 0
+    description: A weak guitar attack that hits every enemy.
     harmonic: 0
   - moveName: Barre
     type: Guitar
@@ -4190,6 +4446,7 @@ MonoBehaviour:
     group: 1
     cost: 20
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Power
     type: Guitar
@@ -4197,6 +4454,7 @@ MonoBehaviour:
     group: 1
     cost: 30
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Plink
     type: Piano
@@ -4204,6 +4462,7 @@ MonoBehaviour:
     group: 0
     cost: 4
     friendly: 0
+    description: A weak, singular piano attack.
     harmonic: 0
   - moveName: Waltz
     type: Piano
@@ -4211,6 +4470,7 @@ MonoBehaviour:
     group: 0
     cost: 8
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Nocturne
     type: Piano
@@ -4218,6 +4478,7 @@ MonoBehaviour:
     group: 0
     cost: 12
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Mezzo
     type: Piano
@@ -4225,6 +4486,7 @@ MonoBehaviour:
     group: 1
     cost: 10
     friendly: 0
+    description: A weak piano attack that hits every enemy.
     harmonic: 0
   - moveName: Forte
     type: Piano
@@ -4232,6 +4494,7 @@ MonoBehaviour:
     group: 1
     cost: 20
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Subito
     type: Piano
@@ -4239,6 +4502,7 @@ MonoBehaviour:
     group: 1
     cost: 30
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Push The Fader
     type: Heal
@@ -4246,6 +4510,7 @@ MonoBehaviour:
     group: 0
     cost: 6
     friendly: 1
+    description: Heal 20% of one party member's health.
     harmonic: 0
   - moveName: Pick The Bass Back Up
     type: Heal
@@ -4253,6 +4518,7 @@ MonoBehaviour:
     group: 0
     cost: 6
     friendly: 1
+    description: PUT DESCRIPTION HERE
     harmonic: 0
   - moveName: Red Line
     type: Heal
@@ -4260,6 +4526,7 @@ MonoBehaviour:
     group: 1
     cost: 15
     friendly: 1
+    description: Heal 20% of every party member's health
     harmonic: 0
   - moveName: Silencers
     type: Physical Defence Buff
@@ -4267,6 +4534,7 @@ MonoBehaviour:
     group: 0
     cost: 7
     friendly: 1
+    description: Temporarily buff one party member's defence by 3.
     harmonic: 0
   - moveName: Up To 11
     type: Rhythm Buff
@@ -4274,6 +4542,7 @@ MonoBehaviour:
     group: 0
     cost: 10
     friendly: 1
+    description: Temporarily buff one party member's rhythm by 3.
     harmonic: 0
   moveList: {fileID: 4900000, guid: 8b1fc4d27ef0d9341b4782c7e969e5bd, type: 3}
 --- !u!4 &1380002060
@@ -4287,37 +4556,37 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1670859321}
-  - {fileID: 22386010}
-  - {fileID: 536788989}
-  - {fileID: 2129679882}
-  - {fileID: 2086926862}
-  - {fileID: 1780497580}
-  - {fileID: 1755314894}
-  - {fileID: 1617556088}
-  - {fileID: 1036802896}
-  - {fileID: 158967464}
-  - {fileID: 1417736467}
-  - {fileID: 243585102}
-  - {fileID: 615533216}
-  - {fileID: 499347915}
-  - {fileID: 37805042}
-  - {fileID: 1171099273}
-  - {fileID: 1756407030}
-  - {fileID: 324009893}
-  - {fileID: 1809475504}
-  - {fileID: 1536128480}
-  - {fileID: 1161298015}
-  - {fileID: 995500102}
-  - {fileID: 1445255050}
-  - {fileID: 613192426}
-  - {fileID: 621839689}
-  - {fileID: 976828205}
-  - {fileID: 7913735}
-  - {fileID: 88753405}
-  - {fileID: 886685068}
-  - {fileID: 207450148}
-  - {fileID: 265857402}
+  - {fileID: 324284754}
+  - {fileID: 1925584154}
+  - {fileID: 710540118}
+  - {fileID: 856586900}
+  - {fileID: 1767525703}
+  - {fileID: 1167572859}
+  - {fileID: 837942117}
+  - {fileID: 529241460}
+  - {fileID: 510196735}
+  - {fileID: 496633886}
+  - {fileID: 608434524}
+  - {fileID: 34259599}
+  - {fileID: 1149403405}
+  - {fileID: 748810290}
+  - {fileID: 912239912}
+  - {fileID: 606814797}
+  - {fileID: 935829019}
+  - {fileID: 337166457}
+  - {fileID: 232209149}
+  - {fileID: 602366942}
+  - {fileID: 1834259463}
+  - {fileID: 1121792008}
+  - {fileID: 263631297}
+  - {fileID: 701945984}
+  - {fileID: 2001506054}
+  - {fileID: 2008602822}
+  - {fileID: 988300142}
+  - {fileID: 597675594}
+  - {fileID: 2040045131}
+  - {fileID: 1026692209}
+  - {fileID: 1590439147}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4565,9 +4834,9 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 22386009}
+  - {fileID: 1925584153}
   midMoves:
-  - {fileID: 1670859320}
+  - {fileID: 324284753}
   backMoves: []
   known: {fileID: 1300073382}
 --- !u!135 &1398137051
@@ -4745,159 +5014,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1417736466
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1417736467}
-  - component: {fileID: 1417736468}
-  m_Layer: 0
-  m_Name: Slap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1417736467
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417736466}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1417736468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417736466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Slap
-    type: Bass
-    effective: 2
-    group: 0
-    cost: 12
-    friendly: 0
-    harmonic: 0
---- !u!1 &1445255049
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1445255050}
-  - component: {fileID: 1445255051}
-  m_Layer: 0
-  m_Name: Nocturne
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1445255050
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445255049}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1445255051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445255049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Nocturne
-    type: Piano
-    effective: 2
-    group: 0
-    cost: 12
-    friendly: 0
-    harmonic: 0
---- !u!1 &1536128479
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1536128480}
-  - component: {fileID: 1536128481}
-  m_Layer: 0
-  m_Name: Power
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1536128480
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536128479}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 19
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1536128481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1536128479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Power
-    type: Guitar
-    effective: 2
-    group: 1
-    cost: 30
-    friendly: 0
-    harmonic: 0
 --- !u!1 &1587424044
 GameObject:
   m_ObjectHideFlags: 0
@@ -5075,11 +5191,11 @@ MonoBehaviour:
     - 
     _Values: 32000000280000000a0000000a0000000e0000000e0000000c00000005000000000000000000000000000000000000000000000000000000000000000000000000000000
   moves:
-  - {fileID: 536788988}
-  - {fileID: 1780497579}
-  - {fileID: 7913734}
+  - {fileID: 710540117}
+  - {fileID: 1167572858}
+  - {fileID: 988300141}
   harmonic: {fileID: 0}
---- !u!1 &1617556087
+--- !u!1 &1590439146
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5087,48 +5203,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1617556088}
-  - component: {fileID: 1617556089}
+  - component: {fileID: 1590439147}
+  - component: {fileID: 1590439148}
   m_Layer: 0
-  m_Name: Crash
+  m_Name: Up To 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1617556088
+--- !u!4 &1590439147
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1617556087}
+  m_GameObject: {fileID: 1590439146}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 7
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1617556089
+--- !u!114 &1590439148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1617556087}
+  m_GameObject: {fileID: 1590439146}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Crash
-    type: Drum
-    effective: 2
-    group: 1
-    cost: 30
-    friendly: 0
+    moveName: Up To 11
+    type: Rhythm Buff
+    effective: 4
+    group: 0
+    cost: 10
+    friendly: 1
+    description: Temporarily buff one party member's rhythm by 3.
     harmonic: 0
 --- !u!1001 &1621720545
 PrefabInstance:
@@ -5285,57 +5402,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1621720545}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1670859320
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1670859321}
-  - component: {fileID: 1670859322}
-  m_Layer: 0
-  m_Name: Smack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1670859321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670859320}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1670859322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670859320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Smack
-    type: Physical
-    effective: 1
-    group: 0
-    cost: 2
-    friendly: 0
-    harmonic: 0
 --- !u!1 &1671912870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5438,9 +5504,9 @@ MonoBehaviour:
     - 
     _Values: 280000003c000000070000000e0000000c000000120000000f00000004000000000000000000000000000000000000000000000000000000000000000000000000000000
   moves:
-  - {fileID: 37805041}
-  - {fileID: 324009892}
-  - {fileID: 886685067}
+  - {fileID: 912239911}
+  - {fileID: 337166456}
+  - {fileID: 2040045130}
   harmonic: {fileID: 0}
 --- !u!65 &1671912872
 BoxCollider:
@@ -5606,9 +5672,9 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 22386009}
+  - {fileID: 1925584153}
   midMoves:
-  - {fileID: 1670859320}
+  - {fileID: 324284753}
   backMoves: []
   known: {fileID: 1300073382}
 --- !u!135 &1678223811
@@ -5684,9 +5750,9 @@ Transform:
   m_Children:
   - {fileID: 196766765}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1755314893
+--- !u!1 &1767525702
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5694,99 +5760,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1755314894}
-  - component: {fileID: 1755314895}
+  - component: {fileID: 1767525703}
+  - component: {fileID: 1767525704}
   m_Layer: 0
-  m_Name: Wash
+  m_Name: Kick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1755314894
+--- !u!4 &1767525703
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755314893}
+  m_GameObject: {fileID: 1767525702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1380002060}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1755314895
+--- !u!114 &1767525704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755314893}
+  m_GameObject: {fileID: 1767525702}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveClass:
-    moveName: Wash
+    moveName: Kick
     type: Drum
-    effective: 1.5
-    group: 1
-    cost: 20
-    friendly: 0
-    harmonic: 0
---- !u!1 &1756407029
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1756407030}
-  - component: {fileID: 1756407031}
-  m_Layer: 0
-  m_Name: Arpeggio
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1756407030
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756407029}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1756407031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756407029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Arpeggio
-    type: Guitar
     effective: 2
     group: 0
     cost: 12
     friendly: 0
+    description: PUT DESCRIPTION HERE
     harmonic: 0
 --- !u!1 &1774238741
 GameObject:
@@ -5886,108 +5902,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 1600, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1780497579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1780497580}
-  - component: {fileID: 1780497581}
-  m_Layer: 0
-  m_Name: Hi Hat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1780497580
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780497579}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1780497581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780497579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Hi Hat
-    type: Drum
-    effective: 1
-    group: 1
-    cost: 10
-    friendly: 0
-    harmonic: 0
---- !u!1 &1809475503
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1809475504}
-  - component: {fileID: 1809475505}
-  m_Layer: 0
-  m_Name: Barre
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1809475504
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1809475503}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 18
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1809475505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1809475503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Barre
-    type: Guitar
-    effective: 1.5
-    group: 1
-    cost: 20
-    friendly: 0
-    harmonic: 0
 --- !u!1 &1810568610
 GameObject:
   m_ObjectHideFlags: 0
@@ -6077,11 +5991,11 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 22386009}
+  - {fileID: 1925584153}
   midMoves:
-  - {fileID: 1036802895}
+  - {fileID: 510196734}
   backMoves:
-  - {fileID: 207450147}
+  - {fileID: 1026692208}
   known: {fileID: 1300073382}
 --- !u!135 &1810568612
 SphereCollider:
@@ -6158,6 +6072,110 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: -0.26700002, z: 0}
+--- !u!1 &1834259462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1834259463}
+  - component: {fileID: 1834259464}
+  m_Layer: 0
+  m_Name: Plink
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1834259463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834259462}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1834259464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834259462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Plink
+    type: Piano
+    effective: 1
+    group: 0
+    cost: 4
+    friendly: 0
+    description: A weak, singular piano attack.
+    harmonic: 0
+--- !u!1 &1925584153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1925584154}
+  - component: {fileID: 1925584155}
+  m_Layer: 0
+  m_Name: Mosh Pit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1925584154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925584153}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1925584155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925584153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Mosh Pit
+    type: Physical
+    effective: 1
+    group: 1
+    cost: 2
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
 --- !u!1001 &1986967194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6303,6 +6321,110 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1986967194}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2001506053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2001506054}
+  - component: {fileID: 2001506055}
+  m_Layer: 0
+  m_Name: Forte
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2001506054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001506053}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2001506055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001506053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Forte
+    type: Piano
+    effective: 1.5
+    group: 1
+    cost: 20
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
+--- !u!1 &2008602821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008602822}
+  - component: {fileID: 2008602823}
+  m_Layer: 0
+  m_Name: Subito
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2008602822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008602821}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2008602823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008602821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Subito
+    type: Piano
+    effective: 2
+    group: 1
+    cost: 30
+    friendly: 0
+    description: PUT DESCRIPTION HERE
+    harmonic: 0
 --- !u!1001 &2029020735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6448,6 +6570,58 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2029020735}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2040045130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2040045131}
+  - component: {fileID: 2040045132}
+  m_Layer: 0
+  m_Name: Red Line
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2040045131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040045130}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.36, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1380002060}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2040045132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040045130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveClass:
+    moveName: Red Line
+    type: Heal
+    effective: 0.2
+    group: 1
+    cost: 15
+    friendly: 1
+    description: Heal 20% of every party member's health
+    harmonic: 0
 --- !u!1 &2057566759
 GameObject:
   m_ObjectHideFlags: 0
@@ -6537,11 +6711,11 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 22386009}
+  - {fileID: 1925584153}
   midMoves:
-  - {fileID: 1036802895}
+  - {fileID: 510196734}
   backMoves:
-  - {fileID: 207450147}
+  - {fileID: 1026692208}
   known: {fileID: 1300073382}
 --- !u!135 &2057566761
 SphereCollider:
@@ -6618,108 +6792,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: -0.26700002, z: 0}
---- !u!1 &2086926861
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2086926862}
-  - component: {fileID: 2086926863}
-  m_Layer: 0
-  m_Name: Kick
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2086926862
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086926861}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2086926863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2086926861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Kick
-    type: Drum
-    effective: 2
-    group: 0
-    cost: 12
-    friendly: 0
-    harmonic: 0
---- !u!1 &2129679881
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2129679882}
-  - component: {fileID: 2129679883}
-  m_Layer: 0
-  m_Name: Snare
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2129679882
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129679881}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.36, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1380002060}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2129679883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129679881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8971855296f3572468b130f16e156926, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveClass:
-    moveName: Snare
-    type: Drum
-    effective: 1.5
-    group: 0
-    cost: 8
-    friendly: 0
-    harmonic: 0
 --- !u!1 &2140881483
 GameObject:
   m_ObjectHideFlags: 0
@@ -6809,9 +6881,9 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 22386009}
+  - {fileID: 1925584153}
   midMoves:
-  - {fileID: 1670859320}
+  - {fileID: 324284753}
   backMoves: []
   known: {fileID: 1300073382}
 --- !u!135 &2140881485
@@ -6887,7 +6959,7 @@ Transform:
   m_Children:
   - {fileID: 191975176}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6354224533798910793
 PrefabInstance:

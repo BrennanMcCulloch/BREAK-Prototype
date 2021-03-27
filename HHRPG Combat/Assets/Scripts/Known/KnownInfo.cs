@@ -48,8 +48,8 @@ public class KnownInfo : MonoBehaviour
 
     public void InitializeJSON()
     {
-        AssetDatabase.ImportAsset("Assets/Resources/JSON/KnownAffinities.json");
-        var known = (TextAsset)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/KnownAffinities.json");
+        //Resources.Load("Assets/Resources/JSON/KnownAffinities.json");
+        var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
         knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
     }
 
@@ -61,8 +61,8 @@ public class KnownInfo : MonoBehaviour
 
     public void InitializeJSONNew()
     {
-        AssetDatabase.ImportAsset("Assets/Resources/JSON/KnownAffinities.json");
-        var known = (TextAsset)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/KnownAffinities.json");
+        //AssetDatabase.ImportAsset("Assets/Resources/JSON/KnownAffinities.json");
+        var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
         knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
 
         for(int x = 0; x < knownInfo.Length; x++)

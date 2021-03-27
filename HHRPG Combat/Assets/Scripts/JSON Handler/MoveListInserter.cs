@@ -5,7 +5,7 @@ using UnityEditor;
 
 [ExecuteInEditMode]
 [System.Serializable]
-public class MoveListInserter : MonoBehaviour
+public class MoveListInserter : MonoBehaviour//test
 {
     //INITIALIZE TO ALL POSSIBLE MOVES
     public MoveClass[] allMoves;
@@ -20,6 +20,7 @@ public class MoveListInserter : MonoBehaviour
     private void Update()
     {
 #if UNITY_EDITOR
+        //DoTheThing();
         if(isItDone == 0)
         {
             DoTheThing();
@@ -30,8 +31,8 @@ public class MoveListInserter : MonoBehaviour
     
     private void DoTheThing()
     {
-        AssetDatabase.ImportAsset("Assets/Resources/JSON/AllMovesList.json");
-        moveList = (TextAsset)AssetDatabase.LoadMainAssetAtPath("Assets/Resources/JSON/AllMovesList.json");
+        //AssetDatabase.ImportAsset("Assets/Resources/JSON/AllMovesList.json");
+        moveList = Resources.Load<TextAsset>("JSON/AllMovesList") as TextAsset;
         allMoves = JsonHelper.FromJson<MoveClass>(moveList.text);
         string fixitstring = JsonHelper.ToJson<MoveClass>(allMoves, true);
 
@@ -54,7 +55,7 @@ public class MoveListInserter : MonoBehaviour
 
             MoveClass current = allMoves[x];
 
-            System.Type myType = System.Type.GetType("MoveClass");
+            //System.Type myType = System.Type.GetType("MoveClass");
 
 
             MoveClassWrapper thing = temp.AddComponent<MoveClassWrapper>();
@@ -64,6 +65,7 @@ public class MoveListInserter : MonoBehaviour
             thing.MoveClass.SetGroup(current.GetGroup());
             thing.MoveClass.SetCost(current.GetCost());
             thing.MoveClass.SetFriend(current.GetFriend());
+            thing.MoveClass.SetDesc(current.GetDesc());
             thing.MoveClass.SetHarm(current.GetHarm());
 
         }

@@ -71,7 +71,7 @@ public class PartyMemberClass : MonoBehaviour
 
     private void UpdateUI()
     {
-        foreach (Text theThing in UIStuff.GetComponentsInChildren<Text>())
+        foreach (Text theThing in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
             if (theThing.name == "Name")
             {
@@ -113,12 +113,18 @@ public class PartyMemberClass : MonoBehaviour
     private void OnMouseEnter()
     {
         UpdateUI();
-        UIStuff.SetActive(true);
+        foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
+        {
+            textbox.gameObject.SetActive(true);
+        }
     }
 
     private void OnMouseExit()
     {
-        UIStuff.SetActive(false);
+        foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
+        {
+            textbox.gameObject.SetActive(false);
+        }
     }
 
 }
@@ -139,8 +145,10 @@ public class ModifierDictionary : SerializableDictionary<string, Modifier> { }
 [System.Serializable]
 public class StatDictionary : SerializableDictionary<string, int> { }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer (typeof(AffinityDictionary))]
-public class MyDictionaryDrawerAffinity : DictionaryDrawer<string, string> { }
+public class MyDictionaryDrawerAffinity : SerializableDictionary<string, string> { }
 
 [CustomPropertyDrawer (typeof(StatDictionary))]
-public class MyDictionaryDrawerStats : DictionaryDrawer<string, int> { }
+public class MyDictionaryDrawerStats : SerializableDictionary<string, int> { }
+#endif

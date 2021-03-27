@@ -12,7 +12,7 @@ public class CameraControls : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class CameraControls : MonoBehaviour
         {
             mouseX = Input.GetAxis("Mouse X");
             mouseY = Input.GetAxis("Mouse Y");
-            cam.transform.Rotate(-mouseY * 50 * Time.deltaTime, mouseX * 50 * Time.deltaTime, 0);
+            cam.transform.Rotate(-mouseY / 3, mouseX / 3, 0);
         }
 
         //cam doesn't rotate around z axis

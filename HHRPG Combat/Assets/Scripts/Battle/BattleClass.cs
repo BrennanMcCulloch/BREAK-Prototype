@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using MEC; //coroutine stuff
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
-using UnityEditor;
 
 /*
  * Ok, so, this file is long as heck. So here's an explanation.
@@ -238,6 +236,7 @@ public class BattleClass : MonoBehaviour
             MoveClass moveIt = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass;
             string title = "Button " + x;
             Button thing = rhythmButtons.transform.Find(title).gameObject.GetComponent<Button>();
+            thing.gameObject.GetComponent<MoveClassWrapper>().MoveClass = moveIt;
             thing.onClick.AddListener(() => changeToDo("Rhythm Targeting"));
             thing.onClick.AddListener(() => UpdateMove(moveIt, person));
             thing.gameObject.GetComponentInChildren<Text>().text = person.moves[x].GetComponent<MoveClassWrapper>().MoveClass.moveName;
@@ -414,7 +413,7 @@ public class BattleClass : MonoBehaviour
                     {
                         if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
                         {
-                            MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, false);
+                            MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, "Attack. Duh.", false);
 
                             EQMenu.SetActive(false);
                             yield return PartyMove(person, hit.transform.gameObject, hitThem);
@@ -564,6 +563,12 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //partyButtons.SetActive(true);
+
+                runItParty = false;
+                runItEnemy = true;
+                isItRunningEnemy = true;
+                StopAllCoroutines();//hypothetically, this should instantly trigger the enemy turn upon a break
+
                 toDo = "Done";
             }
 
@@ -782,7 +787,7 @@ public class BattleClass : MonoBehaviour
                     surprise.Initialize();
 
                     //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon)
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && ArrayUtility.Contains<EnemyClass>(front, victimP.GetComponent<EnemyClass>()) == true)
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && System.Array.BinarySearch<EnemyClass>(front, 0, maxRowSize, victimP.GetComponent<EnemyClass>()) > 0)
                     {
                         chains.Add(surprise);
                         Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
@@ -855,6 +860,7 @@ public class BattleClass : MonoBehaviour
                         victimP.gameObject.GetComponent<EnemyClass>().currentHealth = maxHealthParty;
                     }
                     DamagePopup.Create(damagePosition, damage.ToString(), 0, 1, 0);
+                    yield return new WaitForSeconds(timing);
                 }
 
             /*
@@ -892,6 +898,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //retain learned information
+                //yield return new WaitForSeconds(timing);
 
                 break;
             //ALL BUFFS GO HERE.
@@ -1781,6 +1788,7 @@ public class BattleClass : MonoBehaviour
     {
         isItRunningParty = false;
         Debug.Log("PARTY PHASE");
+        DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "PARTY PHASE", 0, 0, 1);
         int turn = 0;
         while (turn < party.Length && party[turn].gameObject.activeSelf)
         {
@@ -1803,6 +1811,7 @@ public class BattleClass : MonoBehaviour
     IEnumerator EnemyPhase()
     {
         Debug.Log("ENEMY PHASE");
+        DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "ENEMY PHASE", 1, 0, 0);
         isItRunningEnemy = false;
         int sizee = maxNumberOfRows * maxRowSize;
         Line[] line = new Line[sizee];

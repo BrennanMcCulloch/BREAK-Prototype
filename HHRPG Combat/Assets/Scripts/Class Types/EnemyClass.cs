@@ -23,7 +23,7 @@ public class EnemyClass : MonoBehaviour
 
     private void Start()
     {
-        UIStuff.SetActive(false);
+        //UIStuff.SetActive(true);
         HPEP = this.gameObject.GetComponentInChildren<Canvas>();
         stats.TryGetValue("HP", out max);
 
@@ -59,7 +59,7 @@ public class EnemyClass : MonoBehaviour
 
     private void UpdateUI()
     {
-        foreach (Text theThing in UIStuff.GetComponentsInChildren<Text>())
+        foreach (Text theThing in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
             if(theThing.name == "Name")
             {
@@ -97,11 +97,17 @@ public class EnemyClass : MonoBehaviour
     {
         knownThing = known.getFromJSON(enemyName);
         UpdateUI();
-        UIStuff.SetActive(true);
+        foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
+        {
+            textbox.gameObject.SetActive(true);
+        }
     }
 
     private void OnMouseExit()
     {
-        UIStuff.SetActive(false);
+        foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
+        {
+            textbox.gameObject.SetActive(false);
+        }
     }
 }

@@ -7,6 +7,7 @@
 			"group": false,
 			"cost": 2,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -16,6 +17,7 @@
 			"group": true,
 			"cost": 2,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -25,6 +27,7 @@
 			"group": false,
 			"cost": 4,
 			"friendly": false,
+			"description": "A weak, singular drum attack.",
 			"harmonic": false
 		},
 		{
@@ -34,6 +37,7 @@
 			"group": false,
 			"cost": 8,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -43,6 +47,7 @@
 			"group": false,
 			"cost": 12,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -52,6 +57,7 @@
 			"group": true,
 			"cost": 10,
 			"friendly": false,
+			"description": "A weak drum attack that hits every enemy.",
 			"harmonic": false
 		},
 		{
@@ -61,6 +67,7 @@
 			"group": true,
 			"cost": 20,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -70,6 +77,7 @@
 			"group": true,
 			"cost": 30,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -79,6 +87,7 @@
 			"group": false,
 			"cost": 4,
 			"friendly": false,
+			"description": "A weak, singular bass attack.",
 			"harmonic": false
 		},
 		{
@@ -88,6 +97,7 @@
 			"group": false,
 			"cost": 8,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -97,6 +107,7 @@
 			"group": false,
 			"cost": 12,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -106,6 +117,7 @@
 			"group": true,
 			"cost": 10,
 			"friendly": false,
+			"description": "A weak bass attack that hits every enemy.",
 			"harmonic": false
 		},
 		{
@@ -115,6 +127,7 @@
 			"group": true,
 			"cost": 20,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -124,6 +137,7 @@
 			"group": true,
 			"cost": 30,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -133,6 +147,7 @@
 			"group": false,
 			"cost": 4,
 			"friendly": false,
+			"description": "A weak, singular guitar attack.",
 			"harmonic": false
 		},
 		{
@@ -142,6 +157,7 @@
 			"group": false,
 			"cost": 8,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -151,6 +167,7 @@
 			"group": false,
 			"cost": 12,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -160,6 +177,7 @@
 			"group": true,
 			"cost": 10,
 			"friendly": false,
+			"description": "A weak guitar attack that hits every enemy.",
 			"harmonic": false
 		},
 		{
@@ -169,6 +187,7 @@
 			"group": true,
 			"cost": 20,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -178,6 +197,7 @@
 			"group": true,
 			"cost": 30,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -187,6 +207,7 @@
 			"group": false,
 			"cost": 4,
 			"friendly": false,
+			"description": "A weak, singular piano attack.",
 			"harmonic": false
 		},
 		{
@@ -196,6 +217,7 @@
 			"group": false,
 			"cost": 8,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -205,6 +227,7 @@
 			"group": false,
 			"cost": 12,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -214,6 +237,7 @@
 			"group": true,
 			"cost": 10,
 			"friendly": false,
+			"description": "A weak piano attack that hits every enemy.",
 			"harmonic": false
 		},
 		{
@@ -223,6 +247,7 @@
 			"group": true,
 			"cost": 20,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -232,6 +257,7 @@
 			"group": true,
 			"cost": 30,
 			"friendly": false,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -241,6 +267,7 @@
 			"group": false,
 			"cost": 6,
 			"friendly": true,
+			"description": "Heal 20% of one party member's health.",
 			"harmonic": false
 		},
 		{
@@ -250,6 +277,7 @@
 			"group": false,
 			"cost": 6,
 			"friendly": true,
+			"description": "PUT DESCRIPTION HERE",
 			"harmonic": false
 		},
 		{
@@ -259,6 +287,7 @@
 			"group": true,
 			"cost": 15,
 			"friendly": true,
+			"description": "Heal 20% of every party member's health",
 			"harmonic": false
 		},
 		{
@@ -268,6 +297,7 @@
 			"group": false,
 			"cost": 7,
 			"friendly": true,
+			"description": "Temporarily buff one party member's defence by 3.",
 			"harmonic": false
 		},
 		{
@@ -277,6 +307,7 @@
 			"group": false,
 			"cost": 10,
 			"friendly": true,
+			"description": "Temporarily buff one party member's rhythm by 3.",
 			"harmonic": false
 		}
 	]

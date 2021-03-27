@@ -13,9 +13,10 @@ public class MoveClass
     public bool group; //true if group effect, false if not
     public int cost;
     public bool friendly; //true if only cast on party, false if cast on enemy
+    public string description;
     public bool harmonic; //true if it's a move for a harmonic
 
-    public MoveClass(string _move, string _type, float _eff, bool _group, int _cost, bool _friend, bool _harm)
+    public MoveClass(string _move, string _type, float _eff, bool _group, int _cost, bool _friend, string _desc, bool _harm)
     {
         moveName = _move;
         type = _type;
@@ -23,6 +24,7 @@ public class MoveClass
         group = _group;
         cost = _cost;
         friendly = _friend;
+        description = _desc;
         harmonic = _harm;
     }
 
@@ -89,6 +91,16 @@ public class MoveClass
     public bool GetHarm()
     {
         return harmonic;
+    }
+
+    public void SetDesc(string _d)
+    {
+        description = _d;
+    }
+
+    public string GetDesc()
+    {
+        return description;
     }
 
     public void SetHarm(bool _h)

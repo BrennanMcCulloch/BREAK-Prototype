@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class MoveClassWrapper : MonoBehaviour
 {
-    public MoveClass MoveClass = new MoveClass("OVERWRITE THIS", null, 3, false, 0, false, false);
+    public MoveClass MoveClass = new MoveClass("OVERWRITE THIS", null, 3, false, 0, false, "OVERWRITE THIS TOO", false);
 }

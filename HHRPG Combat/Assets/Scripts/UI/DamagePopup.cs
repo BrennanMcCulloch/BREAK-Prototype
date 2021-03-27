@@ -9,26 +9,21 @@ public class DamagePopup : MonoBehaviour
     [SerializeField] private static Transform damagePopup;
     
 
-    public static DamagePopup Create(Vector3 position, string thingToDisplay, float r, float g, float b)
+    public static void Create(Vector3 position, string thingToDisplay, float r, float g, float b)
     {
-        AssetDatabase.ImportAsset("Assets/Prefabs/UI/damagePopup.prefab");
+        //AssetDatabase.ImportAsset("Assets/Prefabs/UI/damagePopup.prefab");
         //GameObject prefab = (GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/UI/damagePopup.prefab");
-        UnityEngine.Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/UI/damagePopup.prefab", typeof(GameObject));
+        UnityEngine.Object prefab = Resources.Load<GameObject>("UI/damagePopup") as GameObject;
         GameObject damage = Instantiate(prefab, position, Quaternion.identity) as GameObject;
         DamagePopup damagePopupTransform = damage.GetComponent<DamagePopup>();
         damagePopupTransform.Setup(thingToDisplay, r, g, b);
 
-        return damagePopupTransform;
+        //return damagePopupTransform;
     }
 
-    private TextMeshPro textMesh;
+    public TextMeshPro textMesh;
     private float disappear;
     private Color textColor;
-
-    private void Awake()
-    {
-        textMesh = transform.GetComponent<TextMeshPro>();
-    }
 
     public void Setup(string affinity, float r, float g, float b)
     {
