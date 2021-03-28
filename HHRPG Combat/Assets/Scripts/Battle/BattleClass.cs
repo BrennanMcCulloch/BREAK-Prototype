@@ -210,9 +210,10 @@ public class BattleClass : MonoBehaviour
         var EQMenu = Instantiate(EQButton);
         var xPos = person.gameObject.transform.position.x;
         var zPos = person.gameObject.transform.position.z;
+        float shift = -Mathf.Sign(xPos) * -(zPos + 20) * 20;
 
         //POSITIONING UI ELEMENTS
-        Vector3 temp = new Vector3(xPos * (Screen.width / (Screen.width / 40)), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 40)), 1);
+        Vector3 temp = new Vector3(xPos * (Screen.width / (Screen.width / 40)) + (shift), (zPos + 18) * (-0.2f * Mathf.Abs(21 + zPos)) * (Screen.height / (Screen.height / 40)) + (shift / 2), 1);
         partyButtons.gameObject.transform.position = temp;
         partyButtons.transform.SetParent(canvas.transform, false);
         foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
@@ -455,8 +456,6 @@ public class BattleClass : MonoBehaviour
                 {
                     Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                     rhythmButtons.SetActive(false);
-                    EQMenu.SetActive(true);
-                    yield return _WaitForInputClick();
 
                     if(currentMove != null)
                     {
@@ -495,6 +494,8 @@ public class BattleClass : MonoBehaviour
                         }
                         else
                         {
+                            EQMenu.SetActive(true);
+                            yield return _WaitForInputClick();
                             RaycastHit hit;
                             Ray ray;
 
@@ -506,6 +507,7 @@ public class BattleClass : MonoBehaviour
                                     if (hit.transform.gameObject.GetComponent<PartyMemberClass>() != null)
                                     {
                                         person.currentEP -= currentMove.cost; //UPDATE EP
+                                        EQMenu.SetActive(false);
                                         yield return PartyMove(person, hit.transform.gameObject, currentMove);
                                         toDo = "Done";
                                     }
@@ -515,6 +517,7 @@ public class BattleClass : MonoBehaviour
                                     if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
                                     {
                                         person.currentEP -= currentMove.cost; //UPDATE EP
+                                        EQMenu.SetActive(false);
                                         yield return PartyMove(person, hit.transform.gameObject, currentMove);
                                         toDo = "Done";
                                     }
@@ -522,8 +525,6 @@ public class BattleClass : MonoBehaviour
                             }
                         }
                     }
-
-                    EQMenu.SetActive(false);
                 }
 
                 rhythmButtons.SetActive(false);
@@ -628,7 +629,6 @@ public class BattleClass : MonoBehaviour
             partyButtons.SetActive(true);
         }
 
-        //toDo = "Turn Ended";
         DestroyImmediate(partyButtons);
         DestroyImmediate(rhythmButtons);
         foreach (ChainClass chainThing in chains)
