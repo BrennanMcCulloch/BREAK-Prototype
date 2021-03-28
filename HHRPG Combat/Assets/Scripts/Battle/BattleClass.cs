@@ -34,9 +34,9 @@ public class BattleClass : MonoBehaviour
     public int maxRowSize = 1;
     private static int maxNumberOfRows = 3;
 
-    public EnemyClass[] front;
-    public EnemyClass[] mid;
-    public EnemyClass[] back;
+    public GameObject[] front;
+    public GameObject[] mid;
+    public GameObject[] back;
     public EnemyClass[,] enemies;
 
     public PartyMemberClass[] restOfParty;
@@ -84,39 +84,6 @@ public class BattleClass : MonoBehaviour
         }
     }
 
-    public void UpdateEnemies()
-    {
-        for (int x = 0; x < maxNumberOfRows; x++)
-        {
-            for (int y = 0; y < maxRowSize; y++)
-            {
-                float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
-                float yPosFront = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2) - 1;
-                float zPosFront = -30 - (x * 10);
-                Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
-
-                positionFront.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
-                enemies[x, y].gameObject.transform.position = positionFront;
-
-                switch(x)
-                {
-                    case 0:
-                        front[y] = enemies[x, y];
-                        break;
-                    case 1:
-                        mid[y] = enemies[x, y];
-                        break;
-                    case 2:
-                        back[y] = enemies[x, y];
-                        break;
-                    default:
-                        Debug.Log("Lance yelled at me while I was writing this debug statement");
-                        break;
-                }
-            }
-        }
-    }
-
     public void SetUpEnemies()
     {
         for (int x = 0; x < maxNumberOfRows; x++)
@@ -126,39 +93,39 @@ public class BattleClass : MonoBehaviour
                 switch (x)
                 {
                     case 0:
-                        enemies[x, y] = front[y];
+                        enemies[x, y] = front[y].GetComponentInChildren<EnemyClass>();
 
                         float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
-                        float yPosFront = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2) - 1;
+                        float yPosFront = x * 4.2f + (front[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosFront = -30 - (x * 10);
                         Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
 
-                        positionFront.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
-                        enemies[x, y].gameObject.transform.position = positionFront;
+                        positionFront.y += (front[y].gameObject.transform.localScale.y / 2);
+                        front[y].transform.position = positionFront;
 
                         break;
                     case 1:
-                        enemies[x, y] = mid[y];
+                        enemies[x, y] = mid[y].GetComponentInChildren<EnemyClass>();
 
                         float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
-                        float yPosMid = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        float yPosMid = x * 4.2f + (mid[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosMid = -30 - (x * 10); ;
                         Vector3 positionMid = new Vector3(xPosMid, yPosMid, zPosMid);
 
-                        positionMid.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
-                        enemies[x, y].gameObject.transform.position = positionMid;
+                        positionMid.y += (mid[y].gameObject.transform.localScale.y / 2);
+                        mid[y].gameObject.transform.position = positionMid;
 
                         break;
                     case 2:
-                        enemies[x, y] = back[y];
+                        enemies[x, y] = back[y].GetComponentInChildren<EnemyClass>();
 
                         float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
-                        float yPosBack = x * 4.2f + (enemies[x, y].gameObject.transform.localScale.y / 2);
+                        float yPosBack = x * 4.2f + (back[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosBack = -30 - (x * 10); ;
                         Vector3 positionBack = new Vector3(xPosBack, yPosBack, zPosBack);
 
-                        positionBack.y += (enemies[x, y].gameObject.transform.localScale.y / 2);
-                        enemies[x, y].gameObject.transform.position = positionBack;
+                        positionBack.y += (back[y].gameObject.transform.localScale.y / 2);
+                        back[y].gameObject.transform.position = positionBack;
 
                         break;
                     default:
@@ -341,11 +308,11 @@ public class BattleClass : MonoBehaviour
                                     didItHit = true;
                                     if(x == 0)
                                     {
-                                        EnemyClass vic = front[y];
-                                        front[y] = enemyClicked.GetComponent<EnemyClass>();
-                                        if (xEnemy == 0) { front[yEnemy] = vic; }
-                                        else if (xEnemy == 1) { mid[yEnemy] = vic; }
-                                        else if (xEnemy == 2) { back[yEnemy] = vic; }
+                                        EnemyClass vic = front[y].GetComponentInChildren<EnemyClass>();
+                                        front[y] = enemyClicked;
+                                        if (xEnemy == 0) { front[yEnemy] = vic.transform.parent.gameObject; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vic.transform.parent.gameObject; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vic.transform.parent.gameObject; }
 
                                         SetUpEnemies();
 
@@ -353,11 +320,11 @@ public class BattleClass : MonoBehaviour
                                     }
                                     else if(x == 1)
                                     {
-                                        EnemyClass vicMid = mid[y];
-                                        mid[y] = enemyClicked.GetComponent<EnemyClass>();
-                                        if (xEnemy == 0) { front[yEnemy] = vicMid; }
-                                        else if (xEnemy == 1) { mid[yEnemy] = vicMid; }
-                                        else if (xEnemy == 2) { back[yEnemy] = vicMid; }
+                                        EnemyClass vicMid = mid[y].GetComponentInChildren<EnemyClass>();
+                                        mid[y] = enemyClicked;
+                                        if (xEnemy == 0) { front[yEnemy] = vicMid.transform.parent.gameObject; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vicMid.transform.parent.gameObject; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vicMid.transform.parent.gameObject; }
 
                                         SetUpEnemies();
 
@@ -365,11 +332,11 @@ public class BattleClass : MonoBehaviour
                                     }
                                     else if(x == 2)
                                     {
-                                        EnemyClass vicB = back[y];
-                                        back[y] = enemyClicked.GetComponent<EnemyClass>();
-                                        if (xEnemy == 0) { front[yEnemy] = vicB; }
-                                        else if (xEnemy == 1) { mid[yEnemy] = vicB; }
-                                        else if (xEnemy == 2) { back[yEnemy] = vicB; }
+                                        EnemyClass vicB = back[y].GetComponentInChildren<EnemyClass>();
+                                        back[y] = enemyClicked;
+                                        if (xEnemy == 0) { front[yEnemy] = vicB.transform.parent.gameObject; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vicB.transform.parent.gameObject; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vicB.transform.parent.gameObject; }
 
                                         SetUpEnemies();
 
@@ -803,8 +770,17 @@ public class BattleClass : MonoBehaviour
                     surprise.chainVictim = victimP.GetComponent<EnemyClass>();
                     surprise.Initialize();
 
+                    bool isItThere = false;
+                    for(int x = 0; x < maxRowSize; x++)
+                    {
+                        if(victimP.GetComponent<EnemyClass>() == front[x].GetComponentInChildren<EnemyClass>())
+                        {
+                            isItThere = true;
+                        }
+                    }
+
                     //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon) BUILD FIX
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && System.Array.Find<EnemyClass>(front, temp => temp.stats == victimP.GetComponent<EnemyClass>().stats))
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && isItThere)
                     {
                         chains.Add(surprise);
                         Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
@@ -1109,6 +1085,9 @@ public class BattleClass : MonoBehaviour
         doerAffinityPosition.z += 2;
         doerAffinityPosition.x -= 1;
         doerAffinityPosition.y += 3;
+
+        doer.gameObject.GetComponent<Animator>().SetTrigger("Move");
+        yield return new WaitForSeconds(timing);
         switch (move.type)
         {
             //ALL FORMS OF ATTACK. ONCE NEW TYPES ARE ADDED, THEY GO HERE.
@@ -1497,7 +1476,7 @@ public class BattleClass : MonoBehaviour
                 {
                     for (int y = 0; y < maxRowSize; y++)
                     {
-                        if(enemies[x, y].gameObject.activeSelf == true)
+                        if(enemies[x, y] != null)
                         {
                             if (lowestHealth > enemies[x, y].currentHealth)
                             {
@@ -1634,7 +1613,7 @@ public class BattleClass : MonoBehaviour
         {
             for(int y = 0; y < maxRowSize; y++)
             {
-                if(enemies[x, y].gameObject.activeSelf != false)
+                if(enemies[x, y]!= null)
                 {
                     int result;
                     enemies[x, y].stats.TryGetValue(type, out result);
@@ -1680,7 +1659,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if (enemies[x, y].gameObject.activeSelf != false)
+                if (enemies != null)
                 {
                     int result;
                     enemies[x, y].stats.TryGetValue(type, out result);
@@ -1868,56 +1847,42 @@ public class BattleClass : MonoBehaviour
         DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "ENEMY PHASE", 1, 0, 0);
         //yield return new WaitForSeconds(1);
         isItRunningEnemy = false;
-        int sizee = maxNumberOfRows * maxRowSize;
-        Line[] line = new Line[sizee];
-
-        //MAKE ENEMIES FALL
-        int spot = 0;
-        for(int row = 0; row < maxNumberOfRows; row++)
+        bool swapIt = false;
+        bool bopIt = false;
+        for(int x = 0; x < maxRowSize; x++)
         {
-            for(int col = 0; col < maxRowSize; col++)
+            if(front[x].gameObject.activeSelf == false)
             {
-                line[spot].enemy = enemies[row, col].gameObject; //testing backwards to see if it falls how i want it to DO WORK HERE
-                line[spot].xPos = row;
-                line[spot].yPos = col;
-                spot++;
+                bopIt = true;
+            }
+        }
+        if(bopIt)
+        {
+            swapIt = true;
+        }
+        if(swapIt == true)
+        {
+            Debug.Log("SWAPPING");
+            GameObject[] timp = new GameObject[maxRowSize];
+            for(int x = 0; x < maxRowSize; x++)
+            {
+                timp[x] = back[x];
+            }
+            for (int x = 0; x < maxRowSize; x++)
+            {
+                back[x] = mid[x];
+            }
+            for (int x = 0; x < maxRowSize; x++)
+            {
+                mid[x] = front[x];
+            }
+            for (int x = 0; x < maxRowSize; x++)
+            {
+                front[x] = timp[x];
             }
         }
 
-        //if it's not active, replace it with one that is, IF there's one behind it that's active
-        for(int yes = 0; yes < line.Length; yes++)
-        {
-            if (line[yes].enemy.activeSelf == false)
-            {
-                //go through rest of line
-                int pos = yes + 1;
-                EnemyClass newThing = null;
-                while(pos < line.Length - 1)
-                {
-                    if(line[pos].enemy != null && line[pos].enemy.activeSelf == true)
-                    {
-                        newThing = line[pos].enemy.GetComponent<EnemyClass>();
-                        break;
-                    }
-                    pos++;
-                }
-
-                if(newThing == null) { break; }
-                int xPos1 = line[yes].xPos;
-                int yPos1 = line[yes].yPos;
-                int xPos2 = line[pos].xPos;
-                int yPos2 = line[pos].yPos;
-                Debug.Log("MOVED " + xPos1 + yPos1 + " TO " + xPos2 + yPos2);
-                EnemyClass temp = enemies[xPos1, yPos1];
-                enemies[xPos1, yPos1] = enemies[xPos2, yPos2];
-                enemies[xPos2, yPos2] = temp;
-                Line temporary = line[yes];
-                line[yes] = line[pos];
-                line[pos] = temporary;
-            }
-        }
-
-        UpdateEnemies();
+        SetUpEnemies();
 
         //DO MOVES
         for (int row = 0; row < maxNumberOfRows; row++)
@@ -1925,7 +1890,31 @@ public class BattleClass : MonoBehaviour
             for (int col = 0; col < maxRowSize; col++)
             {
                 //Debug.Log("in row " + row + " and col " + col);
-                if (enemies[row, col].gameObject.activeSelf) { yield return EnemyTurn(enemies[row, col], row, col); }
+                switch(row)
+                {
+                    case 0:
+                        if(front[col].transform.GetChild(0).gameObject.activeSelf == true)
+                        {
+                            yield return EnemyTurn(front[col].GetComponentInChildren<EnemyClass>(), row, col);
+                        }
+                        break;
+                    case 1:
+                        if(mid[col].transform.GetChild(0).gameObject.activeSelf == true)
+                        {
+                            yield return EnemyTurn(mid[col].GetComponentInChildren<EnemyClass>(), row, col);
+                        }
+                        break;
+                    case 2:
+                        if(back[col].transform.GetChild(0).gameObject.activeSelf == true)
+                        {
+                            yield return EnemyTurn(back[col].GetComponentInChildren<EnemyClass>(), row, col);
+                        }
+                        break;
+                    default:
+                        throw new System.Exception("Default in enemy turn cycle");
+                }
+
+                
             }
         }
 

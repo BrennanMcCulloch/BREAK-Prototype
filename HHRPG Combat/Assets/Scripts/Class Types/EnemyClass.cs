@@ -10,6 +10,7 @@ public class EnemyClass : MonoBehaviour
     public Material highlightMaterial;
     private Material def;
     public int currentHealth;
+    private int lastHealth;
     public AffinityDictionary affinities;
     public StatDictionary stats;
     public ModifierDictionary buffDebuff;
@@ -44,18 +45,25 @@ public class EnemyClass : MonoBehaviour
                 epBar.gameObject.SetActive(false);
             }
         }
+        lastHealth = currentHealth;
     }
 
     private void Update()
     {
         if (currentHealth <= 0)
         {
+            this.transform.parent.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
         }
         if(currentHealth < max)
         {
             healthBar.gameObject.SetActive(true);
             healthBar.value = currentHealth;
+        }
+        if(lastHealth != currentHealth)
+        {
+            this.gameObject.GetComponent<Animator>().SetTrigger("Hit");
+            lastHealth = currentHealth;
         }
         
     }
