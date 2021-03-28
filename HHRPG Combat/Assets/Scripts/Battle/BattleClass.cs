@@ -786,8 +786,8 @@ public class BattleClass : MonoBehaviour
                     surprise.chainVictim = victimP.GetComponent<EnemyClass>();
                     surprise.Initialize();
 
-                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon)
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && System.Array.BinarySearch<EnemyClass>(front, 0, maxRowSize, victimP.GetComponent<EnemyClass>()) > 0)
+                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon) BUILD FIX
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && UnityEditor.ArrayUtility.Contains<EnemyClass>(front, victimP.GetComponent<EnemyClass>()) == true)//&& System.Array.BinarySearch<EnemyClass>(front, 0, maxRowSize, victimP.GetComponent<EnemyClass>()) > 0
                     {
                         chains.Add(surprise);
                         Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);

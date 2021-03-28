@@ -173,3 +173,9 @@ public abstract class DictionaryDrawer<TK, TV> : PropertyDrawer
         }
     }
 }
+
+[CustomPropertyDrawer(typeof(AffinityDictionary))]
+public class MyDictionaryDrawerAffinity : DictionaryDrawer<string, string> { }
+
+[CustomPropertyDrawer(typeof(StatDictionary))]
+public class MyDictionaryDrawerStats : DictionaryDrawer<string, int> { }

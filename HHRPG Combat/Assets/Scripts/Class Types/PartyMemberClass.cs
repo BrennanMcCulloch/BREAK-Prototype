@@ -13,8 +13,8 @@ public class PartyMemberClass : MonoBehaviour
     public bool currentlyChained = false;
     public bool currentlyGuarding = false;
     public ModifierDictionary buffDebuff;
-    public AffinityDictionary affinities;
-    public StatDictionary stats;
+    [SerializeField] public AffinityDictionary affinities;
+    [SerializeField] public StatDictionary stats;
     public GameObject[] moves; //MAKE THIS SIZE 8
     public GameObject harmonic;
     private string[] names = new string[10];
@@ -145,10 +145,6 @@ public class ModifierDictionary : SerializableDictionary<string, Modifier> { }
 [System.Serializable]
 public class StatDictionary : SerializableDictionary<string, int> { }
 
-#if UNITY_EDITOR
-[CustomPropertyDrawer (typeof(AffinityDictionary))]
-public class MyDictionaryDrawerAffinity : SerializableDictionary<string, string> { }
-
-[CustomPropertyDrawer (typeof(StatDictionary))]
-public class MyDictionaryDrawerStats : SerializableDictionary<string, int> { }
-#endif
+//ON BUILD, ENABLE
+//#if UNITY_EDITOR
+//#endif
