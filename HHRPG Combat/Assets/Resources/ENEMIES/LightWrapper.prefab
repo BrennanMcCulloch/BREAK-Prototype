@@ -166,11 +166,11 @@ MonoBehaviour:
     - 
     - 
   frontMoves:
-  - {fileID: 0}
+  - {fileID: 7277926286639515690, guid: 56fb14a390ce11d42b3ae6b368c9eb69, type: 3}
   midMoves:
-  - {fileID: 0}
+  - {fileID: 6835305508244037476, guid: eb062a0b2b52eb54f93b76639c2350be, type: 3}
   backMoves:
-  - {fileID: 0}
+  - {fileID: 8427432210492487174, guid: a7abfeba0a25a804f80fbaac4c37105c, type: 3}
   known: {fileID: 0}
 --- !u!95 &1455310720615769912
 Animator:
