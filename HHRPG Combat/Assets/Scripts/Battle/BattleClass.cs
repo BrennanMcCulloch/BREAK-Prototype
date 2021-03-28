@@ -264,18 +264,27 @@ public class BattleClass : MonoBehaviour
 
         int EQPoints = 2;
 
+        Texture2D cursor = Resources.Load("UI/target reticle") as Texture2D;
+        Vector2 hotSpot = new Vector2(cursor.width / 2f, cursor.height / 2f);
+
         while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0 && chainedAgain == false)
         {
             //PUT INTERACTIVE STUFF HERE
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            EQMenu.SetActive(false);
+            partyButtons.SetActive(true);
             yield return null;
+
             while(toDo == "EQ")
             {
+                Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                 Debug.Log("EQ");
 
                 partyButtons.SetActive(false);
                 EQMenu.SetActive(true);
                 RaycastHit hit;
                 Ray ray;
+
                 yield return _WaitForInputClick();
                 GameObject enemyClicked = null;
                 int xEnemy = -1;
@@ -400,6 +409,7 @@ public class BattleClass : MonoBehaviour
             
             while(toDo == "Attack")
             {
+                Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                 partyButtons.SetActive(false);
                 EQMenu.SetActive(true);
                 RaycastHit hit;
@@ -439,11 +449,14 @@ public class BattleClass : MonoBehaviour
             {
                 partyButtons.SetActive(false);
                 rhythmButtons.SetActive(true);
-                yield return _WaitForInputClick();
+                yield return null;
 
                 while (toDo == "Rhythm Targeting")
                 {
+                    Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                     rhythmButtons.SetActive(false);
+                    EQMenu.SetActive(true);
+                    yield return _WaitForInputClick();
 
                     if(currentMove != null)
                     {
@@ -510,7 +523,7 @@ public class BattleClass : MonoBehaviour
                         }
                     }
 
-                    yield return null;
+                    EQMenu.SetActive(false);
                 }
 
                 rhythmButtons.SetActive(false);
@@ -576,6 +589,7 @@ public class BattleClass : MonoBehaviour
             {
                 yield return null;
                 Debug.Log("Harmonic");
+                Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
 
                 partyButtons.SetActive(false);
                 EQMenu.SetActive(true);
@@ -609,9 +623,12 @@ public class BattleClass : MonoBehaviour
                 partyButtons.SetActive(true);
                 EQMenu.SetActive(false);
             }
+
+            EQMenu.SetActive(false);
+            partyButtons.SetActive(true);
         }
 
-        toDo = "Turn Ended";
+        //toDo = "Turn Ended";
         DestroyImmediate(partyButtons);
         DestroyImmediate(rhythmButtons);
         foreach (ChainClass chainThing in chains)
@@ -704,6 +721,29 @@ public class BattleClass : MonoBehaviour
                 int agility;
                 victimP.gameObject.GetComponent<EnemyClass>().affinities.TryGetValue(moveP.type, out affinityInQuestion);
                 victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Agility", out agility);
+
+                //Do they dodge?
+                int d100 = Random.Range(1, 101);
+                Modifier buffsAgility;
+                victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Agility", out buffsAgility);
+                if (buffsAgility != null && buffsAgility.turnTime != 0)
+                {
+                    agility += buffsAgility.amount;
+                    buffsAgility.turnTime--;
+                }
+                else
+                {
+                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Agility");
+                }
+                if (d100 <= agility)
+                {
+                    //DODGE STUFF HERE
+                    Debug.Log("Dodge!");
+                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
+                    yield return new WaitForSeconds(timing);
+                    break;
+                }
+
                 if (moveP.type == "Physical")
                 {
                     victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Physical Defence", out statInQuestion);
@@ -735,29 +775,6 @@ public class BattleClass : MonoBehaviour
                     }
                 }
 
-                //Do they dodge?
-                int d100 = Random.Range(1, 101);
-                Modifier buffsAgility;
-                victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.TryGetValue("Agility", out buffsAgility);
-                if (buffsAgility != null && buffsAgility.turnTime != 0)
-                {
-                    agility += buffsAgility.amount;
-                    buffsAgility.turnTime--;
-                }
-                else
-                {
-                    victimP.gameObject.GetComponent<EnemyClass>().buffDebuff.Remove("Agility");
-                }
-
-                if (d100 <= agility)
-                {
-                    //DODGE STUFF HERE
-                    Debug.Log("Dodge!");
-                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
-                    yield return new WaitForSeconds(timing);
-                    break;
-                }
-
                 for (int x = 0; x < keepIt.affinities.Length; x++)
                 {
                     if (keepIt.affinities[x].affName == moveP.GetMoveType())
@@ -787,7 +804,7 @@ public class BattleClass : MonoBehaviour
                     surprise.Initialize();
 
                     //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon) BUILD FIX
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && UnityEditor.ArrayUtility.Contains<EnemyClass>(front, victimP.GetComponent<EnemyClass>()) == true)//&& System.Array.BinarySearch<EnemyClass>(front, 0, maxRowSize, victimP.GetComponent<EnemyClass>()) > 0
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && System.Array.Find<EnemyClass>(front, temp => temp.stats == victimP.GetComponent<EnemyClass>().stats))
                     {
                         chains.Add(surprise);
                         Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
@@ -871,8 +888,17 @@ public class BattleClass : MonoBehaviour
 
                 else if (affinityInQuestion == "Reflect")
                 {
-                    doerP.currentHealth -= damage;
-                }//REFLECT (FIX LATER)
+                    int doerDefence;
+                    if(moveP.type == "Physical")
+                    {
+                        doerP.stats.TryGetValue("Physical Defence", out doerDefence);
+                    }
+                    else
+                    {
+                        doerP.stats.TryGetValue("Rhythm Defence", out doerDefence);
+                    }
+                    doerP.currentHealth -= (damage * (1 - (doerDefence / 100)));
+                }
                 else
                 {
                     victimP.gameObject.GetComponent<EnemyClass>().currentHealth -= damage;
@@ -1135,15 +1161,36 @@ public class BattleClass : MonoBehaviour
                 affinityPosition.x -= 1;
                 affinityPosition.y += 3;
 
+                //Do they dodge?
+                int agility;
+                victim.stats.TryGetValue("Agility", out agility);
+                int d100 = Random.Range(1, 101);
+                Modifier buffsAgility;
+                victim.buffDebuff.TryGetValue("Agility", out buffsAgility);
+                if (buffsAgility != null && buffsAgility.turnTime != 0)
+                {
+                    agility += buffsAgility.amount;
+                    buffsAgility.turnTime--;
+                }
+                else
+                {
+                    victim.buffDebuff.Remove("Agility");
+                }
+
+                if (d100 <= agility)
+                {
+                    //DODGE STUFF HERE
+                    Debug.Log("Dodge!");
+                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
+                    break;
+                }
 
                 //Determine attack value
                 int d20 = Random.Range(1, 21);
                 double percent = d20 * 0.02;
                 int statInQuestion;
                 string affinityInQuestion;
-                int agility;
                 victim.affinities.TryGetValue(move.type, out affinityInQuestion);
-                victim.stats.TryGetValue("Agility", out agility);
                 if (move.type == "Physical")
                 {
                     victim.stats.TryGetValue("Physical Defence", out statInQuestion);
@@ -1173,28 +1220,6 @@ public class BattleClass : MonoBehaviour
                     {
                         victim.buffDebuff.Remove("Rhythm Defence");
                     }
-                }
-
-                //Do they dodge?
-                int d100 = Random.Range(1, 101);
-                Modifier buffsAgility;
-                victim.buffDebuff.TryGetValue("Agility", out buffsAgility);
-                if (buffsAgility != null && buffsAgility.turnTime != 0)
-                {
-                    agility += buffsAgility.amount;
-                    buffsAgility.turnTime--;
-                }
-                else
-                {
-                    victim.buffDebuff.Remove("Agility");
-                }
-
-                if (d100 <= agility)
-                {
-                    //DODGE STUFF HERE
-                    Debug.Log("Dodge!");
-                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
-                    break;
                 }
 
 
@@ -1270,8 +1295,17 @@ public class BattleClass : MonoBehaviour
 
                 else if (affinityInQuestion == "Reflect")
                 {
-                    doer.currentHealth -= damage;
-                }//REFLECT (FIX LATER)
+                    int doerDefence;
+                    if (move.type == "Physical")
+                    {
+                        doer.stats.TryGetValue("Physical Defence", out doerDefence);
+                    }
+                    else
+                    {
+                        doer.stats.TryGetValue("Rhythm Defence", out doerDefence);
+                    }
+                    doer.currentHealth -= (damage * (1 - (doerDefence / 100)));
+                }
                 else
                 {
                     victim.currentHealth -= damage;
@@ -1503,6 +1537,8 @@ public class BattleClass : MonoBehaviour
                 Debug.Log("The enemy did nothing.");
                 break;
         }
+
+        yield return new WaitForSeconds(timing * 3);
     }
 
     public struct data
@@ -1520,19 +1556,22 @@ public class BattleClass : MonoBehaviour
         data[] information = new data[party.Length];
         for (int x = 0; x < party.Length; x++)
         {
-            int temp;
-            party[x].stats.TryGetValue(type, out temp);
-            information[x].stat = temp;
-            int maxHealth;
-            party[x].stats.TryGetValue("HP", out maxHealth);
-            information[x].healthPercentage = party[x].currentHealth / maxHealth;
+            if (party[x].gameObject.activeSelf != false)
+            {
+                int temp;
+                party[x].stats.TryGetValue(type, out temp);
+                information[x].stat = temp;
+                int maxHealth;
+                party[x].stats.TryGetValue("HP", out maxHealth);
+                information[x].healthPercentage = party[x].currentHealth / maxHealth;
+            }
         }
 
         int lowest = 100;
         int pos = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (lowest > information[x].stat && information[x].healthPercentage != 0)
+            if (lowest > information[x].stat && information[x].healthPercentage != 0 && information[x].stat != default)//default is 0, this may become a problem later
             {
                 lowest = information[x].stat;
                 pos = x;
@@ -1555,19 +1594,22 @@ public class BattleClass : MonoBehaviour
         data[] information = new data[party.Length];
         for (int x = 0; x < party.Length; x++)
         {
-            int temp;
-            party[x].stats.TryGetValue(type, out temp);
-            information[x].stat = temp;
-            int maxHealth;
-            party[x].stats.TryGetValue("HP", out maxHealth);
-            information[x].healthPercentage = party[x].currentHealth / maxHealth;
+            if(party[x].gameObject.activeSelf != false)
+            {
+                int temp;
+                party[x].stats.TryGetValue(type, out temp);
+                information[x].stat = temp;
+                int maxHealth;
+                party[x].stats.TryGetValue("HP", out maxHealth);
+                information[x].healthPercentage = party[x].currentHealth / maxHealth;
+            }
         }
 
         int highest = -100;
         int pos = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (highest < information[x].stat && information[x].healthPercentage != 0)
+            if (highest < information[x].stat && information[x].healthPercentage != 0 && information[x].stat != default)
             {
                 highest = information[x].stat;
                 pos = x;
@@ -1592,12 +1634,15 @@ public class BattleClass : MonoBehaviour
         {
             for(int y = 0; y < maxRowSize; y++)
             {
-                int result;
-                enemies[x, y].stats.TryGetValue(type, out result);
-                information[x, y].stat = result;
-                int maxHealth;
-                party[x].stats.TryGetValue("HP", out maxHealth);
-                information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                if(enemies[x, y].gameObject.activeSelf != false)
+                {
+                    int result;
+                    enemies[x, y].stats.TryGetValue(type, out result);
+                    information[x, y].stat = result;
+                    int maxHealth;
+                    party[x].stats.TryGetValue("HP", out maxHealth);
+                    information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                }
             }
         }
 
@@ -1608,7 +1653,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if(highest < information[x, y].stat)
+                if(highest < information[x, y].stat && information[x, y].stat != default)
                 {
                     highest = information[x, y].stat;
                     xPos = x;
@@ -1635,12 +1680,15 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                int result;
-                enemies[x, y].stats.TryGetValue(type, out result);
-                information[x, y].stat = result;
-                int maxHealth;
-                party[x].stats.TryGetValue("HP", out maxHealth);
-                information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                if (enemies[x, y].gameObject.activeSelf != false)
+                {
+                    int result;
+                    enemies[x, y].stats.TryGetValue(type, out result);
+                    information[x, y].stat = result;
+                    int maxHealth;
+                    party[x].stats.TryGetValue("HP", out maxHealth);
+                    information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                }
             }
         }
 
@@ -1651,7 +1699,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if (lowest >= information[x, y].stat)
+                if (lowest >= information[x, y].stat && information[x, y].stat != default)
                 {
                     lowest = information[x, y].stat;
                     xPos = x;
@@ -1678,13 +1726,16 @@ public class BattleClass : MonoBehaviour
         //Establish AI data
         for(int x = 0; x < party.Length; x++)
         {
-            string temp;
-            int maxHealth;
-            party[x].affinities.TryGetValue(type, out temp);
-            party[x].stats.TryGetValue("HP", out maxHealth);
-            information[x].affinity = temp;
-            information[x].healthPercentage = party[x].currentHealth / maxHealth;
-            information[x].currentlyGuarding = party[x].currentlyGuarding;
+            if(party[x].gameObject.activeSelf != false)
+            {
+                string temp;
+                int maxHealth;
+                party[x].affinities.TryGetValue(type, out temp);
+                party[x].stats.TryGetValue("HP", out maxHealth);
+                information[x].affinity = temp;
+                information[x].healthPercentage = party[x].currentHealth / maxHealth;
+                information[x].currentlyGuarding = party[x].currentlyGuarding;
+            }
         }
 
         //Impact AI point values 
@@ -1708,7 +1759,7 @@ public class BattleClass : MonoBehaviour
         int lowestPerson = -1;
         for(int x = 0; x < party.Length; x++)
         {
-            if(information[x].points <= lowestPoint)
+            if(information[x].points <= lowestPoint && information[x].affinity != default)
             {
                 lowestPoint = information[x].points;
                 lowestPerson = x;
@@ -1735,13 +1786,16 @@ public class BattleClass : MonoBehaviour
         //Establish AI data
         for (int x = 0; x < party.Length; x++)
         {
-            string temp;
-            int maxHealth;
-            party[x].affinities.TryGetValue(type, out temp);
-            party[x].stats.TryGetValue("HP", out maxHealth);
-            information[x].affinity = temp;
-            information[x].healthPercentage = party[x].currentHealth / maxHealth;
-            information[x].currentlyGuarding = party[x].currentlyGuarding;
+            if (party[x].gameObject.activeSelf != false)
+            {
+                string temp;
+                int maxHealth;
+                party[x].affinities.TryGetValue(type, out temp);
+                party[x].stats.TryGetValue("HP", out maxHealth);
+                information[x].affinity = temp;
+                information[x].healthPercentage = party[x].currentHealth / maxHealth;
+                information[x].currentlyGuarding = party[x].currentlyGuarding;
+            }
         }
 
         //Impact AI point values 
@@ -1765,7 +1819,7 @@ public class BattleClass : MonoBehaviour
         int highestPerson = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if ((information[x].points > highestPoint))
+            if (information[x].points > highestPoint && information[x].affinity != default)
             {
                 highestPoint = information[x].points;
                 highestPerson = x;
@@ -1812,6 +1866,7 @@ public class BattleClass : MonoBehaviour
     {
         Debug.Log("ENEMY PHASE");
         DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "ENEMY PHASE", 1, 0, 0);
+        //yield return new WaitForSeconds(1);
         isItRunningEnemy = false;
         int sizee = maxNumberOfRows * maxRowSize;
         Line[] line = new Line[sizee];

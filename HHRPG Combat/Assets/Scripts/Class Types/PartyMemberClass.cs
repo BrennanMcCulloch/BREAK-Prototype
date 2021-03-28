@@ -10,6 +10,8 @@ public class PartyMemberClass : MonoBehaviour
     public int currentHealth;
     public int currentEP;
     public GameObject UIStuff;
+    public Material highlightMaterial;
+    private Material def;
     public bool currentlyChained = false;
     public bool currentlyGuarding = false;
     public ModifierDictionary buffDebuff;
@@ -26,6 +28,8 @@ public class PartyMemberClass : MonoBehaviour
 
     private void Start()
     {
+        def = this.gameObject.GetComponent<Renderer>().material;
+
         names[0] = "Physical";
         names[1] = "Drum";
         names[2] = "Bass";
@@ -112,6 +116,7 @@ public class PartyMemberClass : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        this.transform.gameObject.GetComponent<Renderer>().material = highlightMaterial;
         UpdateUI();
         foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
@@ -121,6 +126,7 @@ public class PartyMemberClass : MonoBehaviour
 
     private void OnMouseExit()
     {
+        this.transform.gameObject.GetComponent<Renderer>().material = def;
         foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
             textbox.gameObject.SetActive(false);

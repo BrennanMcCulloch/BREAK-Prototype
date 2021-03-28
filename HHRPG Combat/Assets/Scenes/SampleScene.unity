@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Todd
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 20
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -748,6 +749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Todd
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 20
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -1594,6 +1596,7 @@ MonoBehaviour:
   currentHealth: 75
   currentEP: 30
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
@@ -2016,6 +2019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Todd
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 20
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -3053,6 +3057,7 @@ MonoBehaviour:
   currentHealth: 30
   currentEP: 30
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
@@ -3975,6 +3980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: David
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 40
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -4779,6 +4785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Clown
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 55
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -5125,6 +5132,7 @@ MonoBehaviour:
   currentHealth: 50
   currentEP: 40
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
@@ -5438,6 +5446,7 @@ MonoBehaviour:
   currentHealth: 40
   currentEP: 60
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
   buffDebuff:
@@ -5617,6 +5626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Clown
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 55
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -5936,6 +5946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: David
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 40
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -6656,6 +6667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: David
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 40
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000
@@ -6826,6 +6838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Clown
   UIStuff: {fileID: 264479532}
+  highlightMaterial: {fileID: 2100000, guid: 90f89bd0333c30a42ba32fd5f92727fb, type: 2}
   currentHealth: 55
   affinities:
     _Buckets: ffffffffffffffffffffffffffffffff030000000200000004000000

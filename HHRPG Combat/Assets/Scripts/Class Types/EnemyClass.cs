@@ -7,6 +7,8 @@ public class EnemyClass : MonoBehaviour
 {
     public string enemyName;
     public GameObject UIStuff;
+    public Material highlightMaterial;
+    private Material def;
     public int currentHealth;
     public AffinityDictionary affinities;
     public StatDictionary stats;
@@ -24,6 +26,7 @@ public class EnemyClass : MonoBehaviour
     private void Start()
     {
         //UIStuff.SetActive(true);
+        def = this.gameObject.GetComponent<Renderer>().material;
         HPEP = this.gameObject.GetComponentInChildren<Canvas>();
         stats.TryGetValue("HP", out max);
 
@@ -96,6 +99,7 @@ public class EnemyClass : MonoBehaviour
     private void OnMouseEnter()
     {
         knownThing = known.getFromJSON(enemyName);
+        this.transform.gameObject.GetComponent<Renderer>().material = highlightMaterial;
         UpdateUI();
         foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
@@ -105,6 +109,7 @@ public class EnemyClass : MonoBehaviour
 
     private void OnMouseExit()
     {
+        this.transform.gameObject.GetComponent<Renderer>().material = def;
         foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
             textbox.gameObject.SetActive(false);
