@@ -308,11 +308,11 @@ public class BattleClass : MonoBehaviour
                                     didItHit = true;
                                     if(x == 0)
                                     {
-                                        EnemyClass vic = front[y].GetComponentInChildren<EnemyClass>();
-                                        front[y] = enemyClicked;
-                                        if (xEnemy == 0) { front[yEnemy] = vic.transform.parent.gameObject; }
-                                        else if (xEnemy == 1) { mid[yEnemy] = vic.transform.parent.gameObject; }
-                                        else if (xEnemy == 2) { back[yEnemy] = vic.transform.parent.gameObject; }
+                                        GameObject vic = front[y];
+                                        front[y] = enemyClicked.transform.parent.gameObject;
+                                        if (xEnemy == 0) { front[yEnemy] = vic; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vic; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vic; }
 
                                         SetUpEnemies();
 
@@ -320,11 +320,11 @@ public class BattleClass : MonoBehaviour
                                     }
                                     else if(x == 1)
                                     {
-                                        EnemyClass vicMid = mid[y].GetComponentInChildren<EnemyClass>();
-                                        mid[y] = enemyClicked;
-                                        if (xEnemy == 0) { front[yEnemy] = vicMid.transform.parent.gameObject; }
-                                        else if (xEnemy == 1) { mid[yEnemy] = vicMid.transform.parent.gameObject; }
-                                        else if (xEnemy == 2) { back[yEnemy] = vicMid.transform.parent.gameObject; }
+                                        GameObject vicMid = mid[y];
+                                        mid[y] = enemyClicked.transform.parent.gameObject;
+                                        if (xEnemy == 0) { front[yEnemy] = vicMid; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vicMid; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vicMid; }
 
                                         SetUpEnemies();
 
@@ -332,11 +332,11 @@ public class BattleClass : MonoBehaviour
                                     }
                                     else if(x == 2)
                                     {
-                                        EnemyClass vicB = back[y].GetComponentInChildren<EnemyClass>();
-                                        back[y] = enemyClicked;
-                                        if (xEnemy == 0) { front[yEnemy] = vicB.transform.parent.gameObject; }
-                                        else if (xEnemy == 1) { mid[yEnemy] = vicB.transform.parent.gameObject; }
-                                        else if (xEnemy == 2) { back[yEnemy] = vicB.transform.parent.gameObject; }
+                                        GameObject vicB = back[y];
+                                        back[y] = enemyClicked.transform.parent.gameObject;
+                                        if (xEnemy == 0) { front[yEnemy] = vicB; }
+                                        else if (xEnemy == 1) { mid[yEnemy] = vicB; }
+                                        else if (xEnemy == 2) { back[yEnemy] = vicB; }
 
                                         SetUpEnemies();
 
