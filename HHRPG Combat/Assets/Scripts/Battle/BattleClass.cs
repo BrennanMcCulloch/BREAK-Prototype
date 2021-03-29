@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
 
 /*
  * Ok, so, this file is long as heck. So here's an explanation.
@@ -29,7 +30,7 @@ public class BattleClass : MonoBehaviour
 
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
-    public string difficulty;
+    public static string difficulty;
 
     private static int maxPartySize = 3;
     public int maxRowSize = 1;
@@ -78,14 +79,60 @@ public class BattleClass : MonoBehaviour
 
     private void Update()
     {
-        if (runItParty)
+        //Check for win and loss
+        bool haveLost = true;
+        bool haveWon = true;
+
+        foreach(GameObject child in front)
         {
-            if (isItRunningParty) { StartCoroutine(PartyPhase()); }
+            if (child.activeSelf == true)
+            {
+                haveWon = false;
+            }
         }
-        else if (runItEnemy)
+        foreach (GameObject child in mid)
         {
-            if (isItRunningEnemy) { StartCoroutine(EnemyPhase()); }
+            if (child.activeSelf == true)
+            {
+                haveWon = false;
+            }
         }
+        foreach (GameObject child in back)
+        {
+            if (child.activeSelf == true)
+            {
+                haveWon = false;
+            }
+        }
+        foreach(PartyMemberClass child in party) 
+        {
+            if(child.gameObject.activeSelf == true)
+            {
+                haveLost = false;
+            }
+        }
+
+        if (haveLost)//Loss
+        {
+            SceneManager.LoadSceneAsync("Intro Menu");
+        }
+        if(haveWon)//Win
+        {
+            Transition.dif = "Final Boss";
+            SceneManager.LoadSceneAsync("Transition");
+        }
+        else
+        {
+            if (runItParty)
+            {
+                if (isItRunningParty) { StartCoroutine(PartyPhase()); }
+            }
+            else if (runItEnemy)
+            {
+                if (isItRunningEnemy) { StartCoroutine(EnemyPhase()); }
+            }
+        }
+        
     }
 
     public void SetUpEnemies()
@@ -451,7 +498,7 @@ public class BattleClass : MonoBehaviour
                                 {
                                     for(int y = 0; y < maxRowSize; y++)
                                     {
-                                        if (enemies[x, y].currentHealth > 0) { yield return PartyMove(person, enemies[x, y].gameObject, currentMove); }
+                                        if (enemies[x, y] != null) { yield return PartyMove(person, enemies[x, y].gameObject, currentMove); }
                                     }
                                 }
                                 groupMove = false;
@@ -1149,7 +1196,14 @@ public class BattleClass : MonoBehaviour
                 {
                     for (int x = 0; x < party.Length; x++)
                     {
-                        vics[x] = party[x];
+                        if(party[x] != null)
+                        {
+                            vics[x] = party[x];
+                        }
+                        else
+                        {
+                            vics[x] = null;
+                        }
                     }
                 }
                 else
@@ -1191,7 +1245,7 @@ public class BattleClass : MonoBehaviour
 
                 foreach(PartyMemberClass victim in vics)
                 {
-                    if(victim != null)
+                    if(victim != null && victim.currentHealth > 0)
                     {
                         damagePosition = victim.transform.position;
                         damagePosition.z += 2;
@@ -1847,7 +1901,7 @@ public class BattleClass : MonoBehaviour
             if (information[x].currentlyGuarding == true) { information[x].points -= 2; }
             else { information[x].points += 3; }
 
-            if (information[x].healthPercentage == 0) { information[x].points = -100; }
+            if (information[x].healthPercentage == 0) { information[x].points = 100; }
         }
 
         //pick BEST one
@@ -1880,7 +1934,7 @@ public class BattleClass : MonoBehaviour
         Debug.Log("PARTY PHASE");
         DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "PARTY PHASE", 0, 0, 1);
         int turn = 0;
-        while (turn < party.Length && party[turn].gameObject.activeSelf)
+        while (turn < party.Length && party[turn] != null)
         {
             yield return PartyMemberTurn(party[turn], turn);
             turn++;
