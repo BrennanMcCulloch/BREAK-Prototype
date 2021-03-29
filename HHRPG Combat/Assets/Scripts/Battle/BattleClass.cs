@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 public class BattleClass : MonoBehaviour
 {
     public GameObject canvas;
+    private GameObject canvasDuplicate;
     public GameObject PartyButtons;
     public GameObject RhythmButtons;
     public GameObject EQButton;
@@ -43,6 +44,8 @@ public class BattleClass : MonoBehaviour
 
     private MoveClass currentMove;
 
+    private int harmonicAmount = 1;
+
     private bool recentlyChained = false;
 
     private bool currentlyBreaking = false;
@@ -65,6 +68,7 @@ public class BattleClass : MonoBehaviour
     private void Start()
     {
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
+        canvasDuplicate = Instantiate(canvas);
         SetUpEnemies();
         SetUpParty();
         runItParty = true;
@@ -548,7 +552,21 @@ public class BattleClass : MonoBehaviour
                 runItParty = false;
                 runItEnemy = true;
                 isItRunningEnemy = true;
+
+                DestroyImmediate(canvas);
+                canvas = Instantiate(canvasDuplicate);
+
+                recentlyChained = false;
+                chainedAgain = false;
+                harmonicAmount = 1;
+
+                foreach(PartyMemberClass dood in party)
+                {
+                    dood.currentlyChained = false;
+                }
+
                 StopAllCoroutines();//hypothetically, this should instantly trigger the enemy turn upon a break
+                yield return new WaitForSeconds(timing * 4);
 
                 toDo = "Done";
             }
@@ -574,7 +592,35 @@ public class BattleClass : MonoBehaviour
                         PartyMemberClass friendlyperson = hit.transform.gameObject.GetComponent<PartyMemberClass>();
                         if (friendlyperson != null && friendlyperson.currentlyChained == false)
                         {
+                            Vector3 damagePosition = friendlyperson.transform.position;
+                            damagePosition.z += 2;
+                            damagePosition.x -= 1;
+                            Vector3 affinityPosition = friendlyperson.transform.position;
+                            affinityPosition.z += 2;
+                            affinityPosition.x -= 1;
+                            affinityPosition.y += 3;
+
                             EQMenu.SetActive(false);
+                            Modifier buff = new Modifier();
+                            buff.statName = person.harmonic.GetComponent<MoveClassWrapper>().MoveClass.type;
+                            buff.amount = harmonicAmount * (int) person.harmonic.GetComponent<MoveClassWrapper>().MoveClass.effective;
+                            buff.turnTime = 1;
+                            harmonicAmount += 2;
+                            Modifier already;
+                            friendlyperson.buffDebuff.TryGetValue(buff.statName, out already);
+
+                            if(already == null)
+                            {
+                                friendlyperson.buffDebuff.Add(buff.statName, buff);
+                            }
+                            else
+                            {
+                                already.amount += buff.amount;
+                            }
+
+                            DamagePopup.Create(affinityPosition, buff.statName + "\nHARMONIC", 1, 0, 1);
+                            DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0, 1);
+
                             yield return PartyMemberTurn(friendlyperson, 1);
                             person.currentlyChained = false;
                             toDo = "Done";
@@ -609,6 +655,7 @@ public class BattleClass : MonoBehaviour
         recentlyChained = false;
         person.currentlyChained = false;
         chainedAgain = false;
+        harmonicAmount = 1;
     }
 
     public void changeToDo(string thing)
@@ -949,7 +996,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //DISPLAY IT
-                DamagePopup.Create(affinityPosition, "BUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(affinityPosition, buff.statName + "\nBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 yield return new WaitForSeconds(timing * 4);
@@ -1006,7 +1053,7 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(timing * 4);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + notBuddy.name + " for " + debuff.amount);
-                DamagePopup.Create(affinityPosition, "DEBUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(affinityPosition, debuff.statName + "\nDEBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
@@ -1097,203 +1144,213 @@ public class BattleClass : MonoBehaviour
             case "Guitar":
             case "Piano":
                 //Determine who we're attacking
-                PartyMemberClass victim;
-                if (difficulty == "Easy")
+                PartyMemberClass[] vics = new PartyMemberClass[party.Length];
+                if (move.group == true)
                 {
-                    //Pick the worst enemy to attack
-                    victim = PickWorstPartyToHit(move.type);
-                    if(victim == null)
+                    for (int x = 0; x < party.Length; x++)
                     {
-                        Debug.Log("No victim");
-                        break;
-                    }
-                }
-                else if (difficulty == "Medium")
-                {
-                    //Randomly pick an enemy
-                    PartyMemberClass vicA = PickWorstPartyToHit(move.type);
-                    PartyMemberClass vicB = PickBestPartyToHit(move.type);
-                    float coin = Random.value;
-                    if(coin >= 0.5) { victim = vicA; }
-                    else{ victim = vicB; }
-                }
-                else if (difficulty == "Hard")
-                {
-                    //Pick the best enemy to attack
-                    victim = PickBestPartyToHit(move.type);
-                    if (victim == null)
-                    {
-                        Debug.Log("No victim");
-                        break;
+                        vics[x] = party[x];
                     }
                 }
                 else
                 {
-                    throw new System.Exception("No difficulty selected in battle class");
-                }
-
-                damagePosition = victim.transform.position;
-                damagePosition.z += 2;
-                damagePosition.x -= 1;
-                affinityPosition = victim.transform.position;
-                affinityPosition.z += 2;
-                affinityPosition.x -= 1;
-                affinityPosition.y += 3;
-
-                //Do they dodge?
-                int agility;
-                victim.stats.TryGetValue("Agility", out agility);
-                int d100 = Random.Range(1, 101);
-                Modifier buffsAgility;
-                victim.buffDebuff.TryGetValue("Agility", out buffsAgility);
-                if (buffsAgility != null && buffsAgility.turnTime != 0)
-                {
-                    agility += buffsAgility.amount;
-                    buffsAgility.turnTime--;
-                }
-                else
-                {
-                    victim.buffDebuff.Remove("Agility");
-                }
-
-                if (d100 <= agility)
-                {
-                    //DODGE STUFF HERE
-                    Debug.Log("Dodge!");
-                    DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
-                    break;
-                }
-
-                //Determine attack value
-                int d20 = Random.Range(1, 21);
-                double percent = d20 * 0.02;
-                int statInQuestion;
-                string affinityInQuestion;
-                victim.affinities.TryGetValue(move.type, out affinityInQuestion);
-                if (move.type == "Physical")
-                {
-                    victim.stats.TryGetValue("Physical Defence", out statInQuestion);
-                    Modifier buffs;
-                    victim.buffDebuff.TryGetValue("Physical Defence", out buffs);
-                    if (buffs != null && buffs.turnTime != 0)
+                    if (difficulty == "Easy")
                     {
-                        statInQuestion += buffs.amount;
-                        buffs.turnTime--;
+                        //Pick the worst enemy to attack
+                        vics[0] = PickWorstPartyToHit(move.type);
+                        if (vics[0] == null)
+                        {
+                            Debug.Log("No victim");
+                            break;
+                        }
+                    }
+                    else if (difficulty == "Medium")
+                    {
+                        //Randomly pick an enemy
+                        PartyMemberClass vicA = PickWorstPartyToHit(move.type);
+                        PartyMemberClass vicB = PickBestPartyToHit(move.type);
+                        float coin = Random.value;
+                        if (coin >= 0.5) { vics[0] = vicA; }
+                        else { vics[0] = vicB; }
+                    }
+                    else if (difficulty == "Hard")
+                    {
+                        //Pick the best enemy to attack
+                        vics[0] = PickBestPartyToHit(move.type);
+                        if (vics[0] == null)
+                        {
+                            Debug.Log("No victim");
+                            break;
+                        }
                     }
                     else
                     {
-                        victim.buffDebuff.Remove("Physical Defence");
+                        throw new System.Exception("No difficulty selected in battle class");
                     }
                 }
-                else
+
+                foreach(PartyMemberClass victim in vics)
                 {
-                    victim.stats.TryGetValue("Rhythm Defence", out statInQuestion);
-                    Modifier buffs;
-                    victim.buffDebuff.TryGetValue("Rhythm Defence", out buffs);
-                    if (buffs != null && buffs.turnTime != 0)
+                    if(victim != null)
                     {
-                        statInQuestion += buffs.amount;
-                        buffs.turnTime--;
-                    }
-                    else
-                    {
-                        victim.buffDebuff.Remove("Rhythm Defence");
+                        damagePosition = victim.transform.position;
+                        damagePosition.z += 2;
+                        damagePosition.x -= 1;
+                        affinityPosition = victim.transform.position;
+                        affinityPosition.z += 2;
+                        affinityPosition.x -= 1;
+                        affinityPosition.y += 3;
+                        //Do they dodge?
+                        int agility;
+                        victim.stats.TryGetValue("Agility", out agility);
+                        int d100 = Random.Range(1, 101);
+                        Modifier buffsAgility;
+                        victim.buffDebuff.TryGetValue("Agility", out buffsAgility);
+                        if (buffsAgility != null && buffsAgility.turnTime != 0)
+                        {
+                            agility += buffsAgility.amount;
+                            buffsAgility.turnTime--;
+                        }
+                        else
+                        {
+                            victim.buffDebuff.Remove("Agility");
+                        }
+
+                        if (d100 <= agility)
+                        {
+                            //DODGE STUFF HERE
+                            Debug.Log("Dodge!");
+                            DamagePopup.Create(affinityPosition, "Dodge!", 1, 0.92f, 0.016f);
+                            continue;
+                        }
+
+                        //Determine attack value
+                        int d20 = Random.Range(1, 21);
+                        double percent = d20 * 0.02;
+                        int statInQuestion;
+                        string affinityInQuestion;
+                        victim.affinities.TryGetValue(move.type, out affinityInQuestion);
+                        if (move.type == "Physical")
+                        {
+                            victim.stats.TryGetValue("Physical Defence", out statInQuestion);
+                            Modifier buffs;
+                            victim.buffDebuff.TryGetValue("Physical Defence", out buffs);
+                            if (buffs != null && buffs.turnTime != 0)
+                            {
+                                statInQuestion += buffs.amount;
+                                buffs.turnTime--;
+                            }
+                            else
+                            {
+                                victim.buffDebuff.Remove("Physical Defence");
+                            }
+                        }
+                        else
+                        {
+                            victim.stats.TryGetValue("Rhythm Defence", out statInQuestion);
+                            Modifier buffs;
+                            victim.buffDebuff.TryGetValue("Rhythm Defence", out buffs);
+                            if (buffs != null && buffs.turnTime != 0)
+                            {
+                                statInQuestion += buffs.amount;
+                                buffs.turnTime--;
+                            }
+                            else
+                            {
+                                victim.buffDebuff.Remove("Rhythm Defence");
+                            }
+                        }
+
+
+                        int crit = 1;
+                        if (d20 >= 19 || affinityInQuestion == "Weak")
+                        {
+                            crit = 2;
+                            DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
+                            yield return new WaitForSeconds(timing * 4);
+                        }
+
+                        //If not, calculate damage
+                        double damagePercent = (crit * percent) + 0.6;
+                        int potentialDamage;
+                        if (move.type == "Physical")
+                        {
+                            doer.stats.TryGetValue("Physical", out potentialDamage);
+                            Modifier buffsPhysical;
+                            doer.buffDebuff.TryGetValue("Physical", out buffsPhysical);
+                            if (buffsPhysical != null && buffsPhysical.turnTime != 0)
+                            {
+                                potentialDamage += buffsPhysical.amount;
+                                buffsPhysical.turnTime--;
+                            }
+                            else
+                            {
+                                victim.buffDebuff.Remove("Physical");
+                            }
+                        }
+                        else
+                        {
+                            doer.stats.TryGetValue("Rhythm", out potentialDamage);
+                            Modifier buffsRhythm;
+                            doer.buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
+                            if (buffsRhythm != null && buffsRhythm.turnTime != 0)
+                            {
+                                potentialDamage += buffsRhythm.amount;
+                                buffsRhythm.turnTime--;
+                            }
+                            else
+                            {
+                                victim.buffDebuff.Remove("Rhythm");
+                            }
+                        }
+                        double damageDealt = damagePercent * potentialDamage * move.effective;
+
+                        int d20def = Random.Range(1, 21);
+                        double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
+
+                        double damageNotRounded = damageDealt - (damageDealt * percentDefended);
+                        if (victim.currentlyGuarding == true) { damageNotRounded = damageNotRounded * 0.5; }
+                        if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; DamagePopup.Create(affinityPosition, "RESIST", 1, 1, 1); yield return new WaitForSeconds(timing * 4); }
+                        int damage = (int)System.Math.Round(damageNotRounded);
+
+                        //Impact numbers
+                        if (affinityInQuestion == "Absorb")
+                        {
+                            victim.currentHealth += damage;
+                            int maxHealthParty;
+                            victim.stats.TryGetValue("HP", out maxHealthParty);
+                            if (victim.currentHealth > maxHealthParty)
+                            {
+                                victim.currentHealth = maxHealthParty;
+                            }
+                            DamagePopup.Create(damagePosition, damage.ToString(), 0, 1, 0);
+                        }
+
+                        else if (affinityInQuestion == "Reflect")
+                        {
+                            int doerDefence;
+                            if (move.type == "Physical")
+                            {
+                                doer.stats.TryGetValue("Physical Defence", out doerDefence);
+                            }
+                            else
+                            {
+                                doer.stats.TryGetValue("Rhythm Defence", out doerDefence);
+                            }
+                            doer.currentHealth -= (damage * (1 - (doerDefence / 100)));
+                        }
+                        else
+                        {
+                            victim.currentHealth -= damage;
+                            DamagePopup.Create(damagePosition, damage.ToString(), 1, 0, 0);
+                        }
+
+                        //DISPLAY IT
+                        //yield return new WaitForSeconds(1.0f);
+                        Debug.Log(doer.name + " did a " + move.moveName + " on " + victim.name + " for " + damage);
                     }
                 }
 
-
-                int crit = 1;
-                if (d20 >= 19 || affinityInQuestion == "Weak")
-                {
-                    crit = 2;
-                    DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
-                    yield return new WaitForSeconds(timing * 4);
-                }
-
-                //If not, calculate damage
-                double damagePercent = (crit * percent) + 0.6;
-                int potentialDamage;
-                if (move.type == "Physical")
-                {
-                    doer.stats.TryGetValue("Physical", out potentialDamage);
-                    Modifier buffsPhysical;
-                    doer.buffDebuff.TryGetValue("Physical", out buffsPhysical);
-                    if (buffsPhysical != null && buffsPhysical.turnTime != 0)
-                    {
-                        potentialDamage += buffsPhysical.amount;
-                        buffsPhysical.turnTime--;
-                    }
-                    else
-                    {
-                        victim.buffDebuff.Remove("Physical");
-                    }
-                }
-                else
-                {
-                    doer.stats.TryGetValue("Rhythm", out potentialDamage);
-                    Modifier buffsRhythm;
-                    doer.buffDebuff.TryGetValue("Rhythm", out buffsRhythm);
-                    if (buffsRhythm != null && buffsRhythm.turnTime != 0)
-                    {
-                        potentialDamage += buffsRhythm.amount;
-                        buffsRhythm.turnTime--;
-                    }
-                    else
-                    {
-                        victim.buffDebuff.Remove("Rhythm");
-                    }
-                }
-                double damageDealt = damagePercent * potentialDamage * move.effective;
-
-                int d20def = Random.Range(1, 21);
-                double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
-
-                double damageNotRounded = damageDealt - (damageDealt * percentDefended);
-                if (victim.currentlyGuarding == true) { damageNotRounded = damageNotRounded * 0.5;  }
-                if (affinityInQuestion == "Strong") { damageNotRounded = damageNotRounded * 0.5; DamagePopup.Create(affinityPosition, "RESIST", 1, 1, 1); yield return new WaitForSeconds(timing * 4); }
-                int damage = (int)System.Math.Round(damageNotRounded);
-
-                //Impact numbers
-                if (affinityInQuestion == "Absorb")
-                {
-                    victim.currentHealth += damage;
-                    int maxHealthParty;
-                    victim.stats.TryGetValue("HP", out maxHealthParty);
-                    if (victim.currentHealth > maxHealthParty)
-                    {
-                        victim.currentHealth = maxHealthParty;
-                    }
-                    DamagePopup.Create(damagePosition, damage.ToString(), 0, 1, 0);
-                }
-
-            /*
-             *
-             * DO WORK HERE
-             * 
-             */
-
-                else if (affinityInQuestion == "Reflect")
-                {
-                    int doerDefence;
-                    if (move.type == "Physical")
-                    {
-                        doer.stats.TryGetValue("Physical Defence", out doerDefence);
-                    }
-                    else
-                    {
-                        doer.stats.TryGetValue("Rhythm Defence", out doerDefence);
-                    }
-                    doer.currentHealth -= (damage * (1 - (doerDefence / 100)));
-                }
-                else
-                {
-                    victim.currentHealth -= damage;
-                    DamagePopup.Create(damagePosition, damage.ToString(), 1, 0, 0);
-                }
-
-                //DISPLAY IT
-                //yield return new WaitForSeconds(1.0f);
-                Debug.Log(doer.name + " did a " + move.moveName + " on " + victim.name + " for " + damage);
 
                 break;
             //ALL BUFFS GO HERE.
@@ -1303,8 +1360,7 @@ public class BattleClass : MonoBehaviour
             case "Rhythm Defence Buff":
             case "Agility Buff":
             case "Potential Buff":
-                Regex regexBuff = new Regex("(\\s+( Buff)\\s*)$");
-                string moveStringBuff = regexBuff.Replace(move.type, "");
+                string moveStringBuff = move.type.Replace(" Buff", "");
                 EnemyClass buddy;
                 if (difficulty == "Easy")
                 {
@@ -1315,8 +1371,8 @@ public class BattleClass : MonoBehaviour
                 {
 
                     //Randomly pick an enemy
-                    EnemyClass vicA = PickWorstEnemyToBuff(move.type);
-                    EnemyClass vicB = PickBestEnemyToBuff(move.type);
+                    EnemyClass vicA = PickWorstEnemyToBuff(moveStringBuff);
+                    EnemyClass vicB = PickBestEnemyToBuff(moveStringBuff);
                     float coin = Random.value;
                     if (coin >= 0.5) { buddy = vicA; }
                     else { buddy = vicB; }
@@ -1378,7 +1434,7 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(timing);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + buddy.name + " for " + buff.amount);
-                DamagePopup.Create(affinityPosition, "BUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(affinityPosition, buff.statName + "\nBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
@@ -1389,8 +1445,7 @@ public class BattleClass : MonoBehaviour
             case "Rhythm Defence Debuff":
             case "Agility Debuff":
             case "Potential Debuff":
-                Regex regexDebuff = new Regex("(\\s+( Debuff)\\s*)$");
-                string moveStringDebuff = regexDebuff.Replace(move.type, "");
+                string moveStringDebuff = move.type.Replace(move.type, " Debuff");
                 PartyMemberClass notBuddy;
                 if (difficulty == "Easy")
                 {
@@ -1400,8 +1455,8 @@ public class BattleClass : MonoBehaviour
                 {
 
                     //Randomly pick an enemy
-                    PartyMemberClass vicA = PickWorstPartyToDebuff(move.type);
-                    PartyMemberClass vicB = PickBestPartyToDebuff(move.type);
+                    PartyMemberClass vicA = PickWorstPartyToDebuff(moveStringDebuff);
+                    PartyMemberClass vicB = PickBestPartyToDebuff(moveStringDebuff);
                     float coin = Random.value;
                     if (coin >= 0.5) { notBuddy = vicA; }
                     else { notBuddy = vicB; }
@@ -1462,7 +1517,7 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(timing);
                 Debug.Log(doer.name + " did a " + move.moveName + " on " + notBuddy.name + " for " + debuff.amount);
-                DamagePopup.Create(affinityPosition, "DEBUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(affinityPosition, debuff.statName + "\nDEBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
@@ -1616,11 +1671,13 @@ public class BattleClass : MonoBehaviour
                 if(enemies[x, y]!= null)
                 {
                     int result;
+                    //Debug.Log(type);
                     enemies[x, y].stats.TryGetValue(type, out result);
                     information[x, y].stat = result;
                     int maxHealth;
                     party[x].stats.TryGetValue("HP", out maxHealth);
                     information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                    //Debug.Log(x + " " + y + " " + information[x, y].stat);
                 }
             }
         }
