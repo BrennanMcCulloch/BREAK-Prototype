@@ -18,7 +18,7 @@ public class Transition : MonoBehaviour
         }
         if(dif == "Battle 2")
         {
-            difString.text = "Congrats, you did it! Now, for some of the fun parts.\nEnemies from here on out will appear in a grid, with a front, mid, and back row. Front row enemies typically do stronger single attacks, Mid does weaker group attacks, and Back does support.\nBy EQ-ing, you can drag and drop enemies around the battlefield, changing the move they do.\nOnly your party leader can EQ.\nHave fun!";
+            difString.text = "Congrats, you did it! Now, for some of the fun parts.\nEnemies from here on out will appear in a grid, with a front, mid, and back row. Front row enemies typically do stronger single attacks, Mid does weaker group attacks, and Back does support.\nBy EQ-ing, you can drag and drop enemies around the battlefield, changing the move they do.\nOnly your party leader can EQ.\nAlso, EQing costs EP, or Magic, and doubles every time you use it in a single turn.\nHave fun!";
         }
         if(dif == "Battle 3")
         {
@@ -26,7 +26,16 @@ public class Transition : MonoBehaviour
         }
         if(dif == "Battle 4")
         {
-            difString.text = "WORK NEEDS TO BE DONE HERE, BRENNAN.";
+            difString.text = "Congratulations, you've learned everything I have to teach you.\nHere's a nice, big, chunky fight for you to go after.\nHave fun, and thanks for playing!";
+        }
+        if(dif == "Battle 5")
+        {
+            difString.text = "Thank you!";
+            dif = "Intro Menu";
+        }
+        if(dif == "Battle 6")
+        {
+            Debug.Log("You shouldn't be here.");
         }
     }
 

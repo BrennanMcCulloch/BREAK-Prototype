@@ -25,7 +25,7 @@ public class CameraControls : MonoBehaviour
         {
             mouseX = Input.GetAxis("Mouse X");
             mouseY = Input.GetAxis("Mouse Y");
-            cam.transform.Rotate(-mouseY / 3, mouseX / 3, 0);
+            cam.transform.Rotate(-mouseY * Time.deltaTime * 13, mouseX * Time.deltaTime * 13, 0);
         }
 
         //cam doesn't rotate around z axis

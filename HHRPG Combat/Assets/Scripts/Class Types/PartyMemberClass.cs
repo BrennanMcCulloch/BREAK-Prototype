@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class PartyMemberClass : MonoBehaviour
 {
     public string memberName;
-    public int currentHealth;
-    public int currentEP;
+    public float currentHealth;
+    public float currentEP;
     public GameObject UIStuff;
     public Material highlightMaterial;
     private Material def;
@@ -85,6 +85,11 @@ public class PartyMemberClass : MonoBehaviour
             }
             else
             {
+                if (theThing.name == "Description")
+                {
+                    Text child = theThing.GetComponent<Text>();
+                    child.text = "";
+                }
                 if (theThing.name == "HP")
                 {
                     string display = "HP: " + currentHealth;

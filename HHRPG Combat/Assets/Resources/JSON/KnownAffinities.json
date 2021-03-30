@@ -1,15 +1,15 @@
 {
     "Items": [
         {
-            "name": "?",
+            "name": "David",
             "affinities": [
                 {
                     "affName": "Physical",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "?"
+                    "affValue": "Weak"
                 },
                 {
                     "affName": "Bass",

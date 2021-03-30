@@ -120,12 +120,14 @@ public class BattleClass : MonoBehaviour
         if (haveLost)//Loss
         {
             tutorial = 1;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             SceneManager.LoadSceneAsync("Intro Menu");
         }
         if(haveWon)//Win
         {
             KnownInfo.UpdateJSON();
             tutorial++;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             Transition.dif = "Battle " + tutorial.ToString();
             SceneManager.LoadScene("Transition");
         }
@@ -154,7 +156,15 @@ public class BattleClass : MonoBehaviour
                     case 0:
                         enemies[x, y] = front[y].GetComponentInChildren<EnemyClass>();
 
-                        float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 200); //3 is MAGIC NUMBER. bad.
+                        float xPosFront;
+                        if(maxRowSize == 1)
+                        {
+                            xPosFront = 0;
+                        }
+                        else
+                        {
+                            xPosFront = (y - (Mathf.Abs(Mathf.Abs(x - 1) - ((maxRowSize - 1) / 2)) / 2)) * (Screen.width / 250) - (Screen.width / 250);
+                        }
                         float yPosFront = x * 4.2f + (front[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosFront = -30 - (x * 10);
                         Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
@@ -166,9 +176,17 @@ public class BattleClass : MonoBehaviour
                     case 1:
                         enemies[x, y] = mid[y].GetComponentInChildren<EnemyClass>();
 
-                        float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 200); //3 is MAGIC NUMBER. bad.
+                        float xPosMid;
+                        if (maxRowSize == 1)
+                        {
+                            xPosMid = 0;
+                        }
+                        else
+                        {
+                            xPosMid = (y - (Mathf.Abs(Mathf.Abs(x - 1) - ((maxRowSize - 1) / 2)) / 2)) * (Screen.width / 250) - (Screen.width / 250);
+                        }
                         float yPosMid = x * 4.2f + (mid[y].gameObject.transform.localScale.y / 2) + 1;
-                        float zPosMid = -30 - (x * 10); ;
+                        float zPosMid = -30 - (x * 10);
                         Vector3 positionMid = new Vector3(xPosMid, yPosMid, zPosMid);
 
                         positionMid.y += (mid[y].gameObject.transform.localScale.y / 2);
@@ -178,9 +196,17 @@ public class BattleClass : MonoBehaviour
                     case 2:
                         enemies[x, y] = back[y].GetComponentInChildren<EnemyClass>();
 
-                        float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 200); //3 is MAGIC NUMBER. bad.
+                        float xPosBack;
+                        if (maxRowSize == 1)
+                        {
+                            xPosBack = 0;
+                        }
+                        else
+                        {
+                            xPosBack = (y - (Mathf.Abs(Mathf.Abs(x - 1) - ((maxRowSize - 1) / 2)) / 2)) * (Screen.width / 250) - (Screen.width / 250);
+                        }
                         float yPosBack = x * 4.2f + (back[y].gameObject.transform.localScale.y / 2) + 1;
-                        float zPosBack = -30 - (x * 10); ;
+                        float zPosBack = -30 - (x * 10);
                         Vector3 positionBack = new Vector3(xPosBack, yPosBack, zPosBack);
 
                         positionBack.y += (back[y].gameObject.transform.localScale.y / 2);
@@ -1547,7 +1573,7 @@ public class BattleClass : MonoBehaviour
             case "Rhythm Defence Debuff":
             case "Agility Debuff":
             case "Potential Debuff":
-                string moveStringDebuff = move.type.Replace(move.type, " Debuff");
+                string moveStringDebuff = move.type.Replace(" Debuff", "");
                 PartyMemberClass notBuddy;
                 if (difficulty == "Easy")
                 {
@@ -1692,7 +1718,7 @@ public class BattleClass : MonoBehaviour
         data[] information = new data[party.Length];
         for (int x = 0; x < party.Length; x++)
         {
-            if (party[x].gameObject.activeSelf != false)
+            if (party[x] != null)
             {
                 int temp;
                 party[x].stats.TryGetValue(type, out temp);
@@ -1700,6 +1726,7 @@ public class BattleClass : MonoBehaviour
                 int maxHealth;
                 party[x].stats.TryGetValue("HP", out maxHealth);
                 information[x].healthPercentage = party[x].currentHealth / maxHealth;
+                //Debug.Log(party[x].currentHealth);
             }
         }
 
@@ -1707,7 +1734,7 @@ public class BattleClass : MonoBehaviour
         int pos = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (lowest > information[x].stat && information[x].healthPercentage != 0 && information[x].stat != default)//default is 0, this may become a problem later
+            if (lowest > information[x].stat && information[x].healthPercentage != 0)//default is 0, this may become a problem later
             {
                 lowest = information[x].stat;
                 pos = x;
@@ -1730,7 +1757,7 @@ public class BattleClass : MonoBehaviour
         data[] information = new data[party.Length];
         for (int x = 0; x < party.Length; x++)
         {
-            if(party[x].gameObject.activeSelf != false)
+            if(party[x] != null)
             {
                 int temp;
                 party[x].stats.TryGetValue(type, out temp);
@@ -1738,6 +1765,7 @@ public class BattleClass : MonoBehaviour
                 int maxHealth;
                 party[x].stats.TryGetValue("HP", out maxHealth);
                 information[x].healthPercentage = party[x].currentHealth / maxHealth;
+                //Debug.Log(party[x].currentHealth);
             }
         }
 
@@ -1745,7 +1773,7 @@ public class BattleClass : MonoBehaviour
         int pos = -1;
         for (int x = 0; x < party.Length; x++)
         {
-            if (highest < information[x].stat && information[x].healthPercentage != 0 && information[x].stat != default)
+            if (highest < information[x].stat && information[x].healthPercentage != 0)
             {
                 highest = information[x].stat;
                 pos = x;
@@ -2007,13 +2035,18 @@ public class BattleClass : MonoBehaviour
         //yield return new WaitForSeconds(1);
         isItRunningEnemy = false;
         bool swapIt = false;
+        int numberOfDead = 0;
         bool bopIt = false;
         for(int x = 0; x < maxRowSize; x++)
         {
             if(front[x].gameObject.activeSelf == false)
             {
-                bopIt = true;
+                numberOfDead++;
             }
+        }
+        if(numberOfDead == maxRowSize)
+        {
+            bopIt = true;
         }
         if(bopIt)
         {
