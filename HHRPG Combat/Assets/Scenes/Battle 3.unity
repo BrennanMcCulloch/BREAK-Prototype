@@ -204,7 +204,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 1996223093729152361, guid: d1f7d8a420654aa448b25abf438d0d39,
         type: 3}
       propertyPath: UIStuff
@@ -669,6 +669,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
+  chainedBefore: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -1155,7 +1156,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 3244970411951421192, guid: c8a287a4932018f4c995af4032731616,
         type: 3}
       propertyPath: UIStuff
@@ -1272,7 +1273,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 1975435160039222839, guid: 1e5741fef629a824aa4ef660f855be68,
         type: 3}
       propertyPath: UIStuff
@@ -1478,6 +1479,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
+  chainedBefore: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -1734,7 +1736,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 1975435160039222839, guid: 1e5741fef629a824aa4ef660f855be68,
         type: 3}
       propertyPath: UIStuff
@@ -1823,7 +1825,6 @@ GameObject:
   - component: {fileID: 1300073383}
   - component: {fileID: 1300073384}
   - component: {fileID: 1300073385}
-  - component: {fileID: 1300073382}
   m_Layer: 0
   m_Name: Battle
   m_TagString: Untagged
@@ -1831,219 +1832,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1300073382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300073381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa2ef4293a829f44188ef55e47ea1c01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knownInfo:
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
-  - name: 
-    affinities: []
 --- !u!4 &1300073383
 Transform:
   m_ObjectHideFlags: 0
@@ -2343,6 +2131,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
+  chainedBefore: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -2451,6 +2240,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: eb70db70d90d47b4ca70f1e3c5514590, type: 2}
   currentlyChained: 0
   currentlyGuarding: 0
+  chainedBefore: 0
   buffDebuff:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -2634,7 +2424,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 3244970411951421192, guid: c8a287a4932018f4c995af4032731616,
         type: 3}
       propertyPath: UIStuff
@@ -3195,7 +2985,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 1996223093729152361, guid: d1f7d8a420654aa448b25abf438d0d39,
         type: 3}
       propertyPath: UIStuff
@@ -3267,7 +3057,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 1975435160658374572, guid: 1e5741fef629a824aa4ef660f855be68,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3502,7 +3292,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 2322414780085871592, guid: d1f7d8a420654aa448b25abf438d0d39,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3569,7 +3359,7 @@ PrefabInstance:
         type: 3}
       propertyPath: known
       value: 
-      objectReference: {fileID: 1300073382}
+      objectReference: {fileID: 0}
     - target: {fileID: 3244970412412383768, guid: c8a287a4932018f4c995af4032731616,
         type: 3}
       propertyPath: m_Name

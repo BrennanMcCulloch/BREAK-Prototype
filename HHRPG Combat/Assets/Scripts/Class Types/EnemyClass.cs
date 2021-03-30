@@ -17,7 +17,6 @@ public class EnemyClass : MonoBehaviour
     public GameObject[] frontMoves;
     public GameObject[] midMoves;
     public GameObject[] backMoves;
-    public KnownInfo known; //keep current known affinities
     KnownInfoDataType knownThing;
     private Canvas HPEP;
     private int max;
@@ -106,7 +105,7 @@ public class EnemyClass : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        knownThing = known.getFromJSON(enemyName);
+        knownThing = KnownInfo.getFromJSON(enemyName);
         this.transform.gameObject.GetComponent<Renderer>().material = highlightMaterial;
         UpdateUI();
         foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))

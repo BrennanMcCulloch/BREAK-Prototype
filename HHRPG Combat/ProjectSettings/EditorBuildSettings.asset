@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Intro Menu.unity
     guid: b20ad725a4f9eaf4cb2f420f48d29d89
-  - enabled: 1
-    path: Assets/Scenes/Base Battle Scene.unity
+  - enabled: 0
+    path: Assets/Scenes/Battle 3.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Transition.unity
     guid: 1543c9ea2cf4ea245a6bd2a1599d52a3
+  - enabled: 1
+    path: Assets/Scenes/Battle 1.unity
+    guid: be522fe8bdd82ff41abd56485318e8eb
+  - enabled: 1
+    path: Assets/Scenes/Battle 2.unity
+    guid: b3b5d164601902d45a7c784c3a9a9989
   m_configObjects: {}

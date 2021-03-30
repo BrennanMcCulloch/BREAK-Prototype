@@ -23,8 +23,10 @@ public class MainMenuStuff : MonoBehaviour
 
     public void StartPrototype(string nameOfScene)
     {
+        KnownInfo.InitializeJSONNew();
+        BattleClass.tutorial = 1;
         BattleClass.difficulty = dif;
-        Transition.dif = "Base Battle Scene";
+        Transition.dif = "Battle 1";
         SceneManager.LoadSceneAsync(nameOfScene);
     }
 }

@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class KnownInfo : MonoBehaviour
+[System.Serializable]
+public static class KnownInfo //
 {
     public static long totalEnemies;
-    public KnownInfoDataType[] knownInfo;
+    public static KnownInfoDataType[] knownInfo;
 
-    private void Start()
-    {
-        InitializeJSON();
-    }
 
-    public KnownInfoDataType getFromJSON(string name)
+
+    public static KnownInfoDataType getFromJSON(string name)
     {
         KnownInfoDataType temp = null;
-        for(int x = 0; x < knownInfo.Length; x++)
+        for(int x = 0; x < totalEnemies; x++)
         {
             if (knownInfo[x].name == "?")//We looked through all known instances
             {
@@ -24,8 +22,9 @@ public class KnownInfo : MonoBehaviour
                 knownInfo[x].name = name;
                 break;
             } 
-            if (knownInfo[x].name == name)
+            else if (knownInfo[x].name == name)
             {
+                Debug.Log("Found it! " + knownInfo[x].name);
                 temp = knownInfo[x];
                 break;
             }
@@ -33,7 +32,7 @@ public class KnownInfo : MonoBehaviour
         return temp;
     }
 
-    public void writeToJSON(KnownInfoDataType thingToWrite)
+    public static void writeToJSON(KnownInfoDataType thingToWrite)
     {
         int currentPos = 0;
         while(currentPos < knownInfo.Length) //find the right position in the JSON file
@@ -42,32 +41,40 @@ public class KnownInfo : MonoBehaviour
             if (knownInfo[currentPos].name == thingToWrite.name) { break; }
             currentPos++;
         }
-        knownInfo[currentPos] = thingToWrite;
+        for(int x = 0; x < 10; x++)
+        {
+            knownInfo[currentPos].affinities[x].affValue = thingToWrite.affinities[x].affValue;
+        }
         Debug.Log("Updated!");
     }
 
-    public void InitializeJSON()
+    public static void InitializeJSON()
     {
         //Resources.Load("Assets/Resources/JSON/KnownAffinities.json");
         var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
         knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
     }
 
-    public void UpdateJSON()
+    public static void UpdateJSON()
     {
         var writing = JsonHelper.ToJson<KnownInfoDataType>(knownInfo, true);
         System.IO.File.WriteAllText(Application.dataPath + "/Resources/JSON/KnownAffinities.json", writing);
     }
 
-    public void InitializeJSONNew()
+    public static void InitializeJSONNew()
     {
         //AssetDatabase.ImportAsset("Assets/Resources/JSON/KnownAffinities.json");
         totalEnemies = 100;
         var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
         knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
+        if(knownInfo == null)
+        {
+            knownInfo = new KnownInfoDataType[totalEnemies];
+        }
 
         for(int x = 0; x < knownInfo.Length; x++)
         {
+            knownInfo[x] = new KnownInfoDataType();
             knownInfo[x].name = "?";
             knownInfo[x].affinities[0].affName = "Physical";
             knownInfo[x].affinities[1].affName = "Drum";

@@ -23,7 +23,7 @@ public class BattleClass : MonoBehaviour
     public GameObject EQButton;
 
     public float timing = 0.3f;
-    public static int tutorial = 1;
+    public static int tutorial;
 
     public Camera camera;
 
@@ -70,6 +70,7 @@ public class BattleClass : MonoBehaviour
     private void Awake()
     {
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
+        //KnownInfo.InitializeJSON();
         canvasDuplicate = Instantiate(canvas);
         SetUpEnemies();
         SetUpParty();
@@ -118,16 +119,15 @@ public class BattleClass : MonoBehaviour
 
         if (haveLost)//Loss
         {
+            tutorial = 1;
             SceneManager.LoadSceneAsync("Intro Menu");
         }
         if(haveWon)//Win
         {
-            if(tutorial < 3)
-            {
-                tutorial++;
-            }
-            Transition.dif = "Final Boss";
-            SceneManager.LoadSceneAsync("Transition");
+            KnownInfo.UpdateJSON();
+            tutorial++;
+            Transition.dif = "Battle " + tutorial.ToString();
+            SceneManager.LoadScene("Transition");
         }
         else
         {
@@ -806,7 +806,7 @@ public class BattleClass : MonoBehaviour
             case "Piano":
                 //Determine who we're attacking
                 //Determine attack value
-                KnownInfoDataType keepIt = this.GetComponent<KnownInfo>().getFromJSON(victimP.GetComponent<EnemyClass>().enemyName);
+                KnownInfoDataType keepIt = KnownInfo.getFromJSON(victimP.GetComponent<EnemyClass>().enemyName);
                 int d20 = Random.Range(1, 21);
                 double percent = d20 * 0.02;
                 int statInQuestion;
@@ -881,7 +881,8 @@ public class BattleClass : MonoBehaviour
                         break;
                     }
                 }
-                this.GetComponent<KnownInfo>().writeToJSON(keepIt);
+                KnownInfo.writeToJSON(keepIt);
+
 
                 int crit = 1;
                 if (d20 >= 19 || affinityInQuestion == "Weak")
