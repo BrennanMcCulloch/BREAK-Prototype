@@ -78,6 +78,11 @@ public class EnemyClass : MonoBehaviour
             }
             else
             {
+                if(theThing.name == "Description")
+                {
+                    Text child = theThing.GetComponent<Text>();
+                    child.text = "";
+                }
                 if(theThing.name == "HP")
                 {
                     string display = "HP: " + currentHealth;
@@ -119,6 +124,7 @@ public class EnemyClass : MonoBehaviour
         this.transform.gameObject.GetComponent<Renderer>().material = def;
         foreach (Text textbox in UIStuff.GetComponentsInChildren(typeof(Text), true))
         {
+            textbox.text = "";
             textbox.gameObject.SetActive(false);
         }
     }

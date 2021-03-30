@@ -18,14 +18,22 @@ public static class KnownInfo //
         {
             if (knownInfo[x].name == "?")//We looked through all known instances
             {
-                temp = knownInfo[x];
                 knownInfo[x].name = name;
+                temp = knownInfo[x];
+                for(int y = 0; y < 10; y++)
+                {
+                    temp.affinities[y] = knownInfo[x].affinities[y];
+                }
                 break;
             } 
             else if (knownInfo[x].name == name)
             {
                 Debug.Log("Found it! " + knownInfo[x].name);
                 temp = knownInfo[x];
+                for (int y = 0; y < 10; y++)
+                {
+                    temp.affinities[y] = knownInfo[x].affinities[y];
+                }
                 break;
             }
         }

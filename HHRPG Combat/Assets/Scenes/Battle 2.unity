@@ -1083,7 +1083,7 @@ MonoBehaviour:
   front:
   - {fileID: 244404403}
   mid:
-  - {fileID: 1552633584}
+  - {fileID: 1996223092912663988}
   back:
   - {fileID: 812403484}
   restOfParty:
@@ -1188,12 +1188,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1552633584 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1996223093658805059, guid: d1f7d8a420654aa448b25abf438d0d39,
-    type: 3}
-  m_PrefabInstance: {fileID: 1996223092912663987}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1587424044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,6 +1739,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 484506702146946927, guid: d1f7d8a420654aa448b25abf438d0d39,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1578090582615360106, guid: d1f7d8a420654aa448b25abf438d0d39,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1578090582615360106, guid: d1f7d8a420654aa448b25abf438d0d39,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1996223092959337552, guid: d1f7d8a420654aa448b25abf438d0d39,
         type: 3}
       propertyPath: m_Camera
@@ -1852,8 +1861,29 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7779824555041375825, guid: d1f7d8a420654aa448b25abf438d0d39,
+        type: 3}
+      propertyPath: UIStuff
+      value: 
+      objectReference: {fileID: 264479532}
+    - target: {fileID: 9016108865726429485, guid: d1f7d8a420654aa448b25abf438d0d39,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016108865726429485, guid: d1f7d8a420654aa448b25abf438d0d39,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1f7d8a420654aa448b25abf438d0d39, type: 3}
+--- !u!1 &1996223092912663988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6036573800756933892, guid: d1f7d8a420654aa448b25abf438d0d39,
+    type: 3}
+  m_PrefabInstance: {fileID: 1996223092912663987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3244970412587573931
 PrefabInstance:
   m_ObjectHideFlags: 0

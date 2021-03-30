@@ -154,7 +154,7 @@ public class BattleClass : MonoBehaviour
                     case 0:
                         enemies[x, y] = front[y].GetComponentInChildren<EnemyClass>();
 
-                        float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
+                        float xPosFront = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 200); //3 is MAGIC NUMBER. bad.
                         float yPosFront = x * 4.2f + (front[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosFront = -30 - (x * 10);
                         Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
@@ -166,7 +166,7 @@ public class BattleClass : MonoBehaviour
                     case 1:
                         enemies[x, y] = mid[y].GetComponentInChildren<EnemyClass>();
 
-                        float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
+                        float xPosMid = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 200); //3 is MAGIC NUMBER. bad.
                         float yPosMid = x * 4.2f + (mid[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosMid = -30 - (x * 10); ;
                         Vector3 positionMid = new Vector3(xPosMid, yPosMid, zPosMid);
@@ -178,7 +178,7 @@ public class BattleClass : MonoBehaviour
                     case 2:
                         enemies[x, y] = back[y].GetComponentInChildren<EnemyClass>();
 
-                        float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 250); //3 is MAGIC NUMBER. bad.
+                        float xPosBack = (y - (Mathf.Abs(maxRowSize - 1) / 2)) * (Screen.width / 200); //3 is MAGIC NUMBER. bad.
                         float yPosBack = x * 4.2f + (back[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosBack = -30 - (x * 10); ;
                         Vector3 positionBack = new Vector3(xPosBack, yPosBack, zPosBack);
@@ -898,33 +898,6 @@ public class BattleClass : MonoBehaviour
                     partyMembersChained.Add(doerP);
                     yield return new WaitForSeconds(timing);
                     crit = 2;
-                    GameObject temporaryThing = new GameObject();
-                    temporaryThing.AddComponent<ChainClass>();
-                    ChainClass surprise = temporaryThing.GetComponent<ChainClass>();
-                    surprise.chainHolder = doerP;
-                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
-                    surprise.Initialize();
-
-                    bool isItThere = false;
-                    for(int x = 0; x < maxRowSize; x++)
-                    {
-                        if(victimP.GetComponent<EnemyClass>() == front[x].GetComponentInChildren<EnemyClass>())
-                        {
-                            isItThere = true;
-                        }
-                    }
-
-                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon) BUILD FIX
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && isItThere)
-                    {
-                        chains.Add(surprise);
-                        Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
-                        doerP.currentlyChained = true;
-                    }
-                    else
-                    {
-                        Destroy(surprise.gameObject);
-                    }
                 }
 
                 //If not, calculate damage
@@ -966,6 +939,37 @@ public class BattleClass : MonoBehaviour
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
+
+                if(crit > 1)
+                {
+                    GameObject temporaryThing = new GameObject();
+                    temporaryThing.AddComponent<ChainClass>();
+                    ChainClass surprise = temporaryThing.GetComponent<ChainClass>();
+                    surprise.chainHolder = doerP;
+                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
+                    surprise.Initialize();
+
+                    bool isItThere = false;
+                    for (int x = 0; x < maxRowSize; x++)
+                    {
+                        if (victimP.GetComponent<EnemyClass>() == front[x].GetComponentInChildren<EnemyClass>())
+                        {
+                            isItThere = true;
+                        }
+                    }
+
+                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon)
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && isItThere && victimP.GetComponent<EnemyClass>().currentHealth > 0)
+                    {
+                        chains.Add(surprise);
+                        Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
+                        doerP.currentlyChained = true;
+                    }
+                    else
+                    {
+                        Destroy(surprise.gameObject);
+                    }
+                }
                 
                 //Debug.Log(potentialDamage);
                 if (affinityInQuestion == "Strong")
@@ -1087,7 +1091,7 @@ public class BattleClass : MonoBehaviour
                 }
 
                 //DISPLAY IT
-                DamagePopup.Create(affinityPosition, buff.statName + "\nBUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(affinityPosition, thingBuff + "\nBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 yield return new WaitForSeconds(timing * 4);
@@ -1144,7 +1148,7 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 yield return new WaitForSeconds(timing * 4);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + notBuddy.name + " for " + debuff.amount);
-                DamagePopup.Create(affinityPosition, debuff.statName + "\nDEBUFF", 1, 0.92f, 0.016f);
+                DamagePopup.Create(affinityPosition, thingDebuff + "\nDEBUFF", 1, 0.92f, 0.016f);
                 DamagePopup.Create(damagePosition, debuff.amount.ToString(), 1, 0.92f, 0.016f);
 
                 break;
@@ -1766,15 +1770,15 @@ public class BattleClass : MonoBehaviour
         {
             for(int y = 0; y < maxRowSize; y++)
             {
-                if(enemies[x, y]!= null)
+                if(enemies[x, y] != null)
                 {
                     int result;
                     //Debug.Log(type);
                     enemies[x, y].stats.TryGetValue(type, out result);
                     information[x, y].stat = result;
                     int maxHealth;
-                    party[x].stats.TryGetValue("HP", out maxHealth);
-                    information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                    enemies[x, y].stats.TryGetValue("HP", out maxHealth);
+                    information[x, y].healthPercentage = enemies[x, y].currentHealth / maxHealth;
                     //Debug.Log(x + " " + y + " " + information[x, y].stat);
                 }
             }
@@ -1814,14 +1818,14 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if (enemies != null)
+                if (enemies[x, y] != null)
                 {
                     int result;
                     enemies[x, y].stats.TryGetValue(type, out result);
                     information[x, y].stat = result;
                     int maxHealth;
-                    party[x].stats.TryGetValue("HP", out maxHealth);
-                    information[x, y].healthPercentage = party[x].currentHealth / maxHealth;
+                    enemies[x, y].stats.TryGetValue("HP", out maxHealth);
+                    information[x, y].healthPercentage = enemies[x, y].currentHealth / maxHealth;
                 }
             }
         }
