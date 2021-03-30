@@ -10,7 +10,7 @@ public class KnownInfo : MonoBehaviour
 
     private void Start()
     {
-        InitializeJSONNew();
+        InitializeJSON();
     }
 
     public KnownInfoDataType getFromJSON(string name)
@@ -62,6 +62,7 @@ public class KnownInfo : MonoBehaviour
     public void InitializeJSONNew()
     {
         //AssetDatabase.ImportAsset("Assets/Resources/JSON/KnownAffinities.json");
+        totalEnemies = 100;
         var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
         knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
 

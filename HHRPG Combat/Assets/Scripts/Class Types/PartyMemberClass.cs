@@ -14,6 +14,7 @@ public class PartyMemberClass : MonoBehaviour
     private Material def;
     public bool currentlyChained = false;
     public bool currentlyGuarding = false;
+    public bool chainedBefore = false;
     public ModifierDictionary buffDebuff;
     [SerializeField] public AffinityDictionary affinities;
     [SerializeField] public StatDictionary stats;

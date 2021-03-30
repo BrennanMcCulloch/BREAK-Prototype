@@ -23,6 +23,7 @@ public class BattleClass : MonoBehaviour
     public GameObject EQButton;
 
     public float timing = 0.3f;
+    public static int tutorial = 1;
 
     public Camera camera;
 
@@ -30,7 +31,7 @@ public class BattleClass : MonoBehaviour
 
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
-    public static string difficulty;
+    public static string difficulty = "Medium";
 
     private static int maxPartySize = 3;
     public int maxRowSize = 1;
@@ -66,7 +67,7 @@ public class BattleClass : MonoBehaviour
     private List<ChainClass> chains = new List<ChainClass>();
     List<PartyMemberClass> partyMembersChained = new List<PartyMemberClass>();
 
-    private void Start()
+    private void Awake()
     {
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
         canvasDuplicate = Instantiate(canvas);
@@ -106,9 +107,12 @@ public class BattleClass : MonoBehaviour
         }
         foreach(PartyMemberClass child in party) 
         {
-            if(child.gameObject.activeSelf == true)
+            if(child != null)
             {
-                haveLost = false;
+                if(child.currentHealth > 0)
+                {
+                    haveLost = false;
+                }
             }
         }
 
@@ -118,6 +122,10 @@ public class BattleClass : MonoBehaviour
         }
         if(haveWon)//Win
         {
+            if(tutorial < 3)
+            {
+                tutorial++;
+            }
             Transition.dif = "Final Boss";
             SceneManager.LoadSceneAsync("Transition");
         }
@@ -192,20 +200,27 @@ public class BattleClass : MonoBehaviour
         //initializing party array with random assortment besides leader
         party = new PartyMemberClass[restOfParty.Length + 1];
         int currentSlot = 0;
-        for (float x = restOfParty.Length; x >= 0; x--)
+        if(restOfParty.Length == 0)
         {
-            if (x == restOfParty.Length) { party[currentSlot] = leader; currentSlot++; } //put leader in first
-            else if (x == 0) { party[currentSlot] = restOfParty[0]; currentSlot++; } //don't random search for the last entry
-            else
+            party[0] = leader;
+        }
+        else
+        {
+            for (float x = restOfParty.Length; x >= 0; x--)
             {
-                int select = Mathf.RoundToInt(Random.Range(0, x)); //selects a random party member in array
-                party[currentSlot] = restOfParty[select]; //slots it in position
-                while (select < restOfParty.Length - 1) //moves the rest of the future members up array for future random selection
+                if (x == restOfParty.Length) { party[currentSlot] = leader; currentSlot++; } //put leader in first
+                else if (x == 0) { party[currentSlot] = restOfParty[0]; currentSlot++; } //don't random search for the last entry
+                else
                 {
-                    restOfParty[select] = restOfParty[select + 1];
-                    select++;
+                    int select = Mathf.RoundToInt(Random.Range(0, x)); //selects a random party member in array
+                    party[currentSlot] = restOfParty[select]; //slots it in position
+                    while (select < restOfParty.Length - 1) //moves the rest of the future members up array for future random selection
+                    {
+                        restOfParty[select] = restOfParty[select + 1];
+                        select++;
+                    }
+                    currentSlot++;
                 }
-                currentSlot++;
             }
         }
 
@@ -237,10 +252,16 @@ public class BattleClass : MonoBehaviour
         foreach (Button but in partyButtons.GetComponentsInChildren<Button>())
         {
             but.onClick.AddListener(() => changeToDo(but.GetComponentInChildren<Text>().text));
-            if (leader != 0 && but.GetComponentInChildren<Text>().text == "EQ") { but.gameObject.SetActive(false); }
-            if ((but.GetComponentInChildren<Text>().text == "BREAK") || (but.GetComponentInChildren<Text>().text == "Harmonic"))
+            if (but.GetComponentInChildren<Text>().text == "EQ")
             {
-                if(person.currentlyChained == false)
+                if(leader != 0 || tutorial < 2)
+                {
+                    but.gameObject.SetActive(false);
+                }
+            }
+            else if ((but.GetComponentInChildren<Text>().text == "BREAK") || (but.GetComponentInChildren<Text>().text == "Harmonic"))
+            {
+                if(person.currentlyChained == false || tutorial < 3)
                 {
                     but.gameObject.SetActive(false);
                 }
@@ -286,7 +307,7 @@ public class BattleClass : MonoBehaviour
         Texture2D cursor = Resources.Load("UI/target reticle") as Texture2D;
         Vector2 hotSpot = new Vector2(cursor.width / 2f, cursor.height / 2f);
 
-        while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0 && chainedAgain == false)
+        while (toDo == null && currentlyBreaking == false && groupMove == false && person.currentHealth > 0 && chainedAgain == false && person.chainedBefore == false)
         {
             //PUT INTERACTIVE STUFF HERE
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
@@ -445,6 +466,10 @@ public class BattleClass : MonoBehaviour
                             MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, "Attack. Duh.", false);
 
                             EQMenu.SetActive(false);
+                            if(person.currentlyChained == true)
+                            {
+                                person.chainedBefore = true;
+                            }
                             yield return PartyMove(person, hit.transform.gameObject, hitThem);
                             toDo = "Done";
                         }
@@ -487,25 +512,29 @@ public class BattleClass : MonoBehaviour
                                 foreach (PartyMemberClass homie in party)
                                 {
                                    
-                                    if(homie.currentHealth > 0) { yield return PartyMove(person, homie.gameObject, currentMove); }
+                                    if(homie != null && homie.currentHealth > 0) { yield return PartyMove(person, homie.gameObject, currentMove); }
                                 }
                             }
                             else
                             {
                                 //DID THIS SO GROUP ATTACKS DON'T CAUSE MULTIPLE CALLBACKS
                                 groupMove = true;
+                                if(person.currentlyChained == true)
+                                {
+                                    person.chainedBefore = true;
+                                }
                                 for(int x = 0; x < maxNumberOfRows; x++)
                                 {
                                     for(int y = 0; y < maxRowSize; y++)
                                     {
-                                        if (enemies[x, y] != null) { yield return PartyMove(person, enemies[x, y].gameObject, currentMove); }
+                                        if (enemies[x, y] != null && enemies[x, y].currentHealth > 0) { yield return PartyMove(person, enemies[x, y].gameObject, currentMove); }
                                     }
                                 }
                                 groupMove = false;
                                 if(lastCrit)
                                 {
-                                    yield return PartyMemberTurn(person, 1);
                                     lastCrit = false;
+                                    yield return PartyMemberTurn(person, 1);
                                 }
                             }
                             toDo = "Done";
@@ -580,6 +609,7 @@ public class BattleClass : MonoBehaviour
                     //Debug.Log(temporary);
                     totalPotential += temporary;
                     dude.currentlyChained = false;
+                    dude.chainedBefore = false;
                 }
 
                 partyMembersChained = new List<PartyMemberClass>();
@@ -610,6 +640,7 @@ public class BattleClass : MonoBehaviour
                 foreach(PartyMemberClass dood in party)
                 {
                     dood.currentlyChained = false;
+                    dood.chainedBefore = false;
                 }
 
                 StopAllCoroutines();//hypothetically, this should instantly trigger the enemy turn upon a break
@@ -701,6 +732,7 @@ public class BattleClass : MonoBehaviour
 
         recentlyChained = false;
         person.currentlyChained = false;
+        person.chainedBefore = false;
         chainedAgain = false;
         harmonicAmount = 1;
     }
@@ -783,6 +815,11 @@ public class BattleClass : MonoBehaviour
                 victimP.gameObject.GetComponent<EnemyClass>().affinities.TryGetValue(moveP.type, out affinityInQuestion);
                 victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Agility", out agility);
 
+                if(doerP.currentlyChained == true && moveP.group == false)
+                {
+                    doerP.chainedBefore = true;
+                }
+
                 //Do they dodge?
                 int d100 = Random.Range(1, 101);
                 Modifier buffsAgility;
@@ -849,9 +886,12 @@ public class BattleClass : MonoBehaviour
                 int crit = 1;
                 if (d20 >= 19 || affinityInQuestion == "Weak")
                 {
-                    if(doerP.currentlyChained == true && moveP.group == false)
+                    if(doerP.currentlyChained == true)
                     {
-                        chainedAgain = true;
+                        if(moveP.group == false)
+                        {
+                            chainedAgain = true;
+                        }
                     }
                     DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
                     partyMembersChained.Add(doerP);
@@ -981,7 +1021,7 @@ public class BattleClass : MonoBehaviour
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<EnemyClass>().name + " for " + damage);
 
                 //IF CHAINED, GO BACK TO TOP OF LOOP THING
-                if(doerP.currentlyChained == true)
+                if (doerP.currentlyChained == true)
                 {
                     if(moveP.group == true)
                     {
@@ -989,7 +1029,10 @@ public class BattleClass : MonoBehaviour
                     }
                     else
                     {
-                        yield return PartyMemberTurn(doerP, 1);
+                        if (doerP.chainedBefore == false)
+                        {
+                            yield return PartyMemberTurn(doerP, 1);
+                        }
                     }
                 }
 
