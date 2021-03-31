@@ -56,29 +56,27 @@ public static class KnownInfo //
         Debug.Log("Updated!");
     }
 
+    /*
     public static void InitializeJSON()
     {
         //Resources.Load("Assets/Resources/JSON/KnownAffinities.json");
         var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
         knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
     }
+    */
 
     public static void UpdateJSON()
     {
         var writing = JsonHelper.ToJson<KnownInfoDataType>(knownInfo, true);
-        System.IO.File.WriteAllText(Application.dataPath + "/Resources/JSON/KnownAffinities.json", writing);
+        System.IO.File.WriteAllText(Application.dataPath + "/Assets/Resources/JSON/KnownAffinities.json", writing);
     }
 
     public static void InitializeJSONNew()
     {
         //AssetDatabase.ImportAsset("Assets/Resources/JSON/KnownAffinities.json");
         totalEnemies = 100;
-        var known = Resources.Load<TextAsset>("JSON/KnownAffinities") as TextAsset;
-        knownInfo = JsonHelper.FromJson<KnownInfoDataType>(known.text);
-        if(knownInfo == null)
-        {
-            knownInfo = new KnownInfoDataType[totalEnemies];
-        }
+
+        knownInfo = new KnownInfoDataType[totalEnemies];
 
         for(int x = 0; x < knownInfo.Length; x++)
         {
@@ -102,8 +100,6 @@ public static class KnownInfo //
         }
 
         var writing = JsonHelper.ToJson<KnownInfoDataType>(knownInfo, true);
-        System.IO.File.WriteAllText(Application.dataPath + "/Resources/JSON/KnownAffinities.json", writing);
-
     }
 }
 

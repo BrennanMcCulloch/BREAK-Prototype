@@ -125,7 +125,7 @@ public class BattleClass : MonoBehaviour
         }
         if(haveWon)//Win
         {
-            KnownInfo.UpdateJSON();
+            //KnownInfo.UpdateJSON();
             tutorial++;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             Transition.dif = "Battle " + tutorial.ToString();
