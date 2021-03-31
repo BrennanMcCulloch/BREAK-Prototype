@@ -46,7 +46,7 @@ MonoBehaviour:
   MoveClass:
     moveName: Mosh Pit
     type: Physical
-    effective: 1
+    effective: 0.7
     group: 1
     cost: 2
     friendly: 0

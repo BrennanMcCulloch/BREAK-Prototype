@@ -1,19 +1,19 @@
 {
     "Items": [
         {
-            "name": "David",
+            "name": "?",
             "affinities": [
                 {
                     "affName": "Physical",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "Weak"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Guitar",
@@ -46,19 +46,19 @@
             ]
         },
         {
-            "name": "Kendall",
+            "name": "?",
             "affinities": [
                 {
                     "affName": "Physical",
-                    "affValue": "Strong"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "Strong"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "Weak"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Guitar",
@@ -91,19 +91,19 @@
             ]
         },
         {
-            "name": "Todd",
+            "name": "?",
             "affinities": [
                 {
                     "affName": "Physical",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "Weak"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Guitar",
