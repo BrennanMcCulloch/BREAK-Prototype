@@ -17,6 +17,51 @@
                 },
                 {
                     "affName": "Guitar",
+                    "affValue": "Weak"
+                },
+                {
+                    "affName": "Piano",
+                    "affValue": "?"
+                },
+                {
+                    "affName": "Violin",
+                    "affValue": "?"
+                },
+                {
+                    "affName": "Woodwind",
+                    "affValue": "?"
+                },
+                {
+                    "affName": "Synth",
+                    "affValue": "?"
+                },
+                {
+                    "affName": "Noise",
+                    "affValue": "?"
+                },
+                {
+                    "affName": "Lyrics",
+                    "affValue": "?"
+                }
+            ]
+        },
+        {
+            "name": "Kendall",
+            "affinities": [
+                {
+                    "affName": "Physical",
+                    "affValue": "Strong"
+                },
+                {
+                    "affName": "Drum",
+                    "affValue": "Strong"
+                },
+                {
+                    "affName": "Bass",
+                    "affValue": "Weak"
+                },
+                {
+                    "affName": "Guitar",
                     "affValue": "?"
                 },
                 {
@@ -46,7 +91,7 @@
             ]
         },
         {
-            "name": "?",
+            "name": "Todd",
             "affinities": [
                 {
                     "affName": "Physical",
@@ -54,7 +99,7 @@
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "?"
+                    "affValue": "Weak"
                 },
                 {
                     "affName": "Bass",
@@ -91,7 +136,7 @@
             ]
         },
         {
-            "name": "?",
+            "name": "Clown",
             "affinities": [
                 {
                     "affName": "Physical",
@@ -99,64 +144,19 @@
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Guitar",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Piano",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Violin",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Woodwind",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Synth",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Noise",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Lyrics",
-                    "affValue": "?"
-                }
-            ]
-        },
-        {
-            "name": "?",
-            "affinities": [
-                {
-                    "affName": "Physical",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Drum",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Bass",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Guitar",
-                    "affValue": "?"
-                },
-                {
-                    "affName": "Piano",
-                    "affValue": "?"
+                    "affValue": "Weak"
                 },
                 {
                     "affName": "Violin",

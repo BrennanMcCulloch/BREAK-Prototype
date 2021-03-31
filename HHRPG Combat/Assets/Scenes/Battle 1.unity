@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870fb9261a334e842b0ee24f20ec6b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  memberName: Joker
+  memberName: Dagger
   currentHealth: 50
   currentEP: 40
   UIStuff: {fileID: 264479532}
