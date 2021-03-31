@@ -13,11 +13,11 @@
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Guitar",
-                    "affValue": "Weak"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Piano",
@@ -95,7 +95,7 @@
             "affinities": [
                 {
                     "affName": "Physical",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Drum",
@@ -103,7 +103,7 @@
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "?"
+                    "affValue": "Neutral"
                 },
                 {
                     "affName": "Guitar",
@@ -136,7 +136,7 @@
             ]
         },
         {
-            "name": "Clown",
+            "name": "?",
             "affinities": [
                 {
                     "affName": "Physical",
@@ -144,19 +144,19 @@
                 },
                 {
                     "affName": "Drum",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Bass",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Guitar",
-                    "affValue": "Neutral"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Piano",
-                    "affValue": "Weak"
+                    "affValue": "?"
                 },
                 {
                     "affName": "Violin",
