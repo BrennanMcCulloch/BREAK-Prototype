@@ -1012,7 +1012,7 @@ public class BattleClass : MonoBehaviour
                 {
                     victimP.gameObject.GetComponent<EnemyClass>().currentHealth += damage;
                     int maxHealthParty;
-                    victimP.gameObject.GetComponent<PartyMemberClass>().stats.TryGetValue("HP", out maxHealthParty);
+                    doerP.gameObject.GetComponent<PartyMemberClass>().stats.TryGetValue("HP", out maxHealthParty);
                     if (victimP.gameObject.GetComponent<EnemyClass>().currentHealth > maxHealthParty)
                     {
                         victimP.gameObject.GetComponent<EnemyClass>().currentHealth = maxHealthParty;
