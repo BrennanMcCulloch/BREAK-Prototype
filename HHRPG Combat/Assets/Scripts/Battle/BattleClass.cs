@@ -14,6 +14,12 @@ using UnityEngine.SceneManagement;
  * You can do this. :)
  */
 
+/*
+ * Why is update always stuff that doesnt need to be called every frame?? >.<
+ * Only use I can think of off the top of my head for an update loop
+ * in a turn-based game would be idle animation, aka wiggles and bounces.
+ */
+
 public class BattleClass : MonoBehaviour
 {
     public GameObject canvas;
@@ -32,6 +38,7 @@ public class BattleClass : MonoBehaviour
     public PartyMemberClass leader;
     private PartyMemberClass[] party;
     public static string difficulty = "Medium";
+    public static bool initialized = false;
 
     private static int maxPartySize = 3;
     public int maxRowSize = 1;
@@ -69,6 +76,12 @@ public class BattleClass : MonoBehaviour
 
     private void Awake()
     {
+        if (!initialized)
+        {
+            tutorial = 1;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            SceneManager.LoadSceneAsync("Intro Menu");
+        }
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
         //KnownInfo.InitializeJSON();
         canvasDuplicate = Instantiate(canvas);
@@ -76,7 +89,7 @@ public class BattleClass : MonoBehaviour
         SetUpParty();
         runItParty = true;
         isItRunningParty = true;
-        toDo = null;
+        toDo = null; // false :P
     }
 
     private void Update()
@@ -152,10 +165,10 @@ public class BattleClass : MonoBehaviour
             for (int y = 0; y < maxRowSize; y++)
             {
                 switch (x)
-                {
+                { //The cases change wether the end result goes to the front, mid, or back for various variables
                     case 0:
                         enemies[x, y] = front[y].GetComponentInChildren<EnemyClass>();
-
+                        // from here
                         float xPosFront;
                         if(maxRowSize == 1)
                         {
@@ -168,7 +181,7 @@ public class BattleClass : MonoBehaviour
                         float yPosFront = x * 4.2f + (front[y].gameObject.transform.localScale.y / 2) + 1;
                         float zPosFront = -30 - (x * 10);
                         Vector3 positionFront = new Vector3(xPosFront, yPosFront, zPosFront);
-
+                        // to here could be a function
                         positionFront.y += (front[y].gameObject.transform.localScale.y / 2);
                         front[y].transform.position = positionFront;
 
@@ -408,6 +421,7 @@ public class BattleClass : MonoBehaviour
                                     {
                                         GameObject vic = front[y];
                                         front[y] = enemyClicked.transform.parent.gameObject;
+                                        //from here
                                         if (xEnemy == 0) { front[yEnemy] = vic; }
                                         else if (xEnemy == 1) { mid[yEnemy] = vic; }
                                         else if (xEnemy == 2) { back[yEnemy] = vic; }
@@ -415,6 +429,7 @@ public class BattleClass : MonoBehaviour
                                         SetUpEnemies();
 
                                         Debug.Log(x + " " + y + " switched with " + xEnemy + " " + yEnemy);
+                                        //to here could be a function
                                     }
                                     else if(x == 1)
                                     {
@@ -488,7 +503,7 @@ public class BattleClass : MonoBehaviour
                     if (Physics.Raycast(ray, out hit))
                     {
                         if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
-                        {
+                        {                                   // Name,    Type,    Effect, group,cost,friendly,description,harmonic
                             MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, "Attack. Duh.", false);
 
                             EQMenu.SetActive(false);

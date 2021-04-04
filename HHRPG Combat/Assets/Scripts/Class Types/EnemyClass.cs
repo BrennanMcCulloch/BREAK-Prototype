@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Why is Update() stuff that only needs to be called after
+ * currentHealth is changed? Could make that a public callable
+ * function or just privatize the ability to change health
+ * at all and have it happen automatically.
+ */
+
 public class EnemyClass : MonoBehaviour
 {
     public string enemyName;
