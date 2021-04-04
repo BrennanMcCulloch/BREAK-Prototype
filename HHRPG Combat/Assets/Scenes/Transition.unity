@@ -401,7 +401,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, yeet my lord jesus out the window
+  m_Text: Lorem ipsum dolor sit amet, yeet my lord jesus out the window, oh god just
+    get me out
 --- !u!222 &381852844
 CanvasRenderer:
   m_ObjectHideFlags: 0

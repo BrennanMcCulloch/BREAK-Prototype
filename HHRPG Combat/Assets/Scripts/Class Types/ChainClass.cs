@@ -29,5 +29,6 @@ public class ChainClass : MonoBehaviour
     void Update()
     {
         //Make the chain wiggly maybe?
+        //snek
     }
 }

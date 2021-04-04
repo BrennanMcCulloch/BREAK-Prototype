@@ -41,6 +41,7 @@ public class Transition : MonoBehaviour
 
     public void StartPrototype()
     {
+        BattleClass.initialized = true;
         SceneManager.LoadSceneAsync(dif);
     }
 }
