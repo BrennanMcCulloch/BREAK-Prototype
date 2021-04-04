@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 
+/*
+ * Why is Update() stuff that only needs to be called after
+ * currentHealth/currentEP is changed? Could make that a public callable
+ * function or just privatize the ability to change health
+ * at all and have it happen automatically.
+ */
+
 public class PartyMemberClass : MonoBehaviour
 {
     public string memberName;

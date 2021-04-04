@@ -88,9 +88,9 @@ public class MoveClass
         friendly = _f;
     }
 
-    public bool GetHarm()
+    public string GetDesc()
     {
-        return harmonic;
+        return description;
     }
 
     public void SetDesc(string _d)
@@ -98,9 +98,9 @@ public class MoveClass
         description = _d;
     }
 
-    public string GetDesc()
+    public bool GetHarm()
     {
-        return description;
+        return harmonic;
     }
 
     public void SetHarm(bool _h)

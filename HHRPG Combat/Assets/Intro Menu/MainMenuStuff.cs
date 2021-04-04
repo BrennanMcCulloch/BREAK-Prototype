@@ -8,6 +8,8 @@ public class MainMenuStuff : MonoBehaviour
 {
     public string dif = "Medium";
     public Text difString;
+    public Text LevelString;
+    public int tutorial = 1;
 
     private void Start()
     {
@@ -21,12 +23,24 @@ public class MainMenuStuff : MonoBehaviour
         difString.text = "Difficulty: " + dif;
     }
 
+    public void ChangeStartingLevel()
+    {
+        tutorial ++;
+        
+        if (tutorial > 4)
+        {
+            tutorial = 1;
+        }
+
+        LevelString.text = "Level " + tutorial.ToString();
+    }
+
     public void StartPrototype(string nameOfScene)
     {
         KnownInfo.InitializeJSONNew();
-        BattleClass.tutorial = 1;
+        BattleClass.tutorial = tutorial;
         BattleClass.difficulty = dif;
-        Transition.dif = "Battle 1";
+        Transition.dif = "Battle " + tutorial.ToString();
         SceneManager.LoadSceneAsync(nameOfScene);
     }
 }
