@@ -938,6 +938,7 @@ public class BattleClass : MonoBehaviour
                         }
                     }
                     DamagePopup.Create(affinityPosition, "CRITICAL", 0, 1, 1);
+                    partyMembersChained.Add(doerP);
                     yield return new WaitForSeconds(timing);
                     crit = 2;
                 }
@@ -981,6 +982,37 @@ public class BattleClass : MonoBehaviour
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
+
+                if(crit > 1)
+                {
+                    GameObject temporaryThing = new GameObject();
+                    temporaryThing.AddComponent<ChainClass>();
+                    ChainClass surprise = temporaryThing.GetComponent<ChainClass>();
+                    surprise.chainHolder = doerP;
+                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
+                    surprise.Initialize();
+
+                    bool isItThere = false;
+                    for (int x = 0; x < maxRowSize; x++)
+                    {
+                        if (victimP.GetComponent<EnemyClass>() == front[x].GetComponentInChildren<EnemyClass>())
+                        {
+                            isItThere = true;
+                        }
+                    }
+
+                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon)
+                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && isItThere && victimP.GetComponent<EnemyClass>().currentHealth > 0)
+                    {
+                        chains.Add(surprise);
+                        Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
+                        doerP.currentlyChained = true;
+                    }
+                    else
+                    {
+                        Destroy(surprise.gameObject);
+                    }
+                }
                 
                 //Debug.Log(potentialDamage);
                 if (affinityInQuestion == "Strong")
@@ -1035,38 +1067,6 @@ public class BattleClass : MonoBehaviour
                 //DISPLAY IT
                 //yield return new WaitForSeconds(1.0f);
                 Debug.Log(doerP.name + " did a " + moveP.moveName + " on " + victimP.gameObject.GetComponent<EnemyClass>().name + " for " + damage);
-
-                if (crit > 1 && victimP.GetComponent<EnemyClass>().currentHealth > 0 && affinityInQuestion != "Reflect" && affinityInQuestion != "Absorb")
-                {
-                    partyMembersChained.Add(doerP);
-                    GameObject temporaryThing = new GameObject();
-                    temporaryThing.AddComponent<ChainClass>();
-                    ChainClass surprise = temporaryThing.GetComponent<ChainClass>();
-                    surprise.chainHolder = doerP;
-                    surprise.chainVictim = victimP.GetComponent<EnemyClass>();
-                    surprise.Initialize();
-
-                    bool isItThere = false;
-                    for (int x = 0; x < maxRowSize; x++)
-                    {
-                        if (victimP.GetComponent<EnemyClass>() == front[x].GetComponentInChildren<EnemyClass>())
-                        {
-                            isItThere = true;
-                        }
-                    }
-
-                    //ADD CHAIN TO FRONT ROW ONLY (later change based on weapon)
-                    if (doerP.currentlyChained == false && chains.Contains(surprise) == false && isItThere && victimP.GetComponent<EnemyClass>().currentHealth > 0)
-                    {
-                        chains.Add(surprise);
-                        Debug.Log("CHAINED " + surprise.chainHolder.name + " " + surprise.chainVictim.name);
-                        doerP.currentlyChained = true;
-                    }
-                    else
-                    {
-                        Destroy(surprise.gameObject);
-                    }
-                }
 
                 //IF CHAINED, GO BACK TO TOP OF LOOP THING
                 if (doerP.currentlyChained == true)
