@@ -98,7 +98,7 @@ public class BattleClass : MonoBehaviour
         bool haveLost = true;
         bool haveWon = true;
 
-        foreach(GameObject child in front)
+        foreach (GameObject child in front)
         {
             if (child.activeSelf == true)
             {
@@ -119,11 +119,11 @@ public class BattleClass : MonoBehaviour
                 haveWon = false;
             }
         }
-        foreach(PartyMemberClass child in party) 
+        foreach (PartyMemberClass child in party)
         {
-            if(child != null)
+            if (child != null)
             {
-                if(child.currentHealth > 0)
+                if (child.currentHealth > 0)
                 {
                     haveLost = false;
                 }
@@ -136,7 +136,7 @@ public class BattleClass : MonoBehaviour
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             SceneManager.LoadSceneAsync("Intro Menu");
         }
-        if(haveWon)//Win
+        if (haveWon)//Win
         {
             //KnownInfo.UpdateJSON();
             tutorial++;
@@ -155,7 +155,7 @@ public class BattleClass : MonoBehaviour
                 if (isItRunningEnemy) { StartCoroutine(EnemyPhase()); }
             }
         }
-        
+
     }
 
     public void SetUpEnemies()
@@ -170,7 +170,7 @@ public class BattleClass : MonoBehaviour
                         enemies[x, y] = front[y].GetComponentInChildren<EnemyClass>();
                         // from here
                         float xPosFront;
-                        if(maxRowSize == 1)
+                        if (maxRowSize == 1)
                         {
                             xPosFront = 0;
                         }
@@ -239,7 +239,7 @@ public class BattleClass : MonoBehaviour
         //initializing party array with random assortment besides leader
         party = new PartyMemberClass[restOfParty.Length + 1];
         int currentSlot = 0;
-        if(restOfParty.Length == 0)
+        if (restOfParty.Length == 0)
         {
             party[0] = leader;
         }
@@ -293,14 +293,14 @@ public class BattleClass : MonoBehaviour
             but.onClick.AddListener(() => changeToDo(but.GetComponentInChildren<Text>().text));
             if (but.GetComponentInChildren<Text>().text == "EQ")
             {
-                if(leader != 0 || tutorial < 2)
+                if (leader != 0 || tutorial < 2)
                 {
                     but.gameObject.SetActive(false);
                 }
             }
             else if ((but.GetComponentInChildren<Text>().text == "BREAK") || (but.GetComponentInChildren<Text>().text == "Harmonic"))
             {
-                if(person.currentlyChained == false || tutorial < 3)
+                if (person.currentlyChained == false || tutorial < 3)
                 {
                     but.gameObject.SetActive(false);
                 }
@@ -354,7 +354,7 @@ public class BattleClass : MonoBehaviour
             partyButtons.SetActive(true);
             yield return null;
 
-            while(toDo == "EQ")
+            while (toDo == "EQ")
             {
                 Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                 Debug.Log("EQ");
@@ -369,20 +369,20 @@ public class BattleClass : MonoBehaviour
                 int xEnemy = -1;
                 int yEnemy = -1;
 
-                if(toDo == "EQ")
+                if (toDo == "EQ")
                 {
                     ray = camera.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out hit))
                     {
-                        if(hit.transform.gameObject.GetComponent<EnemyClass>() != null)
+                        if (hit.transform.gameObject.GetComponent<EnemyClass>() != null)
                         {
                             toDo = "EQ Release";
                             enemyClicked = hit.transform.gameObject;
-                            for(int x = 0; x < maxNumberOfRows; x++)
+                            for (int x = 0; x < maxNumberOfRows; x++)
                             {
-                                for(int y = 0; y < maxRowSize; y++)
+                                for (int y = 0; y < maxRowSize; y++)
                                 {
-                                    if(enemies[x, y] == enemyClicked.GetComponent<EnemyClass>())
+                                    if (enemies[x, y] == enemyClicked.GetComponent<EnemyClass>())
                                     {
                                         xEnemy = x;
                                         yEnemy = y;
@@ -393,10 +393,10 @@ public class BattleClass : MonoBehaviour
                     }
                 }
 
-                if(toDo == "EQ Release")
+                if (toDo == "EQ Release")
                 {
                     yield return _WaitForInputClickLift();
-                    if(person.currentEP < EQPoints)
+                    if (person.currentEP < EQPoints)
                     {
                         DamagePopup.Create(new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z - 10), "NO EP", 1, 0, 1);
                         EQMenu.SetActive(false);
@@ -406,18 +406,18 @@ public class BattleClass : MonoBehaviour
                     }
 
                     ray = camera.ScreenPointToRay(Input.mousePosition);
-                    if(Physics.Raycast(ray, out hit))
+                    if (Physics.Raycast(ray, out hit))
                     {
                         bool didItHit = false;
-                        for(int x = 0; x < maxNumberOfRows; x++)
+                        for (int x = 0; x < maxNumberOfRows; x++)
                         {
-                            for(int y = 0; y < maxRowSize; y++)
+                            for (int y = 0; y < maxRowSize; y++)
                             {
                                 if (hit.transform.gameObject.GetComponent<EnemyClass>() == enemies[x, y]) //for each flat, if you've hit THAT flat when releasing the mouse
                                 {
                                     //DO THE EXCHANGE
                                     didItHit = true;
-                                    if(x == 0)
+                                    if (x == 0)
                                     {
                                         GameObject vic = front[y];
                                         front[y] = enemyClicked.transform.parent.gameObject;
@@ -431,7 +431,7 @@ public class BattleClass : MonoBehaviour
                                         Debug.Log(x + " " + y + " switched with " + xEnemy + " " + yEnemy);
                                         //to here could be a function
                                     }
-                                    else if(x == 1)
+                                    else if (x == 1)
                                     {
                                         GameObject vicMid = mid[y];
                                         mid[y] = enemyClicked.transform.parent.gameObject;
@@ -443,7 +443,7 @@ public class BattleClass : MonoBehaviour
 
                                         Debug.Log(x + " " + y + " switched with " + xEnemy + " " + yEnemy);
                                     }
-                                    else if(x == 2)
+                                    else if (x == 2)
                                     {
                                         GameObject vicB = back[y];
                                         back[y] = enemyClicked.transform.parent.gameObject;
@@ -468,7 +468,7 @@ public class BattleClass : MonoBehaviour
                             }
                         }
 
-                        if(didItHit)
+                        if (didItHit)
                         {
                             person.currentEP = person.currentEP - EQPoints;
                             EQPoints = EQPoints * 2;
@@ -487,8 +487,8 @@ public class BattleClass : MonoBehaviour
                 xEnemy = -1;
                 yEnemy = -1;
             }
-            
-            while(toDo == "Attack")
+
+            while (toDo == "Attack")
             {
                 Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                 partyButtons.SetActive(false);
@@ -497,7 +497,7 @@ public class BattleClass : MonoBehaviour
                 Ray ray;
                 yield return _WaitForInputClick();
 
-                if(toDo == "Attack")
+                if (toDo == "Attack")
                 {
                     ray = camera.ScreenPointToRay(Input.mousePosition);
                     if (Physics.Raycast(ray, out hit))
@@ -507,7 +507,7 @@ public class BattleClass : MonoBehaviour
                             MoveClass hitThem = new MoveClass("Attack", "Physical", 1.0f, false, 0, false, "Attack. Duh.", false);
 
                             EQMenu.SetActive(false);
-                            if(person.currentlyChained == true)
+                            if (person.currentlyChained == true)
                             {
                                 person.chainedBefore = true;
                             }
@@ -521,7 +521,7 @@ public class BattleClass : MonoBehaviour
                 EQMenu.SetActive(false);
             }
 
-            while(toDo == "Guard")
+            while (toDo == "Guard")
             {
                 partyButtons.SetActive(false);
                 yield return null;
@@ -530,7 +530,7 @@ public class BattleClass : MonoBehaviour
                 partyButtons.SetActive(true);
             }
 
-            while(toDo == "Rhythm")
+            while (toDo == "Rhythm")
             {
                 partyButtons.SetActive(false);
                 rhythmButtons.SetActive(true);
@@ -541,7 +541,7 @@ public class BattleClass : MonoBehaviour
                     Cursor.SetCursor(cursor, hotSpot, CursorMode.Auto);
                     rhythmButtons.SetActive(false);
 
-                    if(currentMove != null)
+                    if (currentMove != null)
                     {
 
                         if (currentMove.group == true)
@@ -552,27 +552,27 @@ public class BattleClass : MonoBehaviour
                             {
                                 foreach (PartyMemberClass homie in party)
                                 {
-                                   
-                                    if(homie != null && homie.currentHealth > 0) { yield return PartyMove(person, homie.gameObject, currentMove); }
+
+                                    if (homie != null && homie.currentHealth > 0) { yield return PartyMove(person, homie.gameObject, currentMove); }
                                 }
                             }
                             else
                             {
                                 //DID THIS SO GROUP ATTACKS DON'T CAUSE MULTIPLE CALLBACKS
                                 groupMove = true;
-                                if(person.currentlyChained == true)
+                                if (person.currentlyChained == true)
                                 {
                                     person.chainedBefore = true;
                                 }
-                                for(int x = 0; x < maxNumberOfRows; x++)
+                                for (int x = 0; x < maxNumberOfRows; x++)
                                 {
-                                    for(int y = 0; y < maxRowSize; y++)
+                                    for (int y = 0; y < maxRowSize; y++)
                                     {
                                         if (enemies[x, y] != null && enemies[x, y].currentHealth > 0) { yield return PartyMove(person, enemies[x, y].gameObject, currentMove); }
                                     }
                                 }
                                 groupMove = false;
-                                if(lastCrit)
+                                if (lastCrit)
                                 {
                                     lastCrit = false;
                                     yield return PartyMemberTurn(person, 1);
@@ -620,7 +620,7 @@ public class BattleClass : MonoBehaviour
                 currentMove = null;
             }
 
-            while(toDo == "BREAK")
+            while (toDo == "BREAK")
             {
                 currentlyBreaking = true;
                 partyButtons.SetActive(false);
@@ -630,7 +630,7 @@ public class BattleClass : MonoBehaviour
                 List<EnemyClass> enemiesChained = new List<EnemyClass>();
                 foreach (ChainClass chainThing in chains)
                 {
-                    if(enemiesChained.Contains(chainThing.chainVictim.GetComponent<EnemyClass>()) == false)
+                    if (enemiesChained.Contains(chainThing.chainVictim.GetComponent<EnemyClass>()) == false)
                     {
                         totalChains++;
                         enemiesChained.Add(chainThing.chainVictim.GetComponent<EnemyClass>());
@@ -645,7 +645,7 @@ public class BattleClass : MonoBehaviour
                 foreach (PartyMemberClass dude in partyMembersChained)
                 {
                     int temporary;
-                    
+
                     dude.stats.TryGetValue("Potential", out temporary);
                     //Debug.Log(temporary);
                     totalPotential += temporary;
@@ -678,7 +678,7 @@ public class BattleClass : MonoBehaviour
                 chainedAgain = false;
                 harmonicAmount = 1;
 
-                foreach(PartyMemberClass dood in party)
+                foreach (PartyMemberClass dood in party)
                 {
                     dood.currentlyChained = false;
                     dood.chainedBefore = false;
@@ -722,13 +722,13 @@ public class BattleClass : MonoBehaviour
                             EQMenu.SetActive(false);
                             Modifier buff = new Modifier();
                             buff.statName = person.harmonic.GetComponent<MoveClassWrapper>().MoveClass.type;
-                            buff.amount = harmonicAmount * (int) person.harmonic.GetComponent<MoveClassWrapper>().MoveClass.effective;
+                            buff.amount = harmonicAmount * (int)person.harmonic.GetComponent<MoveClassWrapper>().MoveClass.effective;
                             buff.turnTime = 1;
                             harmonicAmount += 2;
                             Modifier already;
                             friendlyperson.buffDebuff.TryGetValue(buff.statName, out already);
 
-                            if(already == null)
+                            if (already == null)
                             {
                                 friendlyperson.buffDebuff.Add(buff.statName, buff);
                             }
@@ -739,6 +739,8 @@ public class BattleClass : MonoBehaviour
 
                             DamagePopup.Create(affinityPosition, buff.statName + "\nHARMONIC", 1, 0, 1);
                             DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0, 1);
+
+                            person.passed = true;
 
                             yield return PartyMemberTurn(friendlyperson, 1);
                             person.currentlyChained = false;
@@ -802,7 +804,7 @@ public class BattleClass : MonoBehaviour
     {
         //yield return null; //need this to not duplicate click choices
         bool temp = Input.GetMouseButtonDown(0);
-        while(temp == false)
+        while (temp == false)
         {
             yield return null;
             temp = Input.GetMouseButtonDown(0);
@@ -856,7 +858,7 @@ public class BattleClass : MonoBehaviour
                 victimP.gameObject.GetComponent<EnemyClass>().affinities.TryGetValue(moveP.type, out affinityInQuestion);
                 victimP.gameObject.GetComponent<EnemyClass>().stats.TryGetValue("Agility", out agility);
 
-                if(doerP.currentlyChained == true && moveP.group == false)
+                if (doerP.currentlyChained == true && moveP.group == false)
                 {
                     doerP.chainedBefore = true;
                 }
@@ -928,9 +930,9 @@ public class BattleClass : MonoBehaviour
                 int crit = 1;
                 if (d20 >= 19 || affinityInQuestion == "Weak")
                 {
-                    if(doerP.currentlyChained == true)
+                    if (doerP.currentlyChained == true)
                     {
-                        if(moveP.group == false)
+                        if (moveP.group == false)
                         {
                             chainedAgain = true;
                         }
@@ -979,7 +981,7 @@ public class BattleClass : MonoBehaviour
                 double percentDefended = ((d20def * 0.01) + 0.8) * statInQuestion / 100;
 
                 double damageNotRounded = damageDealt - (damageDealt * percentDefended);
-                
+
                 //Debug.Log(potentialDamage);
                 if (affinityInQuestion == "Strong")
                 {
@@ -1004,16 +1006,16 @@ public class BattleClass : MonoBehaviour
                     yield return new WaitForSeconds(timing);
                 }
 
-            /*
-             *
-             * DO WORK HERE
-             * 
-             */
+                /*
+                 *
+                 * DO WORK HERE
+                 * 
+                 */
 
                 else if (affinityInQuestion == "Reflect")
                 {
                     int doerDefence;
-                    if(moveP.type == "Physical")
+                    if (moveP.type == "Physical")
                     {
                         doerP.stats.TryGetValue("Physical Defence", out doerDefence);
                     }
@@ -1069,7 +1071,7 @@ public class BattleClass : MonoBehaviour
                 //IF CHAINED, GO BACK TO TOP OF LOOP THING
                 if (doerP.currentlyChained == true)
                 {
-                    if(moveP.group == true)
+                    if (moveP.group == true)
                     {
                         lastCrit = true;
                     }
@@ -1217,10 +1219,10 @@ public class BattleClass : MonoBehaviour
     //Things to do on enemy turn
     IEnumerator EnemyTurn(EnemyClass enemy, int row, int col)
     {
-        switch(row)
+        switch (row)
         {
             case 0: //front row
-                if(enemy.frontMoves.Length > 0 && enemy.currentHealth > 0)
+                if (enemy.frontMoves.Length > 0 && enemy.currentHealth > 0)
                 {
                     int whichFront = Random.Range(0, enemy.frontMoves.Length);
                     GameObject doItFront = enemy.frontMoves[whichFront];
@@ -1230,7 +1232,7 @@ public class BattleClass : MonoBehaviour
                 }
                 break;
             case 1: //mid row
-                if(enemy.midMoves.Length > 0 && enemy.currentHealth > 0)
+                if (enemy.midMoves.Length > 0 && enemy.currentHealth > 0)
                 {
                     int whichMid = Random.Range(0, enemy.midMoves.Length);
                     GameObject doItMid = enemy.midMoves[whichMid];
@@ -1240,7 +1242,7 @@ public class BattleClass : MonoBehaviour
                 }
                 break;
             case 2: //back row
-                if(enemy.backMoves.Length > 0 && enemy.currentHealth > 0)
+                if (enemy.backMoves.Length > 0 && enemy.currentHealth > 0)
                 {
                     int whichBack = Random.Range(0, enemy.backMoves.Length);
                     GameObject doItBack = enemy.backMoves[whichBack];
@@ -1285,7 +1287,7 @@ public class BattleClass : MonoBehaviour
                 {
                     for (int x = 0; x < party.Length; x++)
                     {
-                        if(party[x] != null)
+                        if (party[x] != null)
                         {
                             vics[x] = party[x];
                         }
@@ -1332,9 +1334,9 @@ public class BattleClass : MonoBehaviour
                     }
                 }
 
-                foreach(PartyMemberClass victim in vics)
+                foreach (PartyMemberClass victim in vics)
                 {
-                    if(victim != null && victim.currentHealth > 0)
+                    if (victim != null && victim.currentHealth > 0)
                     {
                         damagePosition = victim.transform.position;
                         damagePosition.z += 2;
@@ -1548,22 +1550,22 @@ public class BattleClass : MonoBehaviour
                 //ADD THE BUFF
                 Modifier thingBuff;
                 buddy.buffDebuff.TryGetValue(buff.statName, out thingBuff);
-                if(thingBuff == null)
+                if (thingBuff == null)
                 {
                     buddy.buffDebuff.Add(buff.statName, buff);
                 }
                 else //there's already a buff or debuff in that category
                 {
-                    if(thingBuff.amount < 0)
+                    if (thingBuff.amount < 0)
                     {
                         thingBuff.amount = buff.amount;
                         thingBuff.turnTime = 3;
                     }
-                    else if(thingBuff.amount == buff.amount)
+                    else if (thingBuff.amount == buff.amount)
                     {
                         thingBuff.turnTime += buff.turnTime;
                     }
-                    else if(thingBuff.amount > 0)
+                    else if (thingBuff.amount > 0)
                     {
                         thingBuff.amount += buff.amount;
                         thingBuff.turnTime = 3;
@@ -1674,7 +1676,7 @@ public class BattleClass : MonoBehaviour
                 {
                     for (int y = 0; y < maxRowSize; y++)
                     {
-                        if(enemies[x, y] != null)
+                        if (enemies[x, y] != null)
                         {
                             if (lowestHealth > enemies[x, y].currentHealth)
                             {
@@ -1701,7 +1703,7 @@ public class BattleClass : MonoBehaviour
                 float healies = move.effective * maxHealth;
                 int heals = (int)Mathf.Round(healies);
                 enemies[xPos, yPos].currentHealth += heals;
-                if(enemies[xPos, yPos].currentHealth > maxHealth) { enemies[xPos, yPos].currentHealth = maxHealth;  }
+                if (enemies[xPos, yPos].currentHealth > maxHealth) { enemies[xPos, yPos].currentHealth = maxHealth; }
 
                 //DISPLAY IT
                 yield return new WaitForSeconds(timing);
@@ -1772,7 +1774,7 @@ public class BattleClass : MonoBehaviour
         data[] information = new data[party.Length];
         for (int x = 0; x < party.Length; x++)
         {
-            if(party[x] != null)
+            if (party[x] != null)
             {
                 int temp;
                 party[x].stats.TryGetValue(type, out temp);
@@ -1805,15 +1807,15 @@ public class BattleClass : MonoBehaviour
             return party[pos];
         }
     }
-    
+
     private EnemyClass PickWorstEnemyToBuff(string type)
     {
         data[,] information = new data[maxNumberOfRows, maxRowSize];
-        for(int x = 0; x < maxNumberOfRows; x++)
+        for (int x = 0; x < maxNumberOfRows; x++)
         {
-            for(int y = 0; y < maxRowSize; y++)
+            for (int y = 0; y < maxRowSize; y++)
             {
-                if(enemies[x, y] != null)
+                if (enemies[x, y] != null)
                 {
                     int result;
                     //Debug.Log(type);
@@ -1834,7 +1836,7 @@ public class BattleClass : MonoBehaviour
         {
             for (int y = 0; y < maxRowSize; y++)
             {
-                if(highest < information[x, y].stat && information[x, y].stat != default)
+                if (highest < information[x, y].stat && information[x, y].stat != default)
                 {
                     highest = information[x, y].stat;
                     xPos = x;
@@ -1905,9 +1907,9 @@ public class BattleClass : MonoBehaviour
         PartyMemberClass victim;
 
         //Establish AI data
-        for(int x = 0; x < party.Length; x++)
+        for (int x = 0; x < party.Length; x++)
         {
-            if(party[x].gameObject.activeSelf != false)
+            if (party[x].gameObject.activeSelf != false)
             {
                 string temp;
                 int maxHealth;
@@ -1920,7 +1922,7 @@ public class BattleClass : MonoBehaviour
         }
 
         //Impact AI point values 
-        for(int x = 0; x < information.Length; x++)
+        for (int x = 0; x < information.Length; x++)
         {
             //affecting points to pick the worst one
             if (information[x].affinity == "Weak") { information[x].points += 3; }
@@ -1938,16 +1940,16 @@ public class BattleClass : MonoBehaviour
         //pick WORST one
         int lowestPoint = 100;
         int lowestPerson = -1;
-        for(int x = 0; x < party.Length; x++)
+        for (int x = 0; x < party.Length; x++)
         {
-            if(information[x].points <= lowestPoint && information[x].affinity != default)
+            if (information[x].points <= lowestPoint && information[x].affinity != default)
             {
                 lowestPoint = information[x].points;
                 lowestPerson = x;
             }
         }
 
-        if(lowestPerson == -1)
+        if (lowestPerson == -1)
         {
             Debug.Log("AI returned null");
             return null;
@@ -2028,7 +2030,18 @@ public class BattleClass : MonoBehaviour
         while (turn < party.Length && party[turn] != null)
         {
             yield return PartyMemberTurn(party[turn], turn);
-            turn++;
+            if (party[turn].passed == true)
+            {
+                foreach (PartyMemberClass dood in party)
+                {
+                    dood.passed = false;
+                }
+                break;
+            }
+            else
+            {
+                turn++;
+            }
         }
         runItParty = false;
         runItEnemy = true;
@@ -2052,26 +2065,26 @@ public class BattleClass : MonoBehaviour
         bool swapIt = false;
         int numberOfDead = 0;
         bool bopIt = false;
-        for(int x = 0; x < maxRowSize; x++)
+        for (int x = 0; x < maxRowSize; x++)
         {
-            if(front[x].gameObject.activeSelf == false)
+            if (front[x].gameObject.activeSelf == false)
             {
                 numberOfDead++;
             }
         }
-        if(numberOfDead == maxRowSize)
+        if (numberOfDead == maxRowSize)
         {
             bopIt = true;
         }
-        if(bopIt)
+        if (bopIt)
         {
             swapIt = true;
         }
-        if(swapIt == true)
+        if (swapIt == true)
         {
             Debug.Log("SWAPPING");
             GameObject[] timp = new GameObject[maxRowSize];
-            for(int x = 0; x < maxRowSize; x++)
+            for (int x = 0; x < maxRowSize; x++)
             {
                 timp[x] = back[x];
             }
@@ -2097,22 +2110,22 @@ public class BattleClass : MonoBehaviour
             for (int col = 0; col < maxRowSize; col++)
             {
                 //Debug.Log("in row " + row + " and col " + col);
-                switch(row)
+                switch (row)
                 {
                     case 0:
-                        if(front[col].transform.GetChild(0).gameObject.activeSelf == true)
+                        if (front[col].transform.GetChild(0).gameObject.activeSelf == true)
                         {
                             yield return EnemyTurn(front[col].GetComponentInChildren<EnemyClass>(), row, col);
                         }
                         break;
                     case 1:
-                        if(mid[col].transform.GetChild(0).gameObject.activeSelf == true)
+                        if (mid[col].transform.GetChild(0).gameObject.activeSelf == true)
                         {
                             yield return EnemyTurn(mid[col].GetComponentInChildren<EnemyClass>(), row, col);
                         }
                         break;
                     case 2:
-                        if(back[col].transform.GetChild(0).gameObject.activeSelf == true)
+                        if (back[col].transform.GetChild(0).gameObject.activeSelf == true)
                         {
                             yield return EnemyTurn(back[col].GetComponentInChildren<EnemyClass>(), row, col);
                         }
@@ -2121,7 +2134,7 @@ public class BattleClass : MonoBehaviour
                         throw new System.Exception("Default in enemy turn cycle");
                 }
 
-                
+
             }
         }
 
