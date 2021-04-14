@@ -740,8 +740,6 @@ public class BattleClass : MonoBehaviour
                             DamagePopup.Create(affinityPosition, buff.statName + "\nHARMONIC", 1, 0, 1);
                             DamagePopup.Create(damagePosition, buff.amount.ToString(), 1, 0, 1);
 
-                            person.passed = true;
-
                             yield return PartyMemberTurn(friendlyperson, 1);
                             person.currentlyChained = false;
                             toDo = "Done";
@@ -2030,18 +2028,7 @@ public class BattleClass : MonoBehaviour
         while (turn < party.Length && party[turn] != null)
         {
             yield return PartyMemberTurn(party[turn], turn);
-            if(party[turn].passed == true)
-            {
-                foreach (PartyMemberClass dood in party)
-                {
-                    dood.passed = false;
-                }
-                break;
-            }
-            else
-            {
-                turn++;
-            }
+            turn++;
         }
         runItParty = false;
         runItEnemy = true;
