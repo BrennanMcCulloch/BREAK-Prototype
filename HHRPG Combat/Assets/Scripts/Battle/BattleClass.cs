@@ -29,7 +29,7 @@ public class BattleClass : MonoBehaviour
     public GameObject EQButton;
 
     public float timing = 0.3f;
-    public static int tutorial;
+    public static int tutorial = 4;
 
     public Camera camera;
 
@@ -76,14 +76,8 @@ public class BattleClass : MonoBehaviour
 
     private void Awake()
     {
-        if (!initialized)
-        {
-            tutorial = 1;
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            SceneManager.LoadSceneAsync("Intro Menu");
-        }
         enemies = new EnemyClass[maxNumberOfRows, maxRowSize];
-        //KnownInfo.InitializeJSON();
+        KnownInfo.InitializeJSONNew();
         canvasDuplicate = Instantiate(canvas);
         SetUpEnemies();
         SetUpParty();
@@ -132,14 +126,11 @@ public class BattleClass : MonoBehaviour
 
         if (haveLost)//Loss
         {
-            tutorial = 1;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             SceneManager.LoadSceneAsync("Intro Menu");
         }
         if (haveWon)//Win
         {
-            //KnownInfo.UpdateJSON();
-            tutorial++;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             Transition.dif = "Battle " + tutorial.ToString();
             SceneManager.LoadScene("Transition");
